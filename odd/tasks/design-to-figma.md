@@ -111,6 +111,12 @@ Original questions:
   - the snapshot goes in a `DESIGN.md` section with an optional `DESIGN.sync.json` sidecar (no size threshold defined yet);
   - `scope: minimal` marks a bootstrapped single-screen project.
   impeccable `new-work` is a flow, not a sub-command.
+- 2026-10-16: third native review (lineage `review-5ebd980b04082bf0`, range `4993807..ccc32bc`) approved and acknowledged, with 11 non-blocking advisories. Applied in a follow-up commit:
+  - local-vs-Figma change detection is now a three-way comparison with the snapshot as the base;
+  - snapshot sidecar threshold set at 150 lines;
+  - variable snapshot format fixed;
+  - unreadable-snapshot and inaccessible-Figma handling made explicit.
+  Remaining advisories (R2-004, R2-005, R3-004, R3-005) are minor wording and test items, left for T5 feedback.
 
 ## Next step
 

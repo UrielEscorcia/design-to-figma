@@ -60,7 +60,7 @@ components:
 
 ## Sync snapshot
 
-Compact record used to detect manual Figma edits (see references/sync-rules.md). Sorted alphabetically; no node IDs. Move to `DESIGN.sync.json` if it grows long.
+Compact record used to detect manual Figma edits (see references/sync-rules.md). Sorted alphabetically; no node IDs. Move to `DESIGN.sync.json` when it exceeds 150 lines.
 
 ```yaml
 lastSync: <ISO 8601 timestamp>
@@ -68,7 +68,7 @@ pages:
   <page name>: [<top-level frame>, <top-level frame>]
 variables:
   <collection>:
-    - <variable name>=<value per mode>
+    <variable name>: { <mode>: <value>, <mode>: <value> }
 styles: [<style name>]
 components: [<component or set name>]
 ```
