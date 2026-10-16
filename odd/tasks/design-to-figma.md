@@ -2,7 +2,7 @@
 
 - **Engram mirror:** `odd/design-to-figma/tasks`
 - **Branch:** `feat/design-to-figma-plugin`
-- **Status:** T2 in progress
+- **Status:** T2 done; T3/T4 next
 
 ## Objective
 
@@ -67,7 +67,7 @@ Original questions:
 ## TDD
 
 - **Mode:** enabled. Source: user global config ("Strict TDD Mode: enabled").
-- **Runner:** `claude plugin validate --strict .` plus `tests/validate-skill.sh` (frontmatter keys, length limits, line count, referenced files). Both are set up in T2.
+- **Runner:** `tests/run.sh`. It runs the validator fixture self-tests (each negative fixture must fail for its expected reason), `tests/validate-skill.sh` on every `skills/*/`, and `claude plugin validate --strict` on `plugin.json` and `marketplace.json`.
 - **What gets tested:** manifests are valid JSON with the required fields; frontmatter uses only allowed keys; SKILL.md is under 500 lines; every referenced file exists.
 
 ## Delivery
@@ -80,7 +80,8 @@ Original questions:
 | ID | Task | Route | Status | Evidence |
 |---|---|---|---|---|
 | T1 | Research the open questions; write `docs/research/platform-capabilities.md` | delegated (broad web research) + inline verification of the key claims | done | research doc |
-| T2 | Plugin scaffold: `plugin.json`, `marketplace.json`, validation test harness (RED first) | inline | pending | — |
+| T2 | Plugin scaffold: `plugin.json`, `marketplace.json`, validation test harness (RED first) | inline | done | RED: no manifest / no skills → GREEN `tests/run.sh` exit 0; commits `6c43e6e`, `083e224`; native review approved (4 lenses, lineage `review-ae3fc37288c0f62c`, acknowledged) |
+| T2b | Validator hardening from review advisories R3-003…006 (frontmatter parsing edge cases) | inline | pending | — |
 | T3 | `SKILL.md`: preflight, tool directory, both mode flows | delegated writer | pending | — |
 | T4 | References: sync rules, Figma structure, minimal-system checklist, `.md` templates | delegated writer (with T3) | pending | — |
 | T5 | Claude Code trial: local marketplace, both modes, a manual Figma edit round-trip | inline + user | pending | — |
@@ -92,8 +93,8 @@ Original questions:
 ## Acceptance criteria
 
 - The plugin installs in Claude Code from a marketplace and in Desktop via zip upload, with no frontmatter errors.
-- Preflight correctly reports missing Claude Design or Figma MCP (blocks) and missing impeccable (warns and continues).
-- Full-project mode produces a Figma file with the four pages, plus local `PRODUCT.md` / `DESIGN.md` carrying the Figma link.
+- Preflight blocks when the Figma MCP tools are missing, reports when no design-capable surface is available, and warns but continues when impeccable is missing.
+- Full-project mode produces a Figma file with the four pages, plus `PRODUCT.md` / `DESIGN.md` carrying the Figma link, written to the folder or delivered as downloads according to the D5 ladder.
 - Single-screen mode with no project bootstraps a minimal system, then designs the screen.
 - A manual edit in Figma is picked up on the next run. A local `.md` edit triggers the diff-and-ask prompt.
 
@@ -102,7 +103,8 @@ Original questions:
 - 2026-10-15: decisions D1–D10 accepted in the planning round. Repository initialized (`84d1e7a`), branch created. T1 started.
 - 2026-10-15: T1 done. Revised D2, D6, D8 and D10; added D11. Key verified facts: claude.ai/design closes on 2026-12-14; Desktop chat cannot write local files; `claude plugin validate` exists.
 - 2026-10-16: D5 write-path ladder accepted (verified signal: `CLAUDECODE=1`; Cowork mounts connected folders, with no official detection API).
+- 2026-10-16: T2 done. Native review (risk: high, shell scripts) approved with only non-blocking advisories. Applied: negative fixtures now assert the failure reason; the stale plan text was fixed. Remaining advisories (R3-003…006: validator parsing edge cases) are tracked as T2b.
 
 ## Next step
 
-T2: scaffold plus RED validation tests.
+T3 + T4: write SKILL.md and its references (one delegated writer).

@@ -4,22 +4,28 @@ set -uo pipefail
 cd "$(dirname "$0")/.."
 status=0
 
-expect() { # expect <pass|fail> <skill-dir>
-  if tests/validate-skill.sh "$2" >/dev/null 2>&1; then got=pass; else got=fail; fi
-  if [[ "$got" == "$1" ]]; then echo "ok   fixture $(basename "$2") -> $1"
-  else echo "FAIL fixture $(basename "$2"): expected $1, got $got"; status=1; fi
+expect() { # expect <pass|fail> <skill-dir> [reason-pattern]
+  local out got
+  if out="$(tests/validate-skill.sh "$2" 2>&1)"; then got=pass; else got=fail; fi
+  if [[ "$got" != "$1" ]]; then
+    echo "FAIL fixture $(basename "$2"): expected $1, got $got"; status=1
+  elif [[ -n "${3:-}" ]] && ! grep -q -- "$3" <<<"$out"; then
+    echo "FAIL fixture $(basename "$2"): failed for the wrong reason (wanted '$3')"; echo "$out"; status=1
+  else
+    echo "ok   fixture $(basename "$2") -> $1${3:+ ($3)}"
+  fi
 }
 
 expect pass tests/fixtures/valid
-expect fail tests/fixtures/extra-key
-expect fail tests/fixtures/long-description
-expect fail tests/fixtures/broken-link
+expect fail tests/fixtures/extra-key "key not allowed"
+expect fail tests/fixtures/long-description "exceeds 200"
+expect fail tests/fixtures/broken-link "broken link"
 # Oversized fixture is generated at runtime to keep 500 filler lines out of the repo.
 tmp="$(mktemp -d)"; trap 'rm -rf "$tmp"' EXIT
 mkdir -p "$tmp/too-long" && touch "$tmp/too-long/reference.md"
 sed 's/^name: valid$/name: too-long/' tests/fixtures/valid/SKILL.md > "$tmp/too-long/SKILL.md"
 seq 1 500 >> "$tmp/too-long/SKILL.md"
-expect fail "$tmp/too-long"
+expect fail "$tmp/too-long" "max 500"
 
 shopt -s nullglob
 skills=(skills/*/)
