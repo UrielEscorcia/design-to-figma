@@ -32,6 +32,26 @@ skills=(skills/*/)
 (( ${#skills[@]} )) || { echo "FAIL no skills found under skills/"; status=1; }
 for s in ${skills[@]+"${skills[@]}"}; do tests/validate-skill.sh "${s%/}" || status=1; done
 
+# design-to-figma content: required files exist and SKILL.md links every supporting file.
+d=skills/design-to-figma
+required=(
+  SKILL.md
+  references/preflight.md references/tool-directory.md references/workflow-project.md
+  references/workflow-screen.md references/sync-rules.md references/figma-structure.md
+  references/minimal-system-checklist.md
+  assets/PRODUCT.template.md assets/DESIGN.template.md assets/brief-page.template.md
+)
+for f in "${required[@]}"; do
+  [[ -f "$d/$f" ]] || { echo "FAIL missing required file: $d/$f"; status=1; }
+done
+if [[ -f "$d/SKILL.md" ]]; then
+  for f in "$d"/references/*.md "$d"/assets/*; do
+    [[ -e "$f" ]] || continue
+    rel="${f#"$d"/}"
+    grep -qF "]($rel)" "$d/SKILL.md" || { echo "FAIL SKILL.md does not link $rel"; status=1; }
+  done
+fi
+
 if command -v claude >/dev/null; then
   claude plugin validate --strict .claude-plugin/plugin.json || status=1
   claude plugin validate --strict .claude-plugin/marketplace.json || status=1

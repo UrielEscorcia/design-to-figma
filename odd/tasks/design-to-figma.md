@@ -2,7 +2,7 @@
 
 - **Engram mirror:** `odd/design-to-figma/tasks`
 - **Branch:** `feat/design-to-figma-plugin`
-- **Status:** T2 done; T3/T4 next
+- **Status:** T3/T4 done; T5 (Claude Code trial) next, T6a pending from the user
 
 ## Objective
 
@@ -82,9 +82,9 @@ Original questions:
 | T1 | Research the open questions; write `docs/research/platform-capabilities.md` | delegated (broad web research) + inline verification of the key claims | done | research doc |
 | T2 | Plugin scaffold: `plugin.json`, `marketplace.json`, validation test harness (RED first) | inline | done | RED: no manifest / no skills → GREEN `tests/run.sh` exit 0; commits `6c43e6e`, `083e224`; native review approved (4 lenses, lineage `review-ae3fc37288c0f62c`, acknowledged) |
 | T2b | Validator hardening from review advisories R3-003…006 (frontmatter parsing edge cases) | inline | pending | — |
-| T3 | `SKILL.md`: preflight, tool directory, both mode flows | delegated writer | pending | — |
-| T4 | References: sync rules, Figma structure, minimal-system checklist, `.md` templates | delegated writer (with T3) | pending | — |
-| T5 | Claude Code trial: local marketplace, both modes, a manual Figma edit round-trip | inline + user | pending | — |
+| T3 | `SKILL.md`: preflight, tool directory, both mode flows | delegated writer (writer trigger: 2+ non-trivial files) | done | RED: required-file check failed for all 10 missing files (the writer's pasted RED excerpt was partly reconstructed) → GREEN `tests/run.sh` exit 0, verified by the parent |
+| T4 | References: sync rules, Figma structure, minimal-system checklist, `.md` templates | delegated writer (with T3) | done | 7 references plus 3 assets; SKILL.md is 84 lines with a 187-character description |
+| T5 | Claude Code trial: local marketplace, both modes, a manual Figma edit round-trip. Also verify that `/design-sync` accepts `DESIGN.md` and what it targets after the claude.ai/design closure | inline + user | pending | — |
 | T6a | Desktop smoke test: Figma connector in chat exposes `use_figma` | user-assisted | pending | — |
 | T6 | Claude Desktop trial: zip upload, same cases | user-assisted | pending | — |
 | T7 | README: install and usage for Code and Desktop | inline | pending | — |
@@ -105,6 +105,13 @@ Original questions:
 - 2026-10-16: D5 write-path ladder accepted (verified signal: `CLAUDECODE=1`; Cowork mounts connected folders, with no official detection API).
 - 2026-10-16: T2 done. Native review (risk: high, shell scripts) approved with only non-blocking advisories. Applied: negative fixtures now assert the failure reason; the stale plan text was fixed. Remaining advisories (R3-003…006: validator parsing edge cases) are tracked as T2b.
 
+- 2026-10-16: delivery decision. Skill content (T3/T4) may exceed the 400-line budget in one slice; code or multi-file work later uses chained PRs (strategy asked when it first applies). Second native review (lineage `review-ed29e1cc09e34678`) approved and acknowledged.
+- 2026-10-16: T3/T4 done. Writer choices to confirm in T5:
+  - sync metadata lives in YAML frontmatter of `PRODUCT.md`/`DESIGN.md`;
+  - the snapshot goes in a `DESIGN.md` section with an optional `DESIGN.sync.json` sidecar (no size threshold defined yet);
+  - `scope: minimal` marks a bootstrapped single-screen project.
+  impeccable `new-work` is a flow, not a sub-command.
+
 ## Next step
 
-T3 + T4: write SKILL.md and its references (one delegated writer).
+T5: install from the local marketplace in Claude Code and run both modes against a test Figma file. Before T8, decide the license (omitted for now).
