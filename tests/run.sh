@@ -14,7 +14,12 @@ expect pass tests/fixtures/valid
 expect fail tests/fixtures/extra-key
 expect fail tests/fixtures/long-description
 expect fail tests/fixtures/broken-link
-expect fail tests/fixtures/too-long
+# Oversized fixture is generated at runtime to keep 500 filler lines out of the repo.
+tmp="$(mktemp -d)"; trap 'rm -rf "$tmp"' EXIT
+mkdir -p "$tmp/too-long" && touch "$tmp/too-long/reference.md"
+sed 's/^name: valid$/name: too-long/' tests/fixtures/valid/SKILL.md > "$tmp/too-long/SKILL.md"
+seq 1 500 >> "$tmp/too-long/SKILL.md"
+expect fail "$tmp/too-long"
 
 shopt -s nullglob
 skills=(skills/*/)
