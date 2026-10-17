@@ -10,7 +10,7 @@ Required tools: `use_figma`, `get_design_context`, `get_variable_defs`, `get_met
 - **Any missing:** STOP. Do not simulate Figma output. Tell the user which tools are missing and how to install:
   - **Claude Code:** `claude plugin install figma@claude-plugins-official`, or add the remote server `https://mcp.figma.com/mcp`.
   - **Claude Desktop (chat and Cowork):** add the Figma connector under Settings / Customize → Connectors, then connect and authorize it.
-- **Desktop caveat:** whether `use_figma` is exposed in Desktop chat is not yet confirmed. If the connector is connected but `use_figma` is absent, report that as the blocker rather than working around it.
+- **Desktop note:** the Figma connector in Desktop chat lists `use_figma` among its tools (observed 2026-10-16). If the connector is connected but `use_figma` is absent, report that as the blocker rather than working around it.
 - **Seat requirement:** the Figma MCP needs a Figma Dev or Full seat. View and Collab seats are limited to 20 MCP calls per month, which is not enough for design work. If calls start failing with a limit error, stop and tell the user.
 
 ## 2. Figma official skills (recommended)

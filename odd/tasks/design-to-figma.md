@@ -2,7 +2,7 @@
 
 - **Engram mirror:** `odd/design-to-figma/tasks`
 - **Branch:** `feat/design-to-figma-plugin`
-- **Status:** T3/T4 done; T5 (Claude Code trial) next, T6a pending from the user
+- **Status:** T3/T4 and T6a done; T5 (Claude Code trial) next
 
 ## Objective
 
@@ -51,9 +51,7 @@ Proposed default Figma structure (adjustable): `📋 Brief & Rules` · `🎨 Fou
 
 ## Open questions
 
-T1 answered the questions below; see `docs/research/platform-capabilities.md`. Still open:
-
-- **Is `use_figma` exposed in Desktop chat?** UNKNOWN; needs a manual smoke test (T6a).
+T1 answered the questions below; see `docs/research/platform-capabilities.md`. T6a answered the last one: `use_figma` is exposed in Desktop chat (2026-10-16).
 
 Original questions:
 
@@ -85,7 +83,7 @@ Original questions:
 | T3 | `SKILL.md`: preflight, tool directory, both mode flows | delegated writer (writer trigger: 2+ non-trivial files) | done | RED: required-file check failed for all 10 missing files (the writer's pasted RED excerpt was partly reconstructed) → GREEN `tests/run.sh` exit 0, verified by the parent |
 | T4 | References: sync rules, Figma structure, minimal-system checklist, `.md` templates | delegated writer (with T3) | done | 7 references plus 3 assets; SKILL.md is 84 lines with a 187-character description |
 | T5 | Claude Code trial: local marketplace, both modes, a manual Figma edit round-trip. Also verify that `/design-sync` accepts `DESIGN.md` and what it targets after the claude.ai/design closure | inline + user | pending | — |
-| T6a | Desktop smoke test: Figma connector in chat exposes `use_figma` | user-assisted | pending | — |
+| T6a | Desktop smoke test: Figma connector in chat exposes `use_figma` | user-assisted | done | User screenshot (2026-10-16): Desktop chat lists about 42 Figma tools, `use_figma` included; invocation is tested in T6 |
 | T6 | Claude Desktop trial: zip upload, same cases | user-assisted | pending | — |
 | T7 | README: install and usage for Code and Desktop | inline | pending | — |
 | T8 | Publish the marketplace on GitHub (push is the user's decision) | user decision | pending | — |
@@ -117,6 +115,7 @@ Original questions:
   - variable snapshot format fixed;
   - unreadable-snapshot and inaccessible-Figma handling made explicit.
   Remaining advisories (R2-004, R2-005, R3-004, R3-005) are minor wording and test items, left for T5 feedback.
+- 2026-10-16: T6a done. Desktop chat lists `use_figma` among about 42 Figma connector tools. The preflight caveat became a note; the research doc records the extra tools seen (out of scope for v1).
 
 ## Next step
 
