@@ -144,6 +144,7 @@ Original questions:
   - resolved 2026-10-16: the `DesignSync` tool only reads and writes claude.ai/design design-system projects, only inside the user-started `/design-sync` skill, and must not be used to make designs. The skill cannot call it. An Artifact type "Design System" exists as the newer target; whether Figma should sync to it is an open question for the user.
   - superseded: the skill handed `/design-sync` to the user as a manual step; Claude Code also exposes a `DesignSync` tool. Check whether the skill can call it directly.
   - gap: `brief-page.template.md` asks for the `PRODUCT.md` / `DESIGN.md` "path", so the trial wrote an absolute local path (with the OS username) into the shared Figma file. Use file names relative to the project folder instead.
+- 2026-10-16: T5a/T5b committed (`39b06ec`). Fourth native review (lineage `review-0169275a953af021`, risk high because of `tests/run.sh`) approved and acknowledged, with 12 non-blocking advisories. Applied: `sync-rules.md` three-way detection now points to the script-based read instead of `get_variable_defs` + `get_metadata` (flagged by three lenses). Remaining advisories (R2-002/R2-003/R3-002…R3-006, R1-001, R2-004) are left for T5c feedback.
 
 ## Next step
 

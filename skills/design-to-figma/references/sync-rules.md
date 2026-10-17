@@ -35,7 +35,7 @@ Keep it deterministic: sort every list alphabetically, use the names and values 
 
 ## Detecting changes (three-way)
 
-The snapshot is the base. Compare each tracked item (variable value, style, component, page or frame name) across three versions: **base** (snapshot), **Figma** (fresh `get_variable_defs` + `get_metadata`, normalized like the snapshot), and **local** (the values written in the `.md`).
+The snapshot is the base. Compare each tracked item (variable value, style, component, page or frame name) across three versions: **base** (snapshot), **Figma** (fresh state read with steps 1–3 above, normalized like the snapshot), and **local** (the values written in the `.md`).
 
 | Base vs Figma | Base vs local | Meaning | Action |
 |---|---|---|---|
