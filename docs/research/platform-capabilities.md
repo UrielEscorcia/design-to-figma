@@ -64,7 +64,8 @@
   - **Prerequisite:** a Dev or Full seat.
 - **Desktop status:**
   - Users do connect the Figma cloud connector in Claude Desktop, but forum reports show connection bugs ("Server not found", duplicate local and remote entries). Sources: [Figma forum 54700](https://forum.figma.com/report-a-problem-6/figma-mcp-connector-in-claude-desktop-server-not-found-on-connect-can-t-disconnect-54700), [Figma forum 56867](https://forum.figma.com/report-a-problem-6/local-figma-mcp-server-doesn-t-integrate-with-claude-desktop-even-though-everything-is-connected-on-claude-s-side-56867) (INFERRED).
-  - Whether `use_figma` is exposed in Desktop chat is **UNKNOWN**. Smoke-test it before relying on it.
+  - `use_figma` **is exposed in Desktop chat** (VERIFIED by user observation, 2026-10-16). Asked which Figma tools it had, Desktop chat listed about 42 connector tools, including `use_figma`, `create_new_file`, `upload_assets`, `get_design_context`, `get_screenshot`, `get_metadata`, `get_variable_defs`, `get_libraries`, `search_design_system`, `download_assets` and `whoami`. An actual `use_figma` call from Desktop is still untested (T6).
+  - The same listing shows tools not in the official tools page used above: `generate_diagram`, `generate_image`, `get_figjam`, `get_motion_context`, `send_code_to_figma`, `export_video`, Code Connect mapping tools, shader and generative-plugin tools, and Weave tools. They are out of scope for v1.
 
 ## 6. Validation tooling
 
