@@ -29,6 +29,8 @@ components:
 
 <Creative direction and personality in two or three sentences.>
 
+Style and references: <style name; reference product names; traits (type, color use, density, radius, motion, imagery)>. Chosen direction: <name and one-line rationale>.
+
 ## Colors
 
 <Roles and how they are used. Values live in the frontmatter above and in Figma variables.>
