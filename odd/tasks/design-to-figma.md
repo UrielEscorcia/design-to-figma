@@ -99,7 +99,7 @@ Original questions:
 | T6a | Desktop smoke test: Figma connector in chat exposes `use_figma` | user-assisted | done | User screenshot (2026-10-16): Desktop chat lists about 42 Figma tools, `use_figma` included; invocation is tested in T6 |
 | T6 | Claude Desktop trial: zip upload, same cases | user-assisted | pending | — |
 | T7 | README: install and usage for Code and Desktop | inline | pending | — |
-| T8 | Publish the marketplace on GitHub (push is the user's decision) | user decision | pending | — |
+| T8 | Publish the marketplace on GitHub (push is the user's decision) | user decision | in progress | Repo https://github.com/UrielEscorcia/design-to-figma (public, MIT); PRs #1–#3 open; merge pending |
 
 ## Acceptance criteria
 
@@ -147,6 +147,7 @@ Original questions:
   - gap: `brief-page.template.md` asks for the `PRODUCT.md` / `DESIGN.md` "path", so the trial wrote an absolute local path (with the OS username) into the shared Figma file. Use file names relative to the project folder instead.
 - 2026-10-16: T5a/T5b committed (`59b0317`). Fourth native review (lineage `review-0169275a953af021`, risk high because of `tests/run.sh`) approved and acknowledged, with 12 non-blocking advisories. Applied: `sync-rules.md` three-way detection now points to the script-based read instead of `get_variable_defs` + `get_metadata` (flagged by three lenses). Remaining advisories (R2-002/R2-003/R3-002…R3-006, R1-001, R2-004) are left for T5c feedback.
 - 2026-10-16: license MIT (`e13b331`: `LICENSE`, `plugin.json`, SKILL.md frontmatter). Public repo created at https://github.com/UrielEscorcia/design-to-figma (empty; remote `origin` added; nothing pushed). Privacy scan before publishing: the test Figma file key was scrubbed from this document, and the unpushed local history was rewritten (`git filter-branch`) so no pushed commit contains it; a local `backup/pre-scrub` branch keeps the original.
+- 2026-10-16: pushed `main` and the three slice branches as UrielEscorcia; stacked PRs opened: #1 scaffold (357 lines, base `main`), #2 skill (612 lines, base #1, `size:exception` requested: SKILL.md and its linked references cannot split without failing the validator), #3 trial fixes and design-quality flow (455 lines, base #2). Merging is the user's decision; after each merge, retarget the next PR to `main`.
 
 ## Next step
 
