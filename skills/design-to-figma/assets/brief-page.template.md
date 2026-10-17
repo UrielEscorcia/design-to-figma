@@ -24,6 +24,12 @@ Place as text layers, one frame per section. Replace placeholders; keep it short
 - Radius: <scale>
 - Modes: <Light / Dark>
 
+## Style and references
+
+- Style: <name>
+- References: <product names only, no copied assets>
+- Traits: <type, color use, density, radius, motion, imagery>
+
 ## Usage rules
 
 - Do: <rule>
@@ -33,9 +39,7 @@ Place as text layers, one frame per section. Replace placeholders; keep it short
 
 ## Links
 
-- PRODUCT.md / DESIGN.md location: <path or "delivered as downloads">
+- `PRODUCT.md` and `DESIGN.md` in the project folder root (file names only; never an absolute path, username or machine detail)
 - Repository: <url or none>
 
-## Sync
-
-Last sync: <ISO 8601 timestamp>. Figma is the source of truth.
+Figma is the source of truth.

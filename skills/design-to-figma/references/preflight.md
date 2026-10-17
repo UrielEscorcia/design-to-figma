@@ -4,7 +4,7 @@ Run before any design step. Detect capabilities by inspecting the tool and skill
 
 ## 1. Figma MCP (BLOCK when missing)
 
-Required tools: `use_figma`, `get_design_context`, `get_variable_defs`, `get_metadata`, `get_screenshot`, `create_new_file`.
+Required tools: `use_figma`, `get_metadata`, `get_screenshot`, `create_new_file`. `get_variable_defs` is useful but optional (variables can also be read with a read-only `use_figma` script). `get_design_context` is not required: this skill only reads state, and the Figma MCP requires the `figma-design-to-code` skill before that tool.
 
 - **All present:** continue.
 - **Any missing:** STOP. Do not simulate Figma output. Tell the user which tools are missing and how to install:
@@ -27,10 +27,10 @@ Required tools: `use_figma`, `get_design_context`, `get_variable_defs`, `get_met
 
 Claude Design is built into Claude; nothing to install. Confirm one of:
 
-- **Claude Code:** `/design`, or the Artifact tool with the Design type.
+- **Claude Code:** `/design`, or the Artifact tool with the Design type (found through `action: "quickstart"`, `intent: "design"`).
 - **Claude Desktop / claude.ai chat:** Output → Design, or the Artifacts Design template.
 
-If none is available, continue: design directly in Figma with the official skills and say so in the report. Never route work to claude.ai/design projects (closing 2026-12-14).
+If none is available, continue: show proposals as quick frames on a `🧪 Explorations` page in Figma ([proposals.md](proposals.md)) and say so in the report. Never route work to claude.ai/design projects (closing 2026-12-14).
 
 ## 5. Local write path ladder
 
@@ -49,6 +49,14 @@ Rules:
 - Desktop chat cannot write to the user's folder; use downloads there and tell the user where to put the files.
 - Detecting `CLAUDECODE` requires running a shell command, which only exists in Claude Code. If no shell tool is available, skip to rung 2 or 3.
 
-## 6. Preflight report
+## 6. Web research
 
-Before continuing, state in one short block: Figma tools (ok or BLOCKED), seat note, impeccable (used or fallback), design surface, write path (target and whether confirmed).
+Style discovery needs current references ([style-discovery.md](style-discovery.md)). Claude Code: `WebSearch` / `WebFetch`. Desktop: web search when enabled. If no web tool exists, continue and mark the references as model knowledge, unverified. This never blocks.
+
+## 7. Project folder contents
+
+The project folder holds `PRODUCT.md`, `DESIGN.md`, optionally `DESIGN.sync.json`, and the `.impeccable/` folder that impeccable creates (its state: surfaces, questions). The whole folder is shareable. Do not edit `.impeccable/` except through impeccable's own flow, and keep absolute paths and machine details out of any file that is shared.
+
+## 8. Preflight report
+
+Before continuing, state in one short block: Figma tools (ok or BLOCKED), seat note, impeccable (used or fallback), design surface, web research (available or unverified), write path (target and whether confirmed).

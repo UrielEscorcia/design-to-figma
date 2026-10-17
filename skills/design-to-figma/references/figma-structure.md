@@ -30,10 +30,13 @@ The page set is a default. Adjust only on user request, and record changes in th
 
 ## Brief page content
 
-Short and scannable. Sections: product in one paragraph, audience, principles (3 to 5), design system summary (palette roles, type, spacing, radius), usage rules (do and don't), links (`PRODUCT.md` / `DESIGN.md` locations, repo if any), last-sync timestamp.
+Short and scannable. Sections: product in one paragraph, audience, principles (3 to 5), design system summary (palette roles, type, spacing, radius), style and references (style name, reference product names, traits), usage rules (do and don't), links (`PRODUCT.md` and `DESIGN.md` by file name relative to the project folder, repo if any).
+
+The Brief page carries no sync timestamp: sync state lives in the local files. Never write absolute local paths, usernames or machine details into Figma.
 
 ## Rules
 
 - Every color, spacing and radius in components and screens binds to a variable. No hardcoded values when a token exists.
 - Text uses text styles. Components use auto layout.
-- Keep screens in `📱 Screens` only; scratch work goes in a clearly named section that is removed before the report.
+- Keep screens in `📱 Screens` only; scratch work goes in a clearly named section that is removed before the report. Direction frames built when no design surface exists go on a `🧪 Explorations` page that is deleted after the choice ([proposals.md](proposals.md)).
+- File names follow `<Product> — <Scope>` (for example `Tessera — Sign-in`).

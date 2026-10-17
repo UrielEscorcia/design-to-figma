@@ -35,6 +35,8 @@ scope: <full | minimal>
 
 <Names, logos, colors, fonts that must stay. Mark inferred facts as "(inferred)".>
 
+Style and references: <confirmed style; reference product names and traits; no copied assets>.
+
 ## Product Principles
 
 - <Principle 1>
