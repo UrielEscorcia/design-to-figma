@@ -1,0 +1,14 @@
+{
+  "name": "design-to-figma",
+  "description": "Claude plugins for design workflows that keep Figma as the source of truth.",
+  "owner": {
+    "name": "Uriel Escorcia"
+  },
+  "plugins": [
+    {
+      "name": "design-to-figma",
+      "source": "./",
+      "description": "Design a full project or a single screen with Claude Design and impeccable, and keep everything in Figma."
+    }
+  ]
+}
