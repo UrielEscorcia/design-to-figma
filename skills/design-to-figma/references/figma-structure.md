@@ -13,7 +13,7 @@ The page set is a default. Adjust only on user request, and record changes in th
 
 ## Naming
 
-**Variable collections:** `Primitives` (raw values), `Semantic` (roles mapped to primitives), `Spacing`, `Radius`, `Typography` when numeric. Create `Semantic` as a single-mode collection (mode `Light`, or the single mode) even when dark mode is not requested, so Dark can be added later as one new mode. Add the `Dark` mode only when the user asked for it.
+**Variable collections:** `Primitives` (raw values), `Semantic` (roles mapped to primitives), `Spacing`, `Radius`, `Typography` when numeric. When dark mode is not requested, `Semantic` is a single-mode collection (mode `Light`, or the single mode); Dark can be added later as one new mode. When dark mode is requested up front, `Semantic` gets Light and Dark modes during foundations; build Dark frames only after each Light screen is user-approved.
 
 **Variables:** slash-separated, lowercase, role-based.
 - Primitives: `color/blue/500`, `space/4`.

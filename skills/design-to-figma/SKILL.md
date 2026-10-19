@@ -55,7 +55,7 @@ Do not load it for code generation from Figma (a future companion skill), for Fi
 | Proposals | Design surface available | Show 2 or 3 directions as Claude Design artifacts: [proposals.md](references/proposals.md) |
 | Proposals | No design surface | Quick frames on a `🧪 Explorations` page in Figma |
 | File name | New Figma file | Ask the file name as its own question (suggest `<Product> — <Scope>`), never folded into another question; only then ask which team or plan when there are several |
-| Dark mode | A project or screen is created | Ask whether dark mode is needed; never assume it. Create the semantic variables in a single-mode collection either way; build Dark only when requested ([figma-structure.md](references/figma-structure.md)). Record the answer in `PRODUCT.md` and the plan |
+| Dark mode | A project or screen is created | Ask whether dark mode is needed; never assume it. If not requested, `Semantic` is a single-mode collection (Dark can be added later as a new mode); if requested up front, `Semantic` gets Light and Dark modes in foundations and Dark frames are built only after each Light screen is user-approved ([figma-structure.md](references/figma-structure.md)). Record the answer in `PRODUCT.md` and the plan |
 | Change request | User asks to change a built design | Apply in Figma, then sync: [iteration.md](references/iteration.md) |
 | impeccable | Its skill is available | Use it for every design step (context, shape, direction, extraction); `critique` and `polish` are mandatory, and builders get its craft guides |
 | impeccable | Not available | Recommend it once, continue with [minimal-system-checklist.md](references/minimal-system-checklist.md) and the critique checklist in [quality-bar.md](references/quality-bar.md) |

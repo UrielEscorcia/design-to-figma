@@ -9,7 +9,7 @@ dark_mode: <yes | no | undecided>
 
 Tracker for the sections to design. Update the state after every change; read this file first on resume and continue with the next unfinished item.
 
-States for screens and components: `pending → built → agent-verified → user-approved → final-verified`. Brief, style and foundations items use `pending → user-approved`. Per-screen loop: [screen-loop.md](../references/screen-loop.md).
+States: Brief, Style, Palette/foundations and Components use `pending → user-approved`. Screens use `pending → built → agent-verified → user-approved → final-verified`. Closing items use `pending → done`. Per-screen loop: [screen-loop.md](../references/screen-loop.md).
 
 ## Foundations
 

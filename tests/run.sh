@@ -86,6 +86,13 @@ grep -q 'DESIGN-PLAN' "$d/SKILL.md" || { echo "FAIL SKILL.md must mention DESIGN
 for st in pending built agent-verified user-approved final-verified; do
   grep -q -- "$st" "$d/assets/DESIGN-PLAN.template.md" 2>/dev/null || { echo "FAIL DESIGN-PLAN.template.md must carry the state '$st'"; status=1; }
 done
+grep -qF 'pending → built → agent-verified → user-approved → final-verified' "$d/assets/DESIGN-PLAN.template.md" || { echo "FAIL DESIGN-PLAN.template.md must state the full screen sequence on one line"; status=1; }
+grep -qiE 'budget' "$r/screen-loop.md" || { echo "FAIL screen-loop.md must state its own budget"; status=1; }
+grep -q 'screen-loop.md' "$r/quality-bar.md" || { echo "FAIL quality-bar.md must point screens to screen-loop.md"; status=1; }
+grep -qE '70%|28/40' "$r/screen-loop.md" && { echo "FAIL screen-loop.md must not hardcode the gate threshold"; status=1; }
+grep -qiE 'when a plan exists|otherwise record' "$r/screen-loop.md" || { echo "FAIL screen-loop.md must handle the no-plan case"; status=1; }
+grep -qiE 'rate[- ]limit' "$r/screen-loop.md" || { echo "FAIL screen-loop.md must handle rate limits"; status=1; }
+grep -q 'polish' "$r/workflow-project.md" || { echo "FAIL workflow-project.md must reach the polish pass"; status=1; }
 sl="$r/screen-loop.md"
 grep -qiE 'user review' "$sl" 2>/dev/null || { echo "FAIL screen-loop.md must include the user review step"; status=1; }
 grep -qiE 'at most 2' "$sl" 2>/dev/null || { echo "FAIL screen-loop.md must cap self-fix at most 2 rounds"; status=1; }
