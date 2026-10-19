@@ -190,6 +190,8 @@ Original questions:
 
 - 2026-10-19: T14 committed (`1e22994`, `ef13fc1`); reviews `review-7af672a41e7bba98` and `review-79d26cdc8eefc678` approved and acknowledged. Follow-up: each style-discovery gate is skipped only by its own recorded confirmation (a recorded style no longer skips the category and palette gates for projects created on v0.2.0); an existing `PRODUCT.md` without a locale gets the locale question; the Category row states the no-tool fallback.
 
+- 2026-10-19: trial evidence: every screen reviewer received the gate in its prompt (a report said "Good, just over the 70% bar"), all scores landed at the threshold, the re-verify read the earlier report, and nothing improved once the gate passed. Added to T14: blind scoring (no gate, no earlier report; the parent applies the gate), an elevate pass after polish with one impeccable refinement command (`bolder`, `delight`, `typeset`, `colorize`, `layout`, `distill`, `quieter`) and a duplicate-and-restore fallback, app-wide requests become `DESIGN.md` and Brief rules applied to built and later screens, and user-review research of category apps. Writer RED: 6 FAIL lines → GREEN.
+
 ## Next step
 
 Open and merge the T14 PR (v0.3.0); the user finishes the T5d retest (on v0.2.0, steering the T14 gates by hand) and later verifies them on v0.3.0. Then T12 (review advisories, including keyword-only test assertions and the D22/D23–D26 table order), T6, T7.

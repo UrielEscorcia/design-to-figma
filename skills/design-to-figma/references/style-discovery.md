@@ -12,6 +12,8 @@ Mandatory, before asking or presenting any style. Research real products in the 
 | 2 | Web search, then fetch on the best pages (Claude Code: `WebSearch` / `WebFetch`; Desktop: web search when enabled) |
 | 3 | No tool: say the list comes from model knowledge and is unverified, and ask the user for references. Never invent links |
 
+Also look at user reviews of the category apps (App Store / Play Store reviews, review sites) and summarize what users ask for and what frustrates them, with sources. Record the findings in `PRODUCT.md` and use them in each screen's definition ([screen-loop.md](screen-loop.md)).
+
 Present the list before continuing: at least 3 real products, each with its name, one line on what is relevant (flow, layout, tone) and the source link. Then ask the user to confirm, add or remove references, and wait.
 
 If the research finds fewer than 3 real category products, say so plainly now, never after the proposals, and ask how to proceed: more searches, references from the user, or continue with style references only. The style research below builds on the confirmed category references.

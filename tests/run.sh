@@ -128,6 +128,14 @@ grep -qiE 'locale' "$d/SKILL.md" || { echo "FAIL SKILL.md must ask the UI langua
 grep -qiE 'locale' "$d/assets/PRODUCT.template.md" || { echo "FAIL PRODUCT.template.md must carry a Locale field"; status=1; }
 grep -qiE 'UI copy' "$d/SKILL.md" || { echo "FAIL SKILL.md must say the English rule does not cover UI copy"; status=1; }
 
+# Content rules from the live trial (v0.2.0): blind scoring, elevate pass, app-wide rules, user-review research.
+grep -qiE 'never includes the gate|without the gate|blind' "$sl" || { echo "FAIL screen-loop.md must score blind (reviewer never sees the gate)"; status=1; }
+grep -qiE 'blind' "$r/quality-bar.md" || { echo "FAIL quality-bar.md must run the critique blind"; status=1; }
+grep -qiE 'elevate' "$sl" || { echo "FAIL screen-loop.md must include the elevate pass"; status=1; }
+grep -qE '`(bolder|delight|typeset)`' "$sl" || { echo "FAIL screen-loop.md must name the impeccable elevate commands"; status=1; }
+grep -qiE 'app-wide' "$r/iteration.md" || { echo "FAIL iteration.md must turn app-wide requests into rules"; status=1; }
+grep -qiE 'user reviews' "$r/style-discovery.md" || { echo "FAIL style-discovery.md must research user reviews of category apps"; status=1; }
+
 if [[ -f "$d/SKILL.md" ]]; then
   for f in "$d"/references/*.md "$d"/assets/*; do
     [[ -e "$f" ]] || continue
