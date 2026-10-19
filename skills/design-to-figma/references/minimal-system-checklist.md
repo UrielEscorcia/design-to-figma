@@ -4,17 +4,17 @@ Use when impeccable is absent (always on Claude Desktop). Keep it small. Ask, wa
 
 ## 1. Brief (3 to 4 questions, one round)
 
-1. Who is the primary user and what are they trying to do on this screen or product?
+1. Who is the primary user and what problem do they have? What are they trying to do on this screen or product?
 2. What does the product do, and what should it feel like (three adjectives, plus one thing it must not feel like)?
 3. Constraints: platform (web, iOS, Android), brand colors or fonts to keep, accessibility needs.
-4. (Project mode only) The list of screens or flows to design.
+4. (Project mode only) The essential screens or flows to design, and the product name.
 
 Record answers in [PRODUCT.template.md](../assets/PRODUCT.template.md) form. Mark any inferred fact as inferred.
 
 ## 2. Palette with semantic roles
 
 - Primary action, secondary action, background (default and subtle), surface, border, text (primary and muted), and feedback (success, warning, danger).
-- Provide light mode; add dark only when asked.
+- Ask whether dark mode is needed; never assume it. Create the semantic variables in a single-mode collection (Light); add a Dark mode only when asked.
 - Check text contrast against its background: at least 4.5:1 for body text, 3:1 for large text and UI boundaries.
 - Map each role to a primitive scale value (see naming in [figma-structure.md](figma-structure.md)).
 

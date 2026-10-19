@@ -28,25 +28,25 @@ Required tools: `use_figma`, `get_metadata`, `get_screenshot`, `create_new_file`
 Claude Design is built into Claude; nothing to install. Confirm one of:
 
 - **Claude Code:** `/design`, or the Artifact tool with the Design type (found through `action: "quickstart"`, `intent: "design"`).
-- **Claude Desktop / claude.ai chat:** Output → Design, or the Artifacts Design template.
+- **Claude desktop or web (chat, Cowork, or the unified Claude experience):** Output → Design, or the Artifacts Design template. Claude Design now lives in Claude as artifacts, including design systems.
 
 If none is available, continue: show proposals as quick frames on a `🧪 Explorations` page in Figma ([proposals.md](proposals.md)) and say so in the report. Never route work to claude.ai/design projects (closing 2026-12-14).
 
-## 5. Local write path ladder
+## 5. Local write path (by capability)
 
-Decide where `PRODUCT.md` / `DESIGN.md` are written. Check in order and take the first match:
+Decide where `PRODUCT.md` / `DESIGN.md` are written by what the session can write, not by the surface name. Chat and Cowork are merging into one unified Claude experience, so a desktop conversation may or may not have a folder. Check in order and take the first match:
 
-| Rung | Signal | Target |
+| Rung | Capability | Target |
 |---|---|---|
-| 1 | Environment variable `CLAUDECODE=1` (Claude Code) | The project folder (current working directory) |
-| 2 | A user-connected folder is mounted (Cowork) | That folder. If several are mounted, ask which one |
-| 3 | Anything else, or detection fails or is ambiguous | Downloadable files (no local write) |
+| 1 | Claude Code (`CLAUDECODE=1`) | The project folder (current working directory) |
+| 2 | A connected local folder is available (Cowork, or the unified Claude experience on desktop; the desktop app must stay open) | That folder. If several are connected, ask which one |
+| 3 | No writable folder (web, mobile, desktop app closed, older chat), or detection fails or is ambiguous | Downloadable files (no local write) |
 
 Rules:
 
 - Confirm the target path with the user **once**, before the first write. Reuse the answer for the session.
 - A failed or uncertain detection falls back to downloads, never to an unconfirmed write.
-- Desktop chat cannot write to the user's folder; use downloads there and tell the user where to put the files.
+- Without a writable folder, deliver downloads and tell the user where to put the files.
 - Detecting `CLAUDECODE` requires running a shell command, which only exists in Claude Code. If no shell tool is available, skip to rung 2 or 3.
 
 ## 6. Web research

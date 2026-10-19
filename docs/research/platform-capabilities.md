@@ -11,12 +11,14 @@
 | The standalone claude.ai/design closes on **December 14, 2026**. Existing projects stay until then; migrate design systems before that date. | VERIFIED | [Get started with Claude Design](https://support.claude.com/en/articles/14604416-get-started-with-claude-design) |
 | Migrated design systems "can move over, so Claude can use them in any chat, including in Claude Code." | VERIFIED | same |
 | Design now runs inside conversations (**Output → Design**, built beside the chat), from the Artifacts tab (Design template), on mobile, and in Claude Code through `/design`. | VERIFIED | same |
-| `/design-sync` (Claude Code) imports a design system from a GitHub repo, design files, raw uploads or a local codebase. | VERIFIED | same |
+| `/design-sync` (Claude Code) imported a design system into the standalone product. Superseded 2026-10-18 (section 7); the skill no longer mentions it. | VERIFIED (historical) | same |
 | Designs automatically use the design system's colors, type and components, and Claude checks its output against it. | VERIFIED | same |
 | Cowork is not mentioned. | VERIFIED (absent) | same |
 | No public API or MCP exists for reading a design-system project. | UNKNOWN | — |
 
-**Implication:** never target claude.ai/design projects. The skill works with Claude's built-in design capability (chat, Artifacts, `/design`) and with the design system Claude uses. In Claude Code, `/design-sync` is the route for loading the Figma-derived system.
+**Design System Artifact type (checked 2026-10-18).** Design systems are artifacts made from a published "Design System" type, found with the Artifact tool (never a hardcoded URL; two links for it were seen on the same day). The type ships `SKILL.md` and `reference/from-design-tool.md`, a procedure to import from a design tool through its connector (first sync and re-sync). That procedure reads tokens with the connector's variables call, which yields one theme; the script-based variable read returns every mode and maps Light/Dark to `color.themes`. A re-sync proceeds only if `tokens.json` `meta.file` matches the user's file link. Content lives under `project/` (`design-system.json` index written last, `tokens.json`, `README.md`, components).
+
+**Implication:** never target claude.ai/design projects. The skill works with Claude's built-in design capability (chat, Artifacts, `/design`) and with the design system Claude uses. (Superseded by section 7: design systems are now artifacts in Claude.)
 
 ## 2. Writing local files from Desktop
 
@@ -78,8 +80,22 @@
 | Decision | Change |
 |---|---|
 | D2 Preflight | Claude Design is built in, not installed. Preflight checks (a) that the Figma MCP tools are present (`use_figma`, `get_design_context`, `get_variable_defs`); (b) impeccable (optional); (c) a design-capable surface. Missing Figma tools block. |
-| D5 Context storage | Direct writes only in Claude Code and in Cowork with a connected folder. Desktop chat needs a decided fallback. |
-| D6 Sync | Target "the design system Claude uses" (`/design-sync` in Code), not claude.ai/design projects, which close 2026-12-14. |
+| D5 Context storage | Direct writes only where a folder is writable: Claude Code, or a connected local folder (Cowork, or the unified Claude experience on desktop). Chosen by capability, not surface name (D22); downloads are the fallback. Revised 2026-10-18. |
+| D6 Sync | Targets: local `.md` and a Claude Design System artifact (one-way, write-only, from Figma), not claude.ai/design projects, which close 2026-12-14. Claude Design now lives in Claude as artifacts, including design systems, so `/design-sync` is dropped. Revised 2026-10-18. |
 | D8 Bootstrap | impeccable is effectively Code-only, so the fallback checklist is mandatory on Desktop. |
 | New prerequisite | A Figma Dev or Full seat. |
 | T2 runner | `claude plugin validate --strict`, plus a frontmatter check script (allowed keys, `name` ≤ 64, `description` ≤ 200). |
+
+## 7. Unified Claude experience and Claude Design migration (2026-10-18)
+
+| Claim | Label | Source |
+|---|---|---|
+| "Claude Cowork is now just Claude": chat and Cowork merge. Rolling out to Pro and Max; Team in beta on web and mobile; Enterprise in beta. | VERIFIED | [support article 15520349](https://support.claude.com/en/articles/15520349) |
+| Connected local folders are readable and writable from the desktop app, which must be open. | VERIFIED | same |
+| Skills, plugins and connectors work on desktop, web and mobile. Local MCP servers are desktop only. | VERIFIED | same |
+| Enterprise public beta is off by default; work moves into an isolated cloud sandbox. Design is not mentioned. | VERIFIED | [support article 17444462](https://support.claude.com/en/articles/17444462) |
+| "Claude Design now lives in Claude": new designs, design systems and decks are created as artifacts. | VERIFIED | [support article 17440474](https://support.claude.com/en/articles/17440474) |
+| Migrated design systems appear in the design system menu and cannot be edited on their page yet. The standalone product closes 2026-12-14. | VERIFIED | same |
+| Design output and a connected folder can be used together in one conversation. | INFERRED (needs the T6 trial) | — |
+
+**Implication:** choose the write path by capability (a project or connected folder is writable), not by surface name; "Desktop chat" no longer implies downloads only. Design systems are artifacts, so `/design-sync` is not a route.

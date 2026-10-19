@@ -10,13 +10,17 @@ When impeccable is present, its direction step supplies the candidates (with the
 
 ## Where to show them
 
-Never target claude.ai/design projects and never call the `DesignSync` tool; it belongs to the user-started `/design-sync` skill and is not a way to make designs.
+Never target claude.ai/design projects and never call the `DesignSync` tool. Claude Design now lives in Claude as artifacts.
 
 | Surface | How |
 |---|---|
 | Claude Code | Artifact tool with `action: "quickstart"` and `intent: "design"`. The result lists the Design type available to the account. Never hardcode a type URL; it is account-scoped. Publish with that `type_url`, a title (for example `<Product> — <Scope> directions`) and `auto_open: "after_first_write"`, then follow the type's own instructions: artboards on a canvas, one artboard per direction. Artifacts are private by default. |
 | Claude Desktop chat or Cowork | The chat's Design output (Output → Design), or the Artifacts Design template. One artboard or section per direction. |
 | No design surface | Build quick direction frames on a `🧪 Explorations` page in Figma, one frame per direction at low fidelity. Delete the page after the choice, and say so in the report. |
+
+## Use the project's design system
+
+When the project has a Design System artifact (`design_system_url` in `DESIGN.md`, see [design-system-artifact.md](design-system-artifact.md)), do not set `design_systems: false` on the quickstart call, and choose that design system, so new proposals use the real tokens. Without one, call quickstart as usual.
 
 ## After they are shown
 

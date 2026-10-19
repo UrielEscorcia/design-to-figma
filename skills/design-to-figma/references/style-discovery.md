@@ -1,6 +1,6 @@
 # Style discovery
 
-Run before any direction work, in both modes, for every new design (a new project, or a new screen without a recorded style). Skip only when `DESIGN.md` or the Brief page already records a confirmed style, and say so in one line.
+Run after the product brief (`PRODUCT.md`: who, problem, essential screens, name) and before any direction work, in both modes, for every new design (a new project, or a new screen without a recorded style). Skip only when `DESIGN.md` or the Brief page already records a confirmed style, and say so in one line.
 
 ## 1. Ask which style
 
@@ -17,7 +17,7 @@ Accept a style the user names that is not on the list. A style is never a litera
 
 ## 2. Research current references
 
-Research the chosen style for this product and screen type (for example "minimal sign-in screen", "dense analytics dashboard").
+Use the brief. Research the chosen style for this product and screen type (for example "minimal sign-in screen", "dense analytics dashboard").
 
 | Surface | Tool |
 |---|---|
@@ -38,7 +38,13 @@ Present, in one short block:
 
 Ask the user to confirm or adjust. Wait for the answer.
 
-## 4. Record and pass on
+## 4. Show palettes visually
+
+Whenever a palette or tokens are proposed, show them as a visual swatch artifact without waiting to be asked; a hex table alone is not enough. Claude Code: the Artifact tool; Desktop: Design output or an artifact. Each swatch shows its role, hex and the contrast ratio against its pair (AA: 4.5:1 text, 3:1 large text and UI).
+
+Offer the seed-color option: the user picks one seed color and the palette is generated from it with tonal ramps (OKLCH), tinted neutrals, and semantic colors (success, warning, danger) shifted toward the seed hue, every pairing AA-checked.
+
+## 5. Record and pass on
 
 The confirmed style, references and traits are constraints from now on:
 

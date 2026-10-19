@@ -13,7 +13,7 @@ The page set is a default. Adjust only on user request, and record changes in th
 
 ## Naming
 
-**Variable collections:** `Primitives` (raw values), `Semantic` (roles mapped to primitives), `Spacing`, `Radius`, `Typography` when numeric. Use Modes for themes (`Light`, `Dark`).
+**Variable collections:** `Primitives` (raw values), `Semantic` (roles mapped to primitives), `Spacing`, `Radius`, `Typography` when numeric. When dark mode is not requested, `Semantic` is a single-mode collection (mode `Light`, or the single mode); Dark can be added later as one new mode. When dark mode is requested up front, `Semantic` gets Light and Dark modes during foundations; build Dark frames only after each Light screen is user-approved.
 
 **Variables:** slash-separated, lowercase, role-based.
 - Primitives: `color/blue/500`, `space/4`.
@@ -33,6 +33,10 @@ The page set is a default. Adjust only on user request, and record changes in th
 Short and scannable. Sections: product in one paragraph, audience, principles (3 to 5), design system summary (palette roles, type, spacing, radius), style and references (style name, reference product names, traits), usage rules (do and don't), links (`PRODUCT.md` and `DESIGN.md` by file name relative to the project folder, repo if any).
 
 The Brief page carries no sync timestamp: sync state lives in the local files. Never write absolute local paths, usernames or machine details into Figma.
+
+## Fonts
+
+Before writing text styles, check availability with `figma.listAvailableFontsAsync()` and load only fonts that exist. Platform fonts can be missing or render blank in MCP screenshots (iOS: SF Pro, SF Pro Rounded). When one is not usable, tell the user and ask before substituting (for example Inter); never swap silently. Record an approved substitution in `DESIGN.md` as a known deviation.
 
 ## Rules
 
