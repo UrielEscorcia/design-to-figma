@@ -10,7 +10,7 @@ Use when the user wants one screen or view. The quality bar is the same as for a
 4. Show 2 or 3 directions for the screen within the style as Claude Design artifacts ([proposals.md](proposals.md)); the user picks one.
 5. Brief each builder, including delegated subagents, with the builder guidance in [tool-directory.md](tool-directory.md) (impeccable's `reference/craft-floor.md`, `reference/layout.md`, `reference/typeset.md` and the platform reference, plus `PRODUCT.md`, `DESIGN.md` and the direction). Missing components: add only those the screen needs to `🧩 Components` (`figma-generate-library`), then build the chosen direction in `📱 Screens` (`figma-generate-design`, with `figma-use`).
 6. Continue the screen loop from step 3 ([screen-loop.md](screen-loop.md)): verify against the quality gate ([quality-bar.md](quality-bar.md)), self-fix, the mandatory `polish` pass, user review, final verify, dark mode when requested, check off.
-7. Sync per [sync-rules.md](sync-rules.md).
+7. Sync per [sync-rules.md](sync-rules.md), including the Design System artifact when kept ([design-system-artifact.md](design-system-artifact.md)).
 
 ## B. No project: minimal bootstrap
 
@@ -29,7 +29,7 @@ The bootstrap creates only what this screen needs and can grow into a full proje
 6. **Screen.** Check fonts ([figma-structure.md](figma-structure.md)) and brief the builder as in part A step 5. Build the chosen direction with `figma-generate-design` and `figma-use`.
 7. **Screen loop** from step 3 ([screen-loop.md](screen-loop.md)), as in step 6 of part A.
 8. **Local files.** Write `PRODUCT.md` and `DESIGN.md` from the templates with the Figma header, marked `scope: minimal`. Record the dark mode answer in `PRODUCT.md`.
-9. Sync and report.
+9. Sync (including the Design System artifact when kept, [design-system-artifact.md](design-system-artifact.md)) and report.
 
 ## Iterating
 

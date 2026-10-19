@@ -6,7 +6,7 @@ Use when the user wants a design system plus several screens. Read Figma before 
 
 - impeccable present: run `init`; it interviews and writes `PRODUCT.md`.
 - Absent: ask the 3–4 brief questions in [minimal-system-checklist.md](minimal-system-checklist.md) and fill [PRODUCT.template.md](../assets/PRODUCT.template.md).
-- Ask who the users are, the problem, the essential screens and the product name. The brief always comes before style discovery. Ask whether dark mode is needed; record the answer in `PRODUCT.md`.
+- Ask who the users are, the problem, the essential screens and the product name. The brief always comes before style discovery. Ask whether dark mode is needed; record the answer in `PRODUCT.md`. Ask once whether to keep a Design System artifact synced from Figma ([design-system-artifact.md](design-system-artifact.md)); record the answer.
 - Optional discovery for the overall experience: impeccable `shape`.
 - Wait for answers before continuing; do not invent product decisions.
 
@@ -28,7 +28,8 @@ Follow [style-discovery.md](style-discovery.md), using the brief from step 1: as
 2. Create the page structure from [figma-structure.md](figma-structure.md).
 3. Check fonts ([figma-structure.md](figma-structure.md)). Load `figma-use` and `figma-generate-library`. Build `🎨 Foundations` (variable collections, with `Semantic` in a single-mode collection, or Light and Dark modes when dark mode was requested up front; text and effect styles) and `🧩 Components` (variants bound to variables).
 4. Fill `📋 Brief & Rules` from [brief-page.template.md](../assets/brief-page.template.md), including the style and references.
-5. Verify by enumerating pages and reading them, plus `get_screenshot` ([sync-rules.md](sync-rules.md)).
+5. Once the foundations are user-approved, run the first Design System artifact sync when kept ([design-system-artifact.md](design-system-artifact.md)).
+6. Verify by enumerating pages and reading them, plus `get_screenshot` ([sync-rules.md](sync-rules.md)).
 
 ## 5. Screen list and plan
 
@@ -48,7 +49,7 @@ Change requests after the build ("change the primary color", "make the cards den
 
 ## 9. Sync
 
-Follow [sync-rules.md](sync-rules.md): update `PRODUCT.md` / `DESIGN.md` from Figma, refresh the frontmatter and snapshot, mark the plan, then report per the Output Contract in `SKILL.md`.
+Follow [sync-rules.md](sync-rules.md): update `PRODUCT.md` / `DESIGN.md` from Figma, refresh the frontmatter and snapshot, run the final Design System artifact sync when kept ([design-system-artifact.md](design-system-artifact.md)), mark the plan, then report per the Output Contract in `SKILL.md`.
 
 ## Iterating on an existing project
 

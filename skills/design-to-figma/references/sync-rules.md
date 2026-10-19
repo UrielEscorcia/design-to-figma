@@ -7,7 +7,7 @@ Figma is the source of truth for design data. Local `PRODUCT.md` / `DESIGN.md` a
 | Direction | Behavior |
 |---|---|
 | Figma → local `.md` | Automatic, at the end of every run (and when reading detects drift). |
-| Figma → Claude's design-system context | Not a required step. Claude's design chats can use the updated `DESIGN.md`; tell the user it is available. Never call the `DesignSync` tool and never target claude.ai/design projects. |
+| Figma → Design System artifact | Write-only third target, one-way, when the user agreed and the tool and type exist: [design-system-artifact.md](design-system-artifact.md). Never read back from the artifact. Otherwise tell the user the updated `DESIGN.md` is available as context. Never call the `DesignSync` tool and never target claude.ai/design projects. |
 | Local `.md` → Figma | Never automatic. Show the diff, then ask: **push to Figma** or **discard**. |
 
 ## Read before every step
@@ -29,6 +29,7 @@ Keep a compact snapshot of Figma as it was at the last sync. It is the **base** 
 - `variables`: collection name → variable name → `{ mode: value }`.
 - `styles`: text and effect style names.
 - `components`: component and component-set names.
+- `designSystemUrl`: the Design System artifact link, when one is kept ([design-system-artifact.md](design-system-artifact.md)).
 - `pages`: page names, each with its top-level frame names.
 
 Keep it deterministic: sort every list alphabetically, use the names and values exactly as Figma returns them, and exclude node IDs, positions and anything volatile.

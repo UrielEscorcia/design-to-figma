@@ -16,6 +16,8 @@
 | Cowork is not mentioned. | VERIFIED (absent) | same |
 | No public API or MCP exists for reading a design-system project. | UNKNOWN | — |
 
+**Design System Artifact type (checked 2026-10-18).** Design systems are artifacts made from a published "Design System" type, found with the Artifact tool (never a hardcoded URL; two links for it were seen on the same day). The type ships `SKILL.md` and `reference/from-design-tool.md`, a procedure to import from a design tool through its connector (first sync and re-sync). That procedure reads tokens with the connector's variables call, which yields one theme; the script-based variable read returns every mode and maps Light/Dark to `color.themes`. A re-sync proceeds only if `tokens.json` `meta.file` matches the user's file link. Content lives under `project/` (`design-system.json` index written last, `tokens.json`, `README.md`, components).
+
 **Implication:** never target claude.ai/design projects. The skill works with Claude's built-in design capability (chat, Artifacts, `/design`) and with the design system Claude uses. (Superseded by section 7: design systems are now artifacts in Claude.)
 
 ## 2. Writing local files from Desktop
@@ -79,7 +81,7 @@
 |---|---|
 | D2 Preflight | Claude Design is built in, not installed. Preflight checks (a) that the Figma MCP tools are present (`use_figma`, `get_design_context`, `get_variable_defs`); (b) impeccable (optional); (c) a design-capable surface. Missing Figma tools block. |
 | D5 Context storage | Direct writes only where a folder is writable: Claude Code, or a connected local folder (Cowork, or the unified Claude experience on desktop). Chosen by capability, not surface name (D22); downloads are the fallback. Revised 2026-10-18. |
-| D6 Sync | Target "the design system Claude uses", not claude.ai/design projects, which close 2026-12-14. Claude Design now lives in Claude as artifacts, including design systems, so `/design-sync` (which imported into the standalone product) is dropped. Revised 2026-10-18. |
+| D6 Sync | Targets: local `.md` and a Claude Design System artifact (one-way, write-only, from Figma), not claude.ai/design projects, which close 2026-12-14. Claude Design now lives in Claude as artifacts, including design systems, so `/design-sync` is dropped. Revised 2026-10-18. |
 | D8 Bootstrap | impeccable is effectively Code-only, so the fallback checklist is mandatory on Desktop. |
 | New prerequisite | A Figma Dev or Full seat. |
 | T2 runner | `claude plugin validate --strict`, plus a frontmatter check script (allowed keys, `name` ≤ 64, `description` ≤ 200). |

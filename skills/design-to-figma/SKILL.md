@@ -62,6 +62,8 @@ Do not load it for code generation from Figma (a future companion skill), for Fi
 | Write path | Claude Code project folder, or any connected local folder (Cowork, or the unified Claude experience on desktop) | Write there after confirming the path |
 | Write path | No writable folder (web, mobile, desktop app closed, older chat) or detection fails | Deliver files as downloads |
 | Design surface | Claude Code, or desktop/web Claude | Artifact Design type (`/design` in Code), or Output → Design |
+| Design System artifact | Artifact tool and the "Design System" type available, and the user agreed | Keep it synced one-way from Figma: [design-system-artifact.md](references/design-system-artifact.md) |
+| Design System artifact | Tool, type or publishing surface unavailable | Skip it and say so once; the Figma file and local files stay complete |
 | Both sides changed | Figma and local files differ | Figma wins for design data; ask before dropping local prose |
 
 Per-surface details and the capability-based write path: [preflight.md](references/preflight.md).
@@ -79,7 +81,7 @@ Per-surface details and the capability-based write path: [preflight.md](referenc
 6. **Run the mode flow.** Project: [workflow-project.md](references/workflow-project.md). Screen: [workflow-screen.md](references/workflow-screen.md). Tool choice at each step: [tool-directory.md](references/tool-directory.md).
 7. **Write to Figma.** Ask the file name as its own question first (before the team or plan question), then check fonts ([figma-structure.md](references/figma-structure.md)). Follow the page structure in [figma-structure.md](references/figma-structure.md); place the Brief page from [brief-page.template.md](assets/brief-page.template.md). Use `figma-create-new-file` for a new file, then `figma-use` with `figma-generate-library` / `figma-generate-design`. Validate with `get_screenshot` and structural reads. Build only the chosen direction, with the builder guidance from [tool-directory.md](references/tool-directory.md).
 8. **Screen loop.** Every screen (project: each one in turn; screen mode: the single screen) runs define, build, agent verify (`critique`), self-fix, `polish`, user review, final verify ([screen-loop.md](references/screen-loop.md)); critique and polish are mandatory for every screen. Done only when the quality gate passes, otherwise report the gap and offer another round ([quality-bar.md](references/quality-bar.md)). Project mode ends with a cross-screen critique.
-9. **Sync the local files.** Update `PRODUCT.md` / `DESIGN.md` from Figma, refresh the frontmatter and snapshot. Handle local-only edits per [sync-rules.md](references/sync-rules.md).
+9. **Sync the local files.** Update `PRODUCT.md` / `DESIGN.md` from Figma, refresh the frontmatter and snapshot, and re-sync the Design System artifact when kept ([design-system-artifact.md](references/design-system-artifact.md)). Handle local-only edits per [sync-rules.md](references/sync-rules.md).
 10. **Iterate on request.** Natural-language changes are applied in Figma, then synced ([iteration.md](references/iteration.md)).
 11. **Report** using the Output Contract.
 
@@ -94,6 +96,7 @@ End every run with a short report containing:
 - **Quality passes:** `critique` and `polish` done (impeccable, or the built-in checklist), with the fixes applied, the heuristics score, the specificity verdict and whether the critique was degraded. Never report a design as done without them or below the gate.
 - **What changed:** pages, variables, styles, components and screens created, updated or left untouched; manual Figma edits that were detected and kept.
 - **Sync status:** local files written (path, or "delivered as downloads"), the `.impeccable/` folder when impeccable created it (part of the shareable project folder), last-sync timestamp (local files only), and that the updated `DESIGN.md` is available as design-system context.
+- **Design System artifact:** its link and last sync, or "skipped: reason".
 - **Pending conflicts:** each local-only change awaiting "push to Figma" or "discard", and any item where both sides changed. Write "none" when clear.
 - **Warnings:** impeccable absent (fallback used), seat limit risk, skipped steps.
 
@@ -109,6 +112,7 @@ End every run with a short report containing:
 - [quality-bar.md](references/quality-bar.md): quality rules, impeccable wiring, built-in critique checklist
 - [iteration.md](references/iteration.md): natural-language change requests applied in Figma
 - [sync-rules.md](references/sync-rules.md): source of truth, diffs, conflicts, snapshot
+- [design-system-artifact.md](references/design-system-artifact.md): one-way sync to a Claude Design System artifact
 - [figma-structure.md](references/figma-structure.md): pages, naming, Brief page content
 - [minimal-system-checklist.md](references/minimal-system-checklist.md): fallback without impeccable
 - [PRODUCT.template.md](assets/PRODUCT.template.md), [DESIGN.template.md](assets/DESIGN.template.md), [brief-page.template.md](assets/brief-page.template.md), [DESIGN-PLAN.template.md](assets/DESIGN-PLAN.template.md): file templates
