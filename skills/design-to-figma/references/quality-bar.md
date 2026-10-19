@@ -37,7 +37,7 @@ How to run the critique so the gate means something:
 
 - Critique runs on rendered screenshots, never on source alone: render the comp artifact, and take Figma frames with `get_screenshot`.
 - The detector (Assessment B) runs on the HTML comp. A Figma-only critique has no Assessment B; report it as degraded and say so in the report.
-- Below the gate: report the gap (which condition failed, the open P0/P1 items, the score) and offer another fix round. Do not call the design done silently. The extra round runs only after the user accepts it, and it starts a new bounded run (one critique, one fix batch, one polish pass) with the user's consent.
+- Below the gate: report the gap (which condition failed, the open P0/P1 items, the score) and offer another fix round. Do not call the design done silently. The extra round runs only after the user accepts it, and it starts a new bounded run (one critique, one fix batch, one polish pass).
 
 Builders are held to the same standard: see the builder guidance in [tool-directory.md](tool-directory.md).
 

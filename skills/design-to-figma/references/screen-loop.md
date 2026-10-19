@@ -38,7 +38,7 @@ After the user's iterations, run one more agent verify against the same gate and
 
 ## 7. Dark mode (only if requested)
 
-Only when the user asked for dark mode ([figma-structure.md](figma-structure.md)). `Semantic` already has Light and Dark modes from foundations. Build the Dark frame only after the Light screen is `user-approved`: switch a copy of the frame to Dark (or build the Dark frame), agent-verify it, and show it to the user. Record it on the screen's Dark line in the plan, or in the report when there is no plan.
+Only when the user asked for dark mode ([figma-structure.md](figma-structure.md)). When dark mode was requested up front, `Semantic` already has Light and Dark modes from foundations. When it is requested later and `Semantic` has only one mode, first add a Dark mode to it and set its values (ask the user to confirm the dark palette), then continue. Build the Dark frame only after the Light screen is `user-approved`: switch a copy of the frame to Dark (or build the Dark frame), agent-verify it, and show it to the user. Record it on the screen's Dark line in the plan, or in the report when there is no plan.
 
 ## 8. Check off
 

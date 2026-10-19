@@ -92,6 +92,7 @@ grep -q 'screen-loop.md' "$r/quality-bar.md" || { echo "FAIL quality-bar.md must
 grep -qE '70%|28/40' "$r/screen-loop.md" && { echo "FAIL screen-loop.md must not hardcode the gate threshold"; status=1; }
 grep -qiE 'when a plan exists|otherwise record' "$r/screen-loop.md" || { echo "FAIL screen-loop.md must handle the no-plan case"; status=1; }
 grep -qiE 'rate[- ]limit' "$r/screen-loop.md" || { echo "FAIL screen-loop.md must handle rate limits"; status=1; }
+grep -qiE 'only one mode' "$d/references/screen-loop.md" || { echo "FAIL screen-loop.md must add a Dark mode when dark mode is requested after foundations"; status=1; }
 grep -q 'polish' "$r/workflow-project.md" || { echo "FAIL workflow-project.md must reach the polish pass"; status=1; }
 sl="$r/screen-loop.md"
 grep -qiE 'user review' "$sl" 2>/dev/null || { echo "FAIL screen-loop.md must include the user review step"; status=1; }
