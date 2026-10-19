@@ -2,7 +2,7 @@
 
 - **Engram mirror:** `odd/design-to-figma/tasks`
 - **Branch:** `chore/d2f-version-bump` (from `main` after PRs #4–#6 merged)
-- **Status:** T9–T11 merged (PRs #4–#6); T13 (version bump) in progress; next: full clean retest (T5d), then T12, T6, T7
+- **Status:** T9–T11 merged (PRs #4–#6); T13 (version bump) done, PR pending; next: full clean retest (T5d), then T12, T6, T7
 
 ## Objective
 
@@ -45,7 +45,7 @@ Figma already ships an official remote MCP server (`mcp.figma.com/mcp`) and a Cl
 | D19 | Screen definition (2026-10-18) | Before building a screen, ask how it should work when that adds value. Do not accept every request as-is: contrast it with the research and with real screens of the same type, and suggest how it would look, so both sides agree on what is built. A reference-source slot in the tool directory is reserved for a future references MCP (for example Mobbin). |
 | D20 | Dark mode optional (2026-10-18) | Ask whether dark mode is needed when a project or screen is created; never assume it. Semantic color variables are created anyway in a single-mode collection, so adding Dark later is one new mode. When requested, Dark is built after the user approves the Light screen. |
 | D21 | Quality gate (2026-10-18) | A design is done only when: no P0/P1 issues, the impeccable design-specificity verdict reads as authored (not category-interchangeable), and the heuristic score is at least 28/40 (70% of the applicable maximum when heuristics are n/a). Builders receive impeccable's craft guidance (`craft-floor`, `layout`, `typeset`, the platform reference) plus `PRODUCT.md`/`DESIGN.md`. Critique runs on rendered screenshots; detector Assessment B runs on the HTML comp, and Figma-only critique is declared degraded. Below the gate, offer another round. |
-| D23 | Versioning (2026-10-19) | Every change to the plugin bumps its version (semver) in `plugin.json` and the SKILL.md `metadata.version`, which must match. `claude plugin update` skips a plugin whose version did not change: after PRs #4–#6 merged, the marketplace clone was current but the installed plugin stayed at the old commit. `tests/run.sh` enforces both rules against `origin/main`. |
+| D23 | Versioning (2026-10-19) | Every change to the plugin bumps its version (semver) in `plugin.json` and the SKILL.md `metadata.version`, which must match. `claude plugin update` skips a plugin whose version did not change: after PRs #4–#6 merged, the marketplace clone was current but the installed plugin stayed at the old commit. `tests/run.sh` enforces both rules against the local `origin/main` (fetch first; a downgrade or an unreadable base version fails). |
 | D22 | Unified Claude experience (2026-10-18) | Chat and Cowork are merging ("Claude Cowork is now just Claude"); connected local folders are readable and writable from the desktop app. The write path is chosen by capability (a connected or project folder is writable), not by surface name. Downloads stay as the fallback. Claude Design now lives in Claude as artifacts, including design systems. |
 
 Proposed default Figma structure (adjustable): `📋 Brief & Rules` · `🎨 Foundations` (variables, styles) · `🧩 Components` · `📱 Screens`.

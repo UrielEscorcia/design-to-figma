@@ -129,12 +129,17 @@ fi
 # skill versions must match, and any change to the plugin since main must bump the version.
 version_of_plugin() { grep -oE '"version": *"[^"]+"' | grep -oE '[0-9][^"]*'; }
 pv="$(version_of_plugin < .claude-plugin/plugin.json)"
-sv="$(grep -oE '^ +version: *"[^"]+"' "$d/SKILL.md" | grep -oE '[0-9][^"]*')"
+sv="$(grep -oE '^ +version: *"[^"]+"' "$d/SKILL.md" | head -1 | grep -oE '[0-9][^"]*')"
 [[ -n "$pv" && "$pv" == "$sv" ]] || { echo "FAIL plugin.json version ($pv) and SKILL.md metadata version ($sv) must match"; status=1; }
 if base="$(git merge-base HEAD origin/main 2>/dev/null)"; then
   if ! git diff --quiet "$base" -- skills .claude-plugin; then
     bv="$(git show "$base:.claude-plugin/plugin.json" 2>/dev/null | version_of_plugin)"
-    [[ "$pv" != "$bv" ]] || { echo "FAIL the plugin changed since main but its version is still $pv; bump it"; status=1; }
+    newest="$(printf '%s\n%s\n' "$bv" "$pv" | sort -V | tail -1)"
+    if [[ -z "$bv" ]]; then
+      echo "FAIL cannot read the plugin version on main; fetch origin and rerun"; status=1
+    elif [[ "$pv" == "$bv" || "$newest" != "$pv" ]]; then
+      echo "FAIL the plugin changed since main but its version $pv is not higher than main's $bv; bump it"; status=1
+    fi
   fi
 else
   echo "SKIP version bump check (no origin/main)"
