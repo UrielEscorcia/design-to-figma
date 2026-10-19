@@ -125,6 +125,21 @@ if [[ -f "$d/SKILL.md" ]]; then
   done
 fi
 
+# Versioning: `claude plugin update` skips a plugin whose version did not change, so the plugin and
+# skill versions must match, and any change to the plugin since main must bump the version.
+version_of_plugin() { grep -oE '"version": *"[^"]+"' | grep -oE '[0-9][^"]*'; }
+pv="$(version_of_plugin < .claude-plugin/plugin.json)"
+sv="$(grep -oE '^ +version: *"[^"]+"' "$d/SKILL.md" | grep -oE '[0-9][^"]*')"
+[[ -n "$pv" && "$pv" == "$sv" ]] || { echo "FAIL plugin.json version ($pv) and SKILL.md metadata version ($sv) must match"; status=1; }
+if base="$(git merge-base HEAD origin/main 2>/dev/null)"; then
+  if ! git diff --quiet "$base" -- skills .claude-plugin; then
+    bv="$(git show "$base:.claude-plugin/plugin.json" 2>/dev/null | version_of_plugin)"
+    [[ "$pv" != "$bv" ]] || { echo "FAIL the plugin changed since main but its version is still $pv; bump it"; status=1; }
+  fi
+else
+  echo "SKIP version bump check (no origin/main)"
+fi
+
 if command -v claude >/dev/null; then
   claude plugin validate --strict .claude-plugin/plugin.json || status=1
   claude plugin validate --strict .claude-plugin/marketplace.json || status=1
