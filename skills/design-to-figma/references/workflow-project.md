@@ -5,20 +5,20 @@ Use when the user wants a design system plus several screens. Read Figma before 
 ## 1. Brief → PRODUCT.md
 
 - impeccable present: run `init`; it interviews and writes `PRODUCT.md`.
-- Absent: ask the 3–4 brief questions in [minimal-system-checklist.md](minimal-system-checklist.md) and fill [PRODUCT.template.md](../assets/PRODUCT.template.md).
-- Ask who the users are, the problem, the essential screens and the product name. The brief always comes before style discovery. Ask whether dark mode is needed; record the answer in `PRODUCT.md`. Ask once whether to keep a Design System artifact synced from Figma ([design-system-artifact.md](design-system-artifact.md)); record the answer.
+- Absent: ask the brief questions in [minimal-system-checklist.md](minimal-system-checklist.md) and fill [PRODUCT.template.md](../assets/PRODUCT.template.md).
+- Ask who the users are, the problem, the essential screens, the product name and the UI language and locale (all UI copy uses it). The brief always comes before style discovery. Ask whether dark mode is needed; record the answer in `PRODUCT.md`. Ask once whether to keep a Design System artifact synced from Figma ([design-system-artifact.md](design-system-artifact.md)); record the answer.
 - Optional discovery for the overall experience: impeccable `shape`.
 - Wait for answers before continuing; do not invent product decisions.
 
 ## 2. Style discovery
 
-Follow [style-discovery.md](style-discovery.md), using the brief from step 1: ask the style, research current references, present the style with popular products and traits, and get the user's confirmation. Record it in `PRODUCT.md`.
+Follow [style-discovery.md](style-discovery.md), using the brief from step 1: research real category products and get the list confirmed, then ask the style, research current references, present the style with popular products and traits, and get the user's confirmation, and get the palette confirmed as swatches. Record it in `PRODUCT.md`.
 
 ## 3. Direction and proposals
 
 - impeccable present: follow its new-work flow for direction, with the confirmed style pinned ([quality-bar.md](quality-bar.md)); `extract` or `document` to turn decisions or existing code into tokens and component lists.
 - Absent: use the palette, type, spacing and radius steps in the checklist.
-- Show 2 or 3 distinct directions within the style as Claude Design artifacts ([proposals.md](proposals.md)). The user picks one, asks for changes, or asks for more.
+- Show 2 or 3 distinct directions within the style, sharing the confirmed palette, as Claude Design artifacts ([proposals.md](proposals.md)). The user picks one, asks for changes, or asks for more.
 - Record the chosen direction in [DESIGN.template.md](../assets/DESIGN.template.md) form. Run `critique` on it (with impeccable; built-in checklist otherwise) and apply the fixes before building.
 - Confirm the direction with the user before writing to Figma.
 

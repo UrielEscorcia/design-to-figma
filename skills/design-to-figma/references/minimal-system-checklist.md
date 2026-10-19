@@ -2,16 +2,19 @@
 
 Use when impeccable is absent (always on Claude Desktop). Keep it small. Ask, wait for answers, do not invent product decisions. Confirm the results before writing to Figma.
 
-## 1. Brief (3 to 4 questions, one round)
+## 1. Brief (4 to 5 questions, one round)
 
 1. Who is the primary user and what problem do they have? What are they trying to do on this screen or product?
 2. What does the product do, and what should it feel like (three adjectives, plus one thing it must not feel like)?
 3. Constraints: platform (web, iOS, Android), brand colors or fonts to keep, accessibility needs.
-4. (Project mode only) The essential screens or flows to design, and the product name.
+4. UI language and locale of the product (for example Spanish, Mexico: dates, currency, number formats). All UI copy uses it.
+5. (Project mode only) The essential screens or flows to design, and the product name.
 
 Record answers in [PRODUCT.template.md](../assets/PRODUCT.template.md) form. Mark any inferred fact as inferred.
 
 ## 2. Palette with semantic roles
+
+The user confirms the palette as swatches before any direction is generated ([style-discovery.md](style-discovery.md)).
 
 - Primary action, secondary action, background (default and subtle), surface, border, text (primary and muted), and feedback (success, warning, danger).
 - Ask whether dark mode is needed; never assume it. Create the semantic variables in a single-mode collection (Light); add a Dark mode only when asked.

@@ -1,8 +1,8 @@
 # Feature: design-to-figma plugin
 
 - **Engram mirror:** `odd/design-to-figma/tasks`
-- **Branch:** `chore/d2f-version-bump` (from `main` after PRs #4–#6 merged)
-- **Status:** T9–T11 merged (PRs #4–#6); T13 (version bump) done, PR pending; next: full clean retest (T5d), then T12, T6, T7
+- **Branch:** `feat/d2f-08-research-gate` (from `main` after PR #7 merged)
+- **Status:** T9–T11 merged (PRs #4–#6); T13 merged (PR #7, v0.2.0); T5d retest in progress; T14 (research and palette gates, v0.3.0) done, PR pending; next: full clean retest (T5d), then T12, T6, T7
 
 ## Objective
 
@@ -46,6 +46,9 @@ Figma already ships an official remote MCP server (`mcp.figma.com/mcp`) and a Cl
 | D20 | Dark mode optional (2026-10-18) | Ask whether dark mode is needed when a project or screen is created; never assume it. Semantic color variables are created anyway in a single-mode collection, so adding Dark later is one new mode. When requested, Dark is built after the user approves the Light screen. |
 | D21 | Quality gate (2026-10-18) | A design is done only when: no P0/P1 issues, the impeccable design-specificity verdict reads as authored (not category-interchangeable), and the heuristic score is at least 28/40 (70% of the applicable maximum when heuristics are n/a). Builders receive impeccable's craft guidance (`craft-floor`, `layout`, `typeset`, the platform reference) plus `PRODUCT.md`/`DESIGN.md`. Critique runs on rendered screenshots; detector Assessment B runs on the HTML comp, and Figma-only critique is declared degraded. Below the gate, offer another round. |
 | D23 | Versioning (2026-10-19) | Every change to the plugin bumps its version (semver) in `plugin.json` and the SKILL.md `metadata.version`, which must match. `claude plugin update` skips a plugin whose version did not change: after PRs #4–#6 merged, the marketplace clone was current but the installed plugin stayed at the old commit. `tests/run.sh` enforces both rules against the local `origin/main` (fetch first; a downgrade or an unreadable base version fails). |
+| D24 | Category research gate (2026-10-19) | Before style work, research real products in the same category (for example barbershop booking apps) with sources, list them to the user and wait before continuing, so the user knows where the references come from. A references connector (for example Mobbin) is preferred when connected; without web tools, say the list is unverified and ask the user for references. |
+| D25 | Palette gate (2026-10-19) | The palette is defined and confirmed by the user (as a swatch artifact) before any direction is generated. Directions share the confirmed palette and differ in structure. |
+| D26 | Product locale (2026-10-19) | The brief asks the language and locale of the product's UI. All UI copy in proposals and Figma uses it. The English rule covers documentation and generated files, not product UI copy. |
 | D22 | Unified Claude experience (2026-10-18) | Chat and Cowork are merging ("Claude Cowork is now just Claude"); connected local folders are readable and writable from the desktop app. The write path is chosen by capability (a connected or project folder is writable), not by surface name. Downloads stay as the fallback. Claude Design now lives in Claude as artifacts, including design systems. |
 
 Proposed default Figma structure (adjustable): `📋 Brief & Rules` · `🎨 Foundations` (variables, styles) · `🧩 Components` · `📱 Screens`.
@@ -108,6 +111,7 @@ Original questions:
 | T10 | Per-screen loop (D17), `DESIGN-PLAN.md` tracker (D18), screen definition with research contrast and a reference-source slot (D19), optional dark mode (D20) | delegated writer (writer trigger: 2+ non-trivial files) | done | RED: 16 FAIL lines, exit 1 (writer report) → GREEN `tests/run.sh` exit 0, rerun by the parent. New `screen-loop.md` and `DESIGN-PLAN.template.md`; SKILL.md 114 lines. Parent fixes: screen mode defines the screen before the proposals; Dark adds a mode to a single-mode `Semantic` collection first |
 | T12 | Round-2 review advisories (lineage `review-706145da1b2cb93f`): SKILL.md proposals before screen definition; explicit foundations approval; `design_system_url` with no writable folder; retry scope for failed artifact files; no revert call after a rate limit; capability-based artifact availability; opt-in record in screen mode without a plan; duplicated builder-guidance list; mixed path aliases and keyword-only assertions in `tests/run.sh` | delegated writer | pending | — |
 | T13 | Version bump to 0.2.0 and the D23 checks in `tests/run.sh` | inline (3 files, mechanical) | done | RED: version mismatch and an unbumped skill change each failed → GREEN `tests/run.sh` exit 0 |
+| T14 | D24 category research gate, D25 palette gate, D26 product locale; bump to 0.3.0 | delegated writer (writer trigger: 2+ non-trivial files) | done | RED: 8 FAIL lines, exit 1 (writer report) → GREEN `tests/run.sh` exit 0, rerun by the parent. Parent addition: the Brief template lists category and style references separately. SKILL.md 120 lines |
 | T5d | Clean full-project retest in Claude Code with v0.2.0: screen loop, user review per screen, dark-mode question, Design System artifact | user-assisted | pending | — |
 | T11 | One-way sync from Figma foundations to a Claude Design System artifact, so later proposals use the project's system | delegated writer (writer trigger: 2+ non-trivial files) | done | RED: 9 FAIL lines, exit 1 (writer report) → GREEN `tests/run.sh` exit 0, rerun by the parent. New `design-system-artifact.md` defers file shapes and re-sync rules to the type's own `SKILL.md` and `from-design-tool.md` (read by the parent from the account's Design System type); adds all-mode tokens via the script read, `design_system_url`, opt-in, sync points and non-blocking failure. SKILL.md 118 lines |
 | T6a | Desktop smoke test: Figma connector in chat exposes `use_figma` | user-assisted | done | User screenshot (2026-10-16): Desktop chat lists about 42 Figma tools, `use_figma` included; invocation is tested in T6 |
@@ -181,6 +185,8 @@ Original questions:
 - 2026-10-18: T11 committed (`b9165ec`). Native review of the branch range `7d09fff..b9165ec` (lineage `review-484e963ada47ad29`, risk high) approved and acknowledged. Advisories fixed in a follow-up: the artifact URL is recorded right after creation (no duplicate artifact after a failed save) and kept out of the Figma snapshot; `PRODUCT.template.md` dark-mode text matches the rule and gains a Design System artifact field; the plan records the opt-in; screen mode asks the opt-in at bootstrap; component syncs follow a screen's `user-approved` state; the scaled threshold rounds up. Left as later work: keyword-only test assertions (R3), duplicated builder-guidance list in `workflow-screen.md` (R2), mixed path aliases in `tests/run.sh` (R2).
 
 - 2026-10-19: PRs #4–#6 opened (stacked) and merged by the user; `main` = `0b928ba`, identical to the slice-6 tip. `claude plugin update` left the installed plugin at `7d09fff` because the version stayed 0.1.0 → D23 and T13.
+
+- 2026-10-19: T5d (barbershop booking app, Editorial) findings so far: brief, dark-mode and artifact opt-in questions all worked in Spanish; but the research was two generic searches (template and font sites), no real barbershop apps, reference brands from model knowledge, disclosed only after the proposals; each direction carried its own palette that the user never confirmed and disliked; UI copy came out in English for a Spanish-speaking user. User decisions D24–D26.
 
 ## Next step
 

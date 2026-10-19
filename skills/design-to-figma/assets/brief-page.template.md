@@ -26,8 +26,9 @@ Place as text layers, one frame per section. Replace placeholders; keep it short
 
 ## Style and references
 
+- Category references: <real products in the same category, names only>
 - Style: <name>
-- References: <product names only, no copied assets>
+- Style references: <product names only, no copied assets>
 - Traits: <type, color use, density, radius, motion, imagery>
 
 ## Usage rules

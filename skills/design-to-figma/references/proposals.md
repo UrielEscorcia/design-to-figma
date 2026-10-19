@@ -1,10 +1,10 @@
 # Proposals
 
-Before building in Figma, show two or three distinct directions inside the confirmed style ([style-discovery.md](style-discovery.md)) so the user can compare, pick one, or ask for more. The proposal is only a base. Only the chosen direction is built in Figma, and from then on Figma is the source of truth.
+Before building in Figma, show two or three distinct directions inside the confirmed style and palette ([style-discovery.md](style-discovery.md)) so the user can compare, pick one, or ask for more. The proposal is only a base. Only the chosen direction is built in Figma, and from then on Figma is the source of truth.
 
 ## What a direction is
 
-A direction differs from the others in structure and character (layout, hierarchy, density, type pairing, color balance), not only in accent color. All directions use the confirmed style and its traits, real content, and no skeuomorphism or literal metaphors. Name each direction in two or three words and describe it in one line.
+Gate: do not generate directions until the user has confirmed the palette as a swatch artifact ([style-discovery.md](style-discovery.md), section 5). All directions share the confirmed palette. A direction differs from the others in structure and character (layout, hierarchy, density, type pairing, imagery), never in palette; it may change how much accent is used, not the palette itself. All directions use the confirmed style and its traits, real content in the product's UI locale from the brief, and no skeuomorphism or literal metaphors. Name each direction in two or three words and describe it in one line.
 
 When impeccable is present, its direction step supplies the candidates (with the style passed as in [quality-bar.md](quality-bar.md)); otherwise derive them yourself.
 
@@ -25,6 +25,6 @@ When the project has a Design System artifact (`design_system_url` in `DESIGN.md
 ## After they are shown
 
 1. Ask which direction to build, or whether to adjust or generate more. Wait for the answer.
-2. If the user asks for changes or more options, regenerate within the same style and show them again. At most two extra rounds, then ask the user to pick.
+2. If the user rejects the palette after seeing the directions, return to the palette gate, confirm a new palette, then regenerate. If the user asks for other changes or more options, regenerate within the same style and show them again. At most two extra rounds, then ask the user to pick.
 3. Record the chosen direction (name, one-line rationale) in `DESIGN.md` Overview and, in project mode, in the Brief page.
 4. Run impeccable `critique` (or the built-in checklist) on the chosen direction before the Figma build ([quality-bar.md](quality-bar.md)).

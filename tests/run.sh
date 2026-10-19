@@ -117,6 +117,17 @@ grep -qiE 'design system' "$r/proposals.md" || { echo "FAIL proposals.md must us
 grep -rqE 'claude\.ai/(code/)?artifact/' "$d" && { echo "FAIL no artifact URL may be hardcoded in the skill"; status=1; }
 grep -qiE 'mode limit|limits modes' "$sl" || { echo "FAIL screen-loop.md must handle the Figma mode limit when adding Dark"; status=1; }
 
+# Content rules from the trial T5d: category research gate (D24), palette gate (D25), product locale (D26).
+sd="$r/style-discovery.md"
+grep -qiE 'category' "$sd" || { echo "FAIL style-discovery.md must research the product category before style"; status=1; }
+grep -qiE 'at least 3' "$sd" || { echo "FAIL style-discovery.md must require at least 3 real category products"; status=1; }
+grep -qiE 'before (continuing|any style|asking)' "$sd" || { echo "FAIL style-discovery.md must show the category references before continuing"; status=1; }
+grep -qiE 'confirm(ed)? .*palette|palette .*confirm' "$r/proposals.md" || { echo "FAIL proposals.md must gate on a confirmed palette"; status=1; }
+grep -qiE 'share the confirmed palette' "$r/proposals.md" || { echo "FAIL proposals.md must make directions share the confirmed palette"; status=1; }
+grep -qiE 'locale' "$d/SKILL.md" || { echo "FAIL SKILL.md must ask the UI language and locale in the brief"; status=1; }
+grep -qiE 'locale' "$d/assets/PRODUCT.template.md" || { echo "FAIL PRODUCT.template.md must carry a Locale field"; status=1; }
+grep -qiE 'UI copy' "$d/SKILL.md" || { echo "FAIL SKILL.md must say the English rule does not cover UI copy"; status=1; }
+
 if [[ -f "$d/SKILL.md" ]]; then
   for f in "$d"/references/*.md "$d"/assets/*; do
     [[ -e "$f" ]] || continue
