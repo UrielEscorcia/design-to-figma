@@ -16,7 +16,7 @@ Use when the user wants one screen or view. The quality bar is the same as for a
 
 The bootstrap creates only what this screen needs and can grow into a full project later.
 
-1. **Product brief (before style).** Ask who the users are, the problem, the essential screens and the product name, and whether dark mode is needed (ask; never assume).
+1. **Product brief (before style).** Ask who the users are, the problem, the essential screens and the product name, whether dark mode is needed (ask; never assume), and whether to keep a Design System artifact ([design-system-artifact.md](design-system-artifact.md)).
    - impeccable present: run `init` for `PRODUCT.md`.
    - Absent: brief questions from [minimal-system-checklist.md](minimal-system-checklist.md).
 2. **Style discovery.** Follow [style-discovery.md](style-discovery.md), using the brief, and get the user's confirmation.

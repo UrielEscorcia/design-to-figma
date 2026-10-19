@@ -29,7 +29,6 @@ Keep a compact snapshot of Figma as it was at the last sync. It is the **base** 
 - `variables`: collection name → variable name → `{ mode: value }`.
 - `styles`: text and effect style names.
 - `components`: component and component-set names.
-- `designSystemUrl`: the Design System artifact link, when one is kept ([design-system-artifact.md](design-system-artifact.md)).
 - `pages`: page names, each with its top-level frame names.
 
 Keep it deterministic: sort every list alphabetically, use the names and values exactly as Figma returns them, and exclude node IDs, positions and anything volatile.

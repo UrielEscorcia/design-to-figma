@@ -67,7 +67,6 @@ Compact record used to detect manual Figma edits (see references/sync-rules.md).
 
 ```yaml
 lastSync: <ISO 8601 timestamp>
-designSystemUrl: <url or empty>
 pages:
   <page name>: [<top-level frame>, <top-level frame>]
 variables:
