@@ -3,7 +3,7 @@ name: design-to-figma
 description: "Design a full project or one screen in Figma, or iterate on an existing Figma design. Orchestrates Claude Design, impeccable (optional) and the Figma MCP; Figma stays the source of truth."
 license: MIT
 metadata:
-  version: "0.1.0"
+  version: "0.2.0"
   author: "Uriel Escorcia"
 ---
 
