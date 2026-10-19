@@ -24,6 +24,8 @@ Build the screen in Light (or the single mode) with the builder guidance in [too
 
 If the gate fails, apply one fix batch in Figma ([iteration.md](iteration.md)) and verify again. At most 2 self-fix rounds. If the screen is still below the gate, do not loop: carry the open gap to the user review.
 
+Then run one mandatory `polish` pass on the screen (impeccable's `polish`, or item 10 of the built-in checklist in [quality-bar.md](quality-bar.md)) before the user review. Critique (step 3) and polish are both required for every screen; never skip either.
+
 ## 5. User review
 
 Always ask for human review. Show the screenshot or Figma link, the verdict, the score and any open gap. The user approves or requests changes; apply each change in Figma per [iteration.md](iteration.md) and show it again until the user approves. State becomes `user-approved`. Do not start the next screen before approval unless the user explicitly says to batch.
