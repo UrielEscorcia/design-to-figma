@@ -39,7 +39,11 @@ Style and references: <confirmed style; reference product names and traits; no c
 
 ## Dark Mode
 
-<Needed: yes | no | undecided. Asked at project or screen creation; never assumed. Semantic variables stay in a single-mode collection so Dark can be added later.>
+<Needed: yes | no | undecided. Asked at project or screen creation; never assumed. If no or undecided, `Semantic` is a single-mode collection so Dark can be added later; if yes, `Semantic` gets Light and Dark modes in foundations.>
+
+## Design System Artifact
+
+<Kept: yes | no | unavailable (reason). Asked once at project start; see the skill's design-system-artifact reference.>
 
 ## Product Principles
 

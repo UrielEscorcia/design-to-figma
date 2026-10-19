@@ -18,6 +18,10 @@ Never target claude.ai/design projects and never call the `DesignSync` tool. Cla
 | Claude Desktop chat or Cowork | The chat's Design output (Output → Design), or the Artifacts Design template. One artboard or section per direction. |
 | No design surface | Build quick direction frames on a `🧪 Explorations` page in Figma, one frame per direction at low fidelity. Delete the page after the choice, and say so in the report. |
 
+## Use the project's design system
+
+When the project has a Design System artifact (`design_system_url` in `DESIGN.md`, see [design-system-artifact.md](design-system-artifact.md)), do not set `design_systems: false` on the quickstart call, and choose that design system, so new proposals use the real tokens. Without one, call quickstart as usual.
+
 ## After they are shown
 
 1. Ask which direction to build, or whether to adjust or generate more. Wait for the answer.

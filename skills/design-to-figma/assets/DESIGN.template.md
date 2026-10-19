@@ -1,6 +1,7 @@
 ---
 figma_url: <https://www.figma.com/design/FILE_KEY/NAME>
 figma_file_key: <FILE_KEY>
+design_system_url: <url or empty>
 last_sync: <ISO 8601 timestamp, e.g. 2026-01-31T12:00:00Z>
 scope: <full | minimal>
 colors:

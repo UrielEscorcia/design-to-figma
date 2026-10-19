@@ -31,7 +31,7 @@ A design is done only when all three hold:
 
 1. **No P0 or P1 issues** remain in the critique findings.
 2. **The design-specificity verdict reads as authored**, not interchangeable within its category (impeccable's critique Design Specificity Verdict). This is the visual-quality signal.
-3. **The heuristics score is at least 28/40.** When some heuristics are n/a, keep the same 70% of the applicable maximum (for example at least 23/32 when two heuristics are n/a). This score measures usability (Nielsen), not visual quality; do not read it as one.
+3. **The heuristics score is at least 28/40.** When some heuristics are n/a, keep the same 70% of the applicable maximum, rounded up (for example at least 23/32 when two heuristics are n/a). This score measures usability (Nielsen), not visual quality; do not read it as one.
 
 How to run the critique so the gate means something:
 
