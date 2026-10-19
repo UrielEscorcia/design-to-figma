@@ -2,7 +2,7 @@
 
 - **Engram mirror:** `odd/design-to-figma/tasks`
 - **Branch:** `feat/d2f-08-research-gate` (from `main` after PR #7 merged)
-- **Status:** T9–T11 merged (PRs #4–#6); T13 merged (PR #7, v0.2.0); T5d retest in progress; T14 (research and palette gates, v0.3.0) done, PR pending; next: full clean retest (T5d), then T12, T6, T7
+- **Status:** T9–T11 merged (PRs #4–#6); T13 merged (PR #7, v0.2.0); T5d retest in progress on v0.2.0; T14 (research and palette gates, v0.3.0) done, PR pending; next: finish T5d, then T12, T6, T7
 
 ## Objective
 
@@ -190,4 +190,4 @@ Original questions:
 
 ## Next step
 
-Merge T13, run `claude plugin update`, confirm the installed version is 0.2.0, then the clean retest T5d. T12 after the retest.
+Open and merge the T14 PR (v0.3.0); the user finishes the T5d retest (on v0.2.0, steering the T14 gates by hand) and later verifies them on v0.3.0. Then T12 (review advisories, including keyword-only test assertions and the D22/D23–D26 table order), T6, T7.

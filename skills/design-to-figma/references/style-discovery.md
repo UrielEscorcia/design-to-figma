@@ -48,7 +48,7 @@ Present, in one short block:
 - the style, and in one line what it means for this product;
 - 3 to 5 popular products that use it (the confirmed category references may count) (for example "this style is used by Stripe and Mercury");
 - concrete traits: **type** (families or classes, scale, weight), **color use**, **density**, **radius**, **motion**, **imagery**;
-- source links when the research produced them, otherwise the unverified note from step 2.
+- source links when the research produced them, otherwise the unverified note from step 3.
 
 Ask the user to confirm or adjust. Wait for the answer.
 
