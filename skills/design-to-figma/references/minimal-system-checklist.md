@@ -14,7 +14,7 @@ Record answers in [PRODUCT.template.md](../assets/PRODUCT.template.md) form. Mar
 ## 2. Palette with semantic roles
 
 - Primary action, secondary action, background (default and subtle), surface, border, text (primary and muted), and feedback (success, warning, danger).
-- Provide light mode; add dark only when asked.
+- Ask whether dark mode is needed; never assume it. Create the semantic variables in a single-mode collection (Light); add a Dark mode only when asked.
 - Check text contrast against its background: at least 4.5:1 for body text, 3:1 for large text and UI boundaries.
 - Map each role to a primitive scale value (see naming in [figma-structure.md](figma-structure.md)).
 

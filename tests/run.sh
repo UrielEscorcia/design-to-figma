@@ -40,8 +40,9 @@ required=(
   references/workflow-screen.md references/sync-rules.md references/figma-structure.md
   references/minimal-system-checklist.md
   references/style-discovery.md references/proposals.md references/quality-bar.md
-  references/iteration.md
+  references/iteration.md references/screen-loop.md references/design-system-artifact.md
   assets/PRODUCT.template.md assets/DESIGN.template.md assets/brief-page.template.md
+  assets/DESIGN-PLAN.template.md
 )
 for f in "${required[@]}"; do
   [[ -f "$d/$f" ]] || { echo "FAIL missing required file: $d/$f"; status=1; }
@@ -78,6 +79,43 @@ grep -rqE 'craft-floor' "$r" || { echo "FAIL builder guidance must reference imp
 grep -rqE 'typeset' "$r" || { echo "FAIL builder guidance must reference impeccable typeset"; status=1; }
 grep -qiE 'connected (local )?folder' "$r/preflight.md" || { echo "FAIL preflight.md write path must be capability-based (connected folder)"; status=1; }
 grep -qiE 'unified' "$r/preflight.md" || { echo "FAIL preflight.md must mention the unified Claude experience"; status=1; }
+
+# Content rules from the per-screen loop, plan tracker and optional dark mode (T10).
+grep -q 'screen-loop.md' "$d/SKILL.md" || { echo "FAIL SKILL.md must link screen-loop.md"; status=1; }
+grep -q 'DESIGN-PLAN' "$d/SKILL.md" || { echo "FAIL SKILL.md must mention DESIGN-PLAN"; status=1; }
+for st in pending built agent-verified user-approved final-verified; do
+  grep -q -- "$st" "$d/assets/DESIGN-PLAN.template.md" 2>/dev/null || { echo "FAIL DESIGN-PLAN.template.md must carry the state '$st'"; status=1; }
+done
+grep -qF 'pending → built → agent-verified → user-approved → final-verified' "$d/assets/DESIGN-PLAN.template.md" || { echo "FAIL DESIGN-PLAN.template.md must state the full screen sequence on one line"; status=1; }
+grep -qiE 'budget' "$r/screen-loop.md" || { echo "FAIL screen-loop.md must state its own budget"; status=1; }
+grep -q 'screen-loop.md' "$r/quality-bar.md" || { echo "FAIL quality-bar.md must point screens to screen-loop.md"; status=1; }
+grep -qE '70%|28/40' "$r/screen-loop.md" && { echo "FAIL screen-loop.md must not hardcode the gate threshold"; status=1; }
+grep -qiE 'when a plan exists|otherwise record' "$r/screen-loop.md" || { echo "FAIL screen-loop.md must handle the no-plan case"; status=1; }
+grep -qiE 'rate[- ]limit' "$r/screen-loop.md" || { echo "FAIL screen-loop.md must handle rate limits"; status=1; }
+sl="$r/screen-loop.md"
+grep -qiE 'only one mode' "$sl" || { echo "FAIL screen-loop.md must add a Dark mode when dark mode is requested after foundations"; status=1; }
+grep -q 'polish' "$r/workflow-project.md" || { echo "FAIL workflow-project.md must reach the polish pass"; status=1; }
+grep -qiE 'user review' "$sl" 2>/dev/null || { echo "FAIL screen-loop.md must include the user review step"; status=1; }
+grep -qiE 'at most 2' "$sl" 2>/dev/null || { echo "FAIL screen-loop.md must cap self-fix at most 2 rounds"; status=1; }
+grep -qiE 'final verify' "$sl" 2>/dev/null || { echo "FAIL screen-loop.md must include the final verify step"; status=1; }
+grep -qiE 'contrast' "$sl" 2>/dev/null || { echo "FAIL screen-loop.md must contrast the request with research and real screens"; status=1; }
+grep -qiE 'dark mode[^.]*ask|ask[^.]*dark mode' "$d/SKILL.md" || { echo "FAIL SKILL.md must ask about dark mode, never assume it"; status=1; }
+grep -rqiE 'single[- ]mode' "$r" || { echo "FAIL references must document the single-mode semantic collection"; status=1; }
+grep -rqiE '(in|both) light and dark' "$d" && { echo "FAIL wording implies Light and Dark are always built"; status=1; }
+grep -qiE 'reference source' "$r/tool-directory.md" || { echo "FAIL tool-directory.md must declare a reference source slot"; status=1; }
+grep -qE '`polish`' "$d/references/screen-loop.md" || { echo "FAIL screen-loop.md must keep the mandatory polish pass"; status=1; }
+
+# Content rules from the Design System artifact sync (T11).
+das="$r/design-system-artifact.md"
+grep -qiE 'one-way' "$das" 2>/dev/null || { echo "FAIL design-system-artifact.md must state the sync is one-way"; status=1; }
+grep -q 'from-design-tool.md' "$das" 2>/dev/null || { echo "FAIL design-system-artifact.md must name the type's from-design-tool.md procedure"; status=1; }
+grep -qiE 'never hardcode' "$das" 2>/dev/null || { echo "FAIL design-system-artifact.md must forbid hardcoding the type URL"; status=1; }
+grep -q 'color.themes' "$das" 2>/dev/null || { echo "FAIL design-system-artifact.md must map modes to color.themes"; status=1; }
+grep -q 'design_system_url' "$d/assets/DESIGN.template.md" || { echo "FAIL DESIGN.template.md must carry design_system_url"; status=1; }
+grep -q 'design-system-artifact.md' "$r/sync-rules.md" || { echo "FAIL sync-rules.md must link design-system-artifact.md"; status=1; }
+grep -qiE 'design system' "$r/proposals.md" || { echo "FAIL proposals.md must use the project's design system"; status=1; }
+grep -rqE 'claude\.ai/(code/)?artifact/' "$d" && { echo "FAIL no artifact URL may be hardcoded in the skill"; status=1; }
+grep -qiE 'mode limit|limits modes' "$sl" || { echo "FAIL screen-loop.md must handle the Figma mode limit when adding Dark"; status=1; }
 
 if [[ -f "$d/SKILL.md" ]]; then
   for f in "$d"/references/*.md "$d"/assets/*; do

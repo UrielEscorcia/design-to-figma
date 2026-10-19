@@ -23,7 +23,7 @@ How impeccable behaves, and how to pass the style into it:
 - Its flows are code-oriented. In this skill use only the design-facing steps (`init`, `shape`, new-work direction, `extract`, `critique`, `polish`) and apply the result in Figma, not in a codebase. Skip its build, live and code-detector steps.
 - impeccable keeps its own state in `.impeccable/` in the project folder (surfaces, questions). Leave it to impeccable; this skill does not edit it except through impeccable's own flow.
 
-Apply `critique` findings and `polish` to the chosen direction, then to the Figma build, in one batch. Bounded: one critique, one fix batch, one polish pass per run.
+Apply `critique` findings and `polish` to the chosen direction, then to the Figma build, in one batch. Bounded: outside the screen loop (for example the chosen-direction critique and the final cross-screen review) a run is one critique, one fix batch, one polish pass. Screens use the budget in [screen-loop.md](screen-loop.md).
 
 ## Quality gate
 
@@ -31,7 +31,7 @@ A design is done only when all three hold:
 
 1. **No P0 or P1 issues** remain in the critique findings.
 2. **The design-specificity verdict reads as authored**, not interchangeable within its category (impeccable's critique Design Specificity Verdict). This is the visual-quality signal.
-3. **The heuristics score is at least 28/40.** When some heuristics are n/a, keep the same 70% of the applicable maximum (for example at least 23/32 when two heuristics are n/a). This score measures usability (Nielsen), not visual quality; do not read it as one.
+3. **The heuristics score is at least 28/40.** When some heuristics are n/a, keep the same 70% of the applicable maximum, rounded up (for example at least 23/32 when two heuristics are n/a). This score measures usability (Nielsen), not visual quality; do not read it as one.
 
 How to run the critique so the gate means something:
 
