@@ -40,8 +40,9 @@ required=(
   references/workflow-screen.md references/sync-rules.md references/figma-structure.md
   references/minimal-system-checklist.md
   references/style-discovery.md references/proposals.md references/quality-bar.md
-  references/iteration.md
+  references/iteration.md references/screen-loop.md
   assets/PRODUCT.template.md assets/DESIGN.template.md assets/brief-page.template.md
+  assets/DESIGN-PLAN.template.md
 )
 for f in "${required[@]}"; do
   [[ -f "$d/$f" ]] || { echo "FAIL missing required file: $d/$f"; status=1; }
@@ -78,6 +79,22 @@ grep -rqE 'craft-floor' "$r" || { echo "FAIL builder guidance must reference imp
 grep -rqE 'typeset' "$r" || { echo "FAIL builder guidance must reference impeccable typeset"; status=1; }
 grep -qiE 'connected (local )?folder' "$r/preflight.md" || { echo "FAIL preflight.md write path must be capability-based (connected folder)"; status=1; }
 grep -qiE 'unified' "$r/preflight.md" || { echo "FAIL preflight.md must mention the unified Claude experience"; status=1; }
+
+# Content rules from the per-screen loop, plan tracker and optional dark mode (T10).
+grep -q 'screen-loop.md' "$d/SKILL.md" || { echo "FAIL SKILL.md must link screen-loop.md"; status=1; }
+grep -q 'DESIGN-PLAN' "$d/SKILL.md" || { echo "FAIL SKILL.md must mention DESIGN-PLAN"; status=1; }
+for st in pending built agent-verified user-approved final-verified; do
+  grep -q -- "$st" "$d/assets/DESIGN-PLAN.template.md" 2>/dev/null || { echo "FAIL DESIGN-PLAN.template.md must carry the state '$st'"; status=1; }
+done
+sl="$r/screen-loop.md"
+grep -qiE 'user review' "$sl" 2>/dev/null || { echo "FAIL screen-loop.md must include the user review step"; status=1; }
+grep -qiE 'at most 2' "$sl" 2>/dev/null || { echo "FAIL screen-loop.md must cap self-fix at most 2 rounds"; status=1; }
+grep -qiE 'final verify' "$sl" 2>/dev/null || { echo "FAIL screen-loop.md must include the final verify step"; status=1; }
+grep -qiE 'contrast' "$sl" 2>/dev/null || { echo "FAIL screen-loop.md must contrast the request with research and real screens"; status=1; }
+grep -qiE 'dark mode[^.]*ask|ask[^.]*dark mode' "$d/SKILL.md" || { echo "FAIL SKILL.md must ask about dark mode, never assume it"; status=1; }
+grep -rqiE 'single[- ]mode' "$r" || { echo "FAIL references must document the single-mode semantic collection"; status=1; }
+grep -rqiE '(in|both) light and dark' "$d" && { echo "FAIL wording implies Light and Dark are always built"; status=1; }
+grep -qiE 'reference source' "$r/tool-directory.md" || { echo "FAIL tool-directory.md must declare a reference source slot"; status=1; }
 
 if [[ -f "$d/SKILL.md" ]]; then
   for f in "$d"/references/*.md "$d"/assets/*; do

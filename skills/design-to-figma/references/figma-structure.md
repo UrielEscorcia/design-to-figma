@@ -13,7 +13,7 @@ The page set is a default. Adjust only on user request, and record changes in th
 
 ## Naming
 
-**Variable collections:** `Primitives` (raw values), `Semantic` (roles mapped to primitives), `Spacing`, `Radius`, `Typography` when numeric. Use Modes for themes (`Light`, `Dark`).
+**Variable collections:** `Primitives` (raw values), `Semantic` (roles mapped to primitives), `Spacing`, `Radius`, `Typography` when numeric. Create `Semantic` as a single-mode collection (mode `Light`, or the single mode) even when dark mode is not requested, so Dark can be added later as one new mode. Add the `Dark` mode only when the user asked for it.
 
 **Variables:** slash-separated, lowercase, role-based.
 - Primitives: `color/blue/500`, `space/4`.

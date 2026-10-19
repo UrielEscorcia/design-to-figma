@@ -22,7 +22,7 @@ Place as text layers, one frame per section. Replace placeholders; keep it short
 - Typography: <families and scale>
 - Spacing: <scale>
 - Radius: <scale>
-- Modes: <Light / Dark>
+- Modes: <Light, plus Dark only when requested>
 
 ## Style and references
 

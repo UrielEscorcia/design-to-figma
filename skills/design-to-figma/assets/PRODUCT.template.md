@@ -37,6 +37,10 @@ scope: <full | minimal>
 
 Style and references: <confirmed style; reference product names and traits; no copied assets>.
 
+## Dark Mode
+
+<Needed: yes | no | undecided. Asked at project or screen creation; never assumed. Semantic variables stay in a single-mode collection so Dark can be added later.>
+
 ## Product Principles
 
 - <Principle 1>

@@ -2,7 +2,7 @@
 
 - **Engram mirror:** `odd/design-to-figma/tasks`
 - **Branch:** `feat/d2f-04-quality-loop` (from `main` after PRs #1–#3 merged)
-- **Status:** T5c and T9 done; T10 (per-screen loop) next, then T11 (Design System artifact sync)
+- **Status:** T5c, T9 and T10 done; T11 (Design System artifact sync) next
 
 ## Objective
 
@@ -104,7 +104,7 @@ Original questions:
 | T5b | Design-quality flow: D13 style discovery and references, D14 quality bar, D15 Claude Design proposals, D16 iteration in Figma | delegated writer (with T5a; preparation trigger: reading impeccable's commands) | done | New `style-discovery.md`, `proposals.md`, `quality-bar.md`, `iteration.md`; SKILL.md 105 lines. Parent verified: Artifact `quickstart` (`intent: design`) returns a Design type on this account; `figma.getLocalTextStylesAsync` / `getLocalEffectStylesAsync` ran in a read script. Unverified until T5c/T6: Desktop Output → Design, impeccable with a pinned style, web search on Desktop |
 | T5c | Retest in Claude Code with the reinstalled plugin: full-project mode end to end, including proposals and an iteration request in Figma | user-assisted | done | Full project "Tino" (iOS finance app) built in about 58 minutes: 100 variables, 41 components, 10 screens Light and Dark; critique 25/40 → 27/40; iteration applied in Figma and synced. Findings in the progress log (2026-10-18) |
 | T9 | Trial fixes and quality gate: reply in the user's language; brief before style; visual palette by default; file name as its own question; iOS font check; iteration inspects ancestors and prefers local fixes; D21 quality gate; impeccable craft guidance to builders; D22 capability-based write path; D6 revision (`/design-sync` outdated) | delegated writer (writer trigger: 2+ non-trivial files) | done | RED: 16 FAIL lines, exit 1 (writer report) → GREEN `tests/run.sh` exit 0, rerun by the parent. Parent fix: scaled threshold wording (23/32 when two heuristics are n/a). SKILL.md 110 lines, description 191 characters |
-| T10 | Per-screen loop (D17), `DESIGN-PLAN.md` tracker (D18), screen definition with research contrast and a reference-source slot (D19), optional dark mode (D20) | delegated writer | pending | — |
+| T10 | Per-screen loop (D17), `DESIGN-PLAN.md` tracker (D18), screen definition with research contrast and a reference-source slot (D19), optional dark mode (D20) | delegated writer (writer trigger: 2+ non-trivial files) | done | RED: 16 FAIL lines, exit 1 (writer report) → GREEN `tests/run.sh` exit 0, rerun by the parent. New `screen-loop.md` and `DESIGN-PLAN.template.md`; SKILL.md 114 lines. Parent fixes: screen mode defines the screen before the proposals; Dark adds a mode to a single-mode `Semantic` collection first |
 | T11 | One-way sync from Figma foundations to a Claude Design System artifact, so later proposals use the project's system | delegated writer | pending | — |
 | T6a | Desktop smoke test: Figma connector in chat exposes `use_figma` | user-assisted | done | User screenshot (2026-10-16): Desktop chat lists about 42 Figma tools, `use_figma` included; invocation is tested in T6 |
 | T6 | Claude Desktop trial: zip upload, same cases | user-assisted | pending | — |
@@ -175,4 +175,4 @@ Original questions:
 
 ## Next step
 
-T10 with a delegated writer (RED first), then T11.
+Review the pending range (T9 follow-up plus T10), then T11 on `feat/d2f-06-ds-artifact`.

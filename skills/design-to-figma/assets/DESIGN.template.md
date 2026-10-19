@@ -33,7 +33,7 @@ Style and references: <style name; reference product names; traits (type, color 
 
 ## Colors
 
-<Roles and how they are used. Values live in the frontmatter above and in Figma variables.>
+<Roles and how they are used. Values live in the frontmatter above and in Figma variables. Modes: Light (single mode), plus Dark only when requested.>
 
 ## Typography
 

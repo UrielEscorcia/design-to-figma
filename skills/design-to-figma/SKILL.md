@@ -32,11 +32,12 @@ Do not load it for code generation from Figma (a future companion skill), for Fi
 7. **Ask before the first local write.** Confirm the target path once; fall back to downloadable files when unsure.
 8. **Design only.** Produce no application code.
 9. **Do not copy or bundle impeccable or the Figma MCP.** Only call them.
-10. **Aim for excellent, current design.** Confirm a style first ([style-discovery.md](references/style-discovery.md)), show proposals before building, and finish with critique and polish ([quality-bar.md](references/quality-bar.md)). No skeuomorphism or literal metaphors unless the user asks.
+10. **Aim for excellent, current design.** Confirm a style first ([style-discovery.md](references/style-discovery.md)), show proposals before building, and verify every screen against the quality gate ([quality-bar.md](references/quality-bar.md)). No skeuomorphism or literal metaphors unless the user asks.
 11. **Never write absolute local paths, usernames or machine details into Figma.**
 12. **Enumerate Figma pages with a read-only `use_figma` script.** An unscoped `get_metadata` lists only the first page.
 13. **Reply in the user's language.** Prose, questions and reports alike, never mixed. Generated files (`PRODUCT.md`, `DESIGN.md`, Figma content labels, specs) stay in English unless the user asks otherwise.
 14. **Builders follow the craft guides.** Every Figma builder, including delegated subagents, receives impeccable's craft guidance or the fallback checklist ([tool-directory.md](references/tool-directory.md)).
+15. **Track the plan.** In project mode create `DESIGN-PLAN.md` ([DESIGN-PLAN.template.md](assets/DESIGN-PLAN.template.md)) once the screen list is agreed, update it after every state change, and read it first on resume to continue with the next unfinished item. Every screen runs [screen-loop.md](references/screen-loop.md); never start the next screen before the user approves the current one, unless the user says to batch.
 
 ## Decision Gates
 
@@ -54,6 +55,7 @@ Do not load it for code generation from Figma (a future companion skill), for Fi
 | Proposals | Design surface available | Show 2 or 3 directions as Claude Design artifacts: [proposals.md](references/proposals.md) |
 | Proposals | No design surface | Quick frames on a `🧪 Explorations` page in Figma |
 | File name | New Figma file | Ask the file name as its own question (suggest `<Product> — <Scope>`), never folded into another question; only then ask which team or plan when there are several |
+| Dark mode | A project or screen is created | Ask whether dark mode is needed; never assume it. Create the semantic variables in a single-mode collection either way; build Dark only when requested ([figma-structure.md](references/figma-structure.md)). Record the answer in `PRODUCT.md` and the plan |
 | Change request | User asks to change a built design | Apply in Figma, then sync: [iteration.md](references/iteration.md) |
 | impeccable | Its skill is available | Use it for every design step (context, shape, direction, extraction); `critique` and `polish` are mandatory, and builders get its craft guides |
 | impeccable | Not available | Recommend it once, continue with [minimal-system-checklist.md](references/minimal-system-checklist.md) and the critique checklist in [quality-bar.md](references/quality-bar.md) |
@@ -68,15 +70,15 @@ Per-surface details and the capability-based write path: [preflight.md](referenc
 
 1. **Preflight.** Follow [preflight.md](references/preflight.md): Figma MCP tools, seat requirement, impeccable, design-capable surface, local write path. BLOCK on missing Figma tools.
 2. **Load or create the project context.**
-   - Look for `PRODUCT.md` / `DESIGN.md` in the confirmed folder, and for a Figma URL in the user's message.
-   - If a Figma file exists, read it: enumerate pages with a read-only `use_figma` script, read each page with `get_metadata(nodeId=pageId)`, read variables and styles by script or `get_variable_defs`, take `get_screenshot` of key frames. Then compare with the sync frontmatter and snapshot ([sync-rules.md](references/sync-rules.md)).
-   - If none exists, continue with step 3. Templates: [PRODUCT.template.md](assets/PRODUCT.template.md), [DESIGN.template.md](assets/DESIGN.template.md).
-3. **Product brief.** Interview the user before any style work: who the users are, the problem, the essential screens and the product name (impeccable `init`, or the questions in [minimal-system-checklist.md](references/minimal-system-checklist.md)). Wait for the answers; write `PRODUCT.md`.
+   - Look for `PRODUCT.md` / `DESIGN.md` / `DESIGN-PLAN.md` in the confirmed folder, and for a Figma URL in the user's message.
+   - If a Figma file exists, read it: enumerate pages with a read-only `use_figma` script, read each page with `get_metadata(nodeId=pageId)`, read variables and styles by script or `get_variable_defs`, take `get_screenshot` of key frames. Then compare with the sync frontmatter and snapshot ([sync-rules.md](references/sync-rules.md)). If `DESIGN-PLAN.md` exists, read it first and resume at the next unfinished item.
+   - If none exists, continue with step 3. Templates: [PRODUCT.template.md](assets/PRODUCT.template.md), [DESIGN.template.md](assets/DESIGN.template.md), [DESIGN-PLAN.template.md](assets/DESIGN-PLAN.template.md).
+3. **Product brief.** Interview the user before any style work: who the users are, the problem, the essential screens, the product name and whether dark mode is needed (ask; never assume) (impeccable `init`, or the questions in [minimal-system-checklist.md](references/minimal-system-checklist.md)). Wait for the answers; write `PRODUCT.md`.
 4. **Style discovery.** Using the brief, ask the style, research current references, present them with traits, get confirmation ([style-discovery.md](references/style-discovery.md)).
 5. **Direction and proposals.** Direction within the style (impeccable, or the checklist), then 2 or 3 directions as Claude Design artifacts; the user picks ([proposals.md](references/proposals.md)). Critique the chosen direction ([quality-bar.md](references/quality-bar.md)).
 6. **Run the mode flow.** Project: [workflow-project.md](references/workflow-project.md). Screen: [workflow-screen.md](references/workflow-screen.md). Tool choice at each step: [tool-directory.md](references/tool-directory.md).
 7. **Write to Figma.** Ask the file name as its own question first (before the team or plan question), then check fonts ([figma-structure.md](references/figma-structure.md)). Follow the page structure in [figma-structure.md](references/figma-structure.md); place the Brief page from [brief-page.template.md](assets/brief-page.template.md). Use `figma-create-new-file` for a new file, then `figma-use` with `figma-generate-library` / `figma-generate-design`. Validate with `get_screenshot` and structural reads. Build only the chosen direction, with the builder guidance from [tool-directory.md](references/tool-directory.md).
-8. **Critique and polish.** Mandatory; done only when the quality gate passes, otherwise report the gap and offer another round ([quality-bar.md](references/quality-bar.md)). Apply fixes in Figma in one batch.
+8. **Screen loop.** Every screen (project: each one in turn; screen mode: the single screen) runs define, build, agent verify, self-fix, user review, final verify ([screen-loop.md](references/screen-loop.md)). Done only when the quality gate passes, otherwise report the gap and offer another round ([quality-bar.md](references/quality-bar.md)). Project mode ends with a cross-screen critique.
 9. **Sync the local files.** Update `PRODUCT.md` / `DESIGN.md` from Figma, refresh the frontmatter and snapshot. Handle local-only edits per [sync-rules.md](references/sync-rules.md).
 10. **Iterate on request.** Natural-language changes are applied in Figma, then synced ([iteration.md](references/iteration.md)).
 11. **Report** using the Output Contract.
@@ -88,6 +90,7 @@ End every run with a short report containing:
 - **Figma link:** the file URL (and frame links for screens touched) and the file name used.
 - **Style and references:** the confirmed style, reference products and whether the references were researched or unverified.
 - **Proposals:** the directions shown, where, and which one was chosen.
+- **Plan and screen states:** the `DESIGN-PLAN.md` location (or "delivered as downloads") and each screen's state (`pending`, `built`, `agent-verified`, `user-approved`, `final-verified`), plus whether dark mode was requested and built.
 - **Quality passes:** `critique` and `polish` done (impeccable, or the built-in checklist), with the fixes applied, the heuristics score, the specificity verdict and whether the critique was degraded. Never report a design as done without them or below the gate.
 - **What changed:** pages, variables, styles, components and screens created, updated or left untouched; manual Figma edits that were detected and kept.
 - **Sync status:** local files written (path, or "delivered as downloads"), the `.impeccable/` folder when impeccable created it (part of the shareable project folder), last-sync timestamp (local files only), and that the updated `DESIGN.md` is available as design-system context.
@@ -100,6 +103,7 @@ End every run with a short report containing:
 - [tool-directory.md](references/tool-directory.md): when to use each tool, handoff order
 - [workflow-project.md](references/workflow-project.md): full-project flow
 - [workflow-screen.md](references/workflow-screen.md): single-screen flow and minimal bootstrap
+- [screen-loop.md](references/screen-loop.md): per-screen define, build, verify, review loop
 - [style-discovery.md](references/style-discovery.md): ask the style, research references, confirm traits
 - [proposals.md](references/proposals.md): 2 or 3 directions as Claude Design artifacts
 - [quality-bar.md](references/quality-bar.md): quality rules, impeccable wiring, built-in critique checklist
@@ -107,4 +111,4 @@ End every run with a short report containing:
 - [sync-rules.md](references/sync-rules.md): source of truth, diffs, conflicts, snapshot
 - [figma-structure.md](references/figma-structure.md): pages, naming, Brief page content
 - [minimal-system-checklist.md](references/minimal-system-checklist.md): fallback without impeccable
-- [PRODUCT.template.md](assets/PRODUCT.template.md), [DESIGN.template.md](assets/DESIGN.template.md), [brief-page.template.md](assets/brief-page.template.md): file templates
+- [PRODUCT.template.md](assets/PRODUCT.template.md), [DESIGN.template.md](assets/DESIGN.template.md), [brief-page.template.md](assets/brief-page.template.md), [DESIGN-PLAN.template.md](assets/DESIGN-PLAN.template.md): file templates
