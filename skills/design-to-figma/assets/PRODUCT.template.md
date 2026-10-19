@@ -36,6 +36,7 @@ scope: <full | minimal>
 <Names, logos, colors, fonts that must stay. Mark inferred facts as "(inferred)".>
 
 Category references: <real products of the same category, names and traits>.
+User needs from reviews: <what users of category apps ask for and what frustrates them, with sources>
 
 Style and references: <confirmed style; reference product names and traits; no copied assets>.
 
