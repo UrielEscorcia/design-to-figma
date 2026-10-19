@@ -88,7 +88,7 @@ Original questions:
   2. orchestrator skill and references (`ccc32bc`, `c546283`, `15628c5`);
   3. trial fixes, design-quality flow and license (T5a/T5b; this branch).
   Branches: `feat/d2f-01-scaffold` (`4797997`..`4993807`), `feat/d2f-02-skill` (`ccc32bc`..`15628c5`), `feat/design-to-figma-plugin` (`59b0317`..HEAD).
-- **Round 2 (2026-10-18):** same `stacked-to-main` strategy. Forecast about 800 authored lines. Slices: (4) `feat/d2f-04-quality-loop`: T9 trial fixes and quality gate; (5) `feat/d2f-05-screen-loop`: T10 per-screen loop, tracker, screen definition, optional dark mode; (6) `feat/d2f-06-ds-artifact`: T11 Figma → Design System artifact sync. Push and PRs remain the user's decision.
+- **Round 2 (2026-10-18):** same `stacked-to-main` strategy. Forecast about 800 authored lines. Slices: (4) `feat/d2f-04-quality-loop`: T9 trial fixes and quality gate; (5) `feat/d2f-05-screen-loop`: T10 per-screen loop, tracker, screen definition, optional dark mode; (6) `feat/d2f-06-ds-artifact`: T11 Figma → Design System artifact sync. Push and PRs remain the user's decision. Actual slices (2026-10-18): (4) `main..34c943b` `6be37f7`, `34c943b`: 15 files, +166/−64 (230); (5) `34c943b..c708f60` `2d97a7b`, `45c7817`, `4d24924`, `c708f60`: 14 files, +160/−45 (205); (6) `c708f60..343aab8` `b9165ec`, `343aab8` plus this record: 14 files, +88/−20 (108). All within the 400-line budget.
 
 ## Tasks
 
