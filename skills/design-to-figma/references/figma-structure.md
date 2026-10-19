@@ -34,6 +34,10 @@ Short and scannable. Sections: product in one paragraph, audience, principles (3
 
 The Brief page carries no sync timestamp: sync state lives in the local files. Never write absolute local paths, usernames or machine details into Figma.
 
+## Fonts
+
+Before writing text styles, check availability with `figma.listAvailableFontsAsync()` and load only fonts that exist. Platform fonts can be missing or render blank in MCP screenshots (iOS: SF Pro, SF Pro Rounded). When one is not usable, tell the user and ask before substituting (for example Inter); never swap silently. Record an approved substitution in `DESIGN.md` as a known deviation.
+
 ## Rules
 
 - Every color, spacing and radius in components and screens binds to a variable. No hardcoded values when a token exists.

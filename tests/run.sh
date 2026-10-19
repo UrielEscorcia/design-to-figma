@@ -55,8 +55,29 @@ if [[ -f "$b" ]]; then
 fi
 grep -qiE 'last[ -]?sync' "$d/references/figma-structure.md" && { echo "FAIL figma-structure.md must not mention a Brief last-sync line"; status=1; }
 grep -qE 'Required tools:[^.]*get_design_context' "$d/references/preflight.md" && { echo "FAIL preflight.md must not require get_design_context"; status=1; }
-grep -rqE 'run `?/design-sync' "$d" && { echo "FAIL a file tells the user to run /design-sync as a routine step"; status=1; }
+grep -rq '/design-sync' "$d" && { echo "FAIL /design-sync is outdated (Claude Design lives in Claude as artifacts); remove every mention"; status=1; }
 grep -qE 'figma\.root\.children' "$d/references/sync-rules.md" || { echo "FAIL sync-rules.md must enumerate pages with figma.root.children"; status=1; }
+
+# Content rules from the trial fixes and quality gate (T9).
+r="$d/references"
+grep -qiE "user's language" "$d/SKILL.md" || { echo "FAIL SKILL.md must state the reply-in-the-user's-language rule"; status=1; }
+brief_line="$(grep -nE '\*\*Product brief' "$d/SKILL.md" | head -1 | cut -d: -f1)"
+style_line="$(grep -nE '\*\*Style discovery' "$d/SKILL.md" | head -1 | cut -d: -f1)"
+{ [[ -n "$brief_line" && -n "$style_line" ]] && (( brief_line < style_line )); } || { echo "FAIL SKILL.md must run the product brief step before style discovery (brief line '${brief_line:-none}', style line '${style_line:-none}')"; status=1; }
+grep -qiE 'swatch' "$r/style-discovery.md" || { echo "FAIL style-discovery.md must show palettes as a visual swatch artifact"; status=1; }
+grep -qiE 'seed' "$r/style-discovery.md" || { echo "FAIL style-discovery.md must mention the seed-color option"; status=1; }
+grep -qiE 'file name[^.]*(own|separate) question' "$d/SKILL.md" || { echo "FAIL SKILL.md must ask the file name as its own question before the team"; status=1; }
+grep -rqE 'listAvailableFontsAsync' "$d" || { echo "FAIL no file mentions the listAvailableFontsAsync font check"; status=1; }
+grep -qE 'clipsContent' "$r/iteration.md" || { echo "FAIL iteration.md must tell to inspect ancestors (clipsContent)"; status=1; }
+grep -qiE 'local fix' "$r/iteration.md" || { echo "FAIL iteration.md must prefer the smallest local fix"; status=1; }
+grep -qE '28/40' "$r/quality-bar.md" || { echo "FAIL quality-bar.md must state the 28/40 heuristics threshold"; status=1; }
+grep -qE 'P0' "$r/quality-bar.md" || { echo "FAIL quality-bar.md must gate on P0/P1 issues"; status=1; }
+grep -qiE 'specificity' "$r/quality-bar.md" || { echo "FAIL quality-bar.md must gate on the design-specificity verdict"; status=1; }
+grep -qiE 'degraded' "$r/quality-bar.md" || { echo "FAIL quality-bar.md must declare Figma-only critique degraded"; status=1; }
+grep -rqE 'craft-floor' "$r" || { echo "FAIL builder guidance must reference impeccable craft-floor"; status=1; }
+grep -rqE 'typeset' "$r" || { echo "FAIL builder guidance must reference impeccable typeset"; status=1; }
+grep -qiE 'connected (local )?folder' "$r/preflight.md" || { echo "FAIL preflight.md write path must be capability-based (connected folder)"; status=1; }
+grep -qiE 'unified' "$r/preflight.md" || { echo "FAIL preflight.md must mention the unified Claude experience"; status=1; }
 
 if [[ -f "$d/SKILL.md" ]]; then
   for f in "$d"/references/*.md "$d"/assets/*; do

@@ -6,12 +6,13 @@ Use when the user wants a design system plus several screens. Read Figma before 
 
 - impeccable present: run `init`; it interviews and writes `PRODUCT.md`.
 - Absent: ask the 3–4 brief questions in [minimal-system-checklist.md](minimal-system-checklist.md) and fill [PRODUCT.template.md](../assets/PRODUCT.template.md).
+- Ask who the users are, the problem, the essential screens and the product name. The brief always comes before style discovery.
 - Optional discovery for the overall experience: impeccable `shape`.
 - Wait for answers before continuing; do not invent product decisions.
 
 ## 2. Style discovery
 
-Follow [style-discovery.md](style-discovery.md): ask the style, research current references, present the style with popular products and traits, and get the user's confirmation. Record it in `PRODUCT.md`.
+Follow [style-discovery.md](style-discovery.md), using the brief from step 1: ask the style, research current references, present the style with popular products and traits, and get the user's confirmation. Record it in `PRODUCT.md`.
 
 ## 3. Direction and proposals
 
@@ -23,22 +24,22 @@ Follow [style-discovery.md](style-discovery.md): ask the style, research current
 
 ## 4. Figma file and foundations
 
-1. No file yet: suggest a file name (`<Product> — <Scope>`, for example `Tessera — Sign-in`) and ask the user to confirm or change it. With several teams or plans, ask which one owns the file. Then load `figma-create-new-file` and call `create_new_file`. Record the URL and file key.
+1. No file yet: ask the file name as its own question (suggest `<Product> — <Scope>`, for example `Tessera — Sign-in`), never folded into another question. Only then, with several teams or plans, ask which one owns the file. Then load `figma-create-new-file` and call `create_new_file`. Record the URL and file key.
 2. Create the page structure from [figma-structure.md](figma-structure.md).
-3. Load `figma-use` and `figma-generate-library`. Build `🎨 Foundations` (variable collections, text and effect styles) and `🧩 Components` (variants bound to variables).
+3. Check fonts ([figma-structure.md](figma-structure.md)). Load `figma-use` and `figma-generate-library`. Build `🎨 Foundations` (variable collections, text and effect styles) and `🧩 Components` (variants bound to variables).
 4. Fill `📋 Brief & Rules` from [brief-page.template.md](../assets/brief-page.template.md), including the style and references.
 5. Verify by enumerating pages and reading them, plus `get_screenshot` ([sync-rules.md](sync-rules.md)).
 
 ## 5. Screens
 
 1. Read the library state again (`search_design_system`, variables and styles by read-only script).
-2. Load `figma-use` and `figma-generate-design`. Build each screen in `📱 Screens` from the chosen direction, section by section, from library components and variables. No hardcoded values when a token exists.
+2. Load `figma-use` and `figma-generate-design`. Brief each builder, including delegated subagents, with the builder guidance in [tool-directory.md](tool-directory.md) (impeccable's `reference/craft-floor.md`, `reference/layout.md`, `reference/typeset.md` and the platform reference, plus `PRODUCT.md`, `DESIGN.md` and the direction; without impeccable, the checklist and quality bar). Build each screen in `📱 Screens` from the chosen direction, section by section, from library components and variables. No hardcoded values when a token exists.
 3. If a screen needs a missing component, add it to the library first, then use the instance.
 4. Screenshot each screen and compare with the chosen direction.
 
 ## 6. Critique and polish (mandatory)
 
-- impeccable present: run `critique` (and `audit` for accessibility), apply the accepted fixes in Figma as one batch, then run `polish` and apply it. Both must be done before the design is reported as done.
+- impeccable present: run `critique` on rendered screenshots (and `audit` for accessibility), apply the accepted fixes in Figma as one batch, then run `polish` and apply it. Both must be done, and the quality gate in [quality-bar.md](quality-bar.md) must pass, before the design is reported as done; below the gate, report the gap and offer another round.
 - Absent: run the built-in critique checklist in [quality-bar.md](quality-bar.md) on the Figma build and fix in one batch.
 - Bounded: one critique, one fix batch, one polish pass per run.
 

@@ -25,6 +25,22 @@ How impeccable behaves, and how to pass the style into it:
 
 Apply `critique` findings and `polish` to the chosen direction, then to the Figma build, in one batch. Bounded: one critique, one fix batch, one polish pass per run.
 
+## Quality gate
+
+A design is done only when all three hold:
+
+1. **No P0 or P1 issues** remain in the critique findings.
+2. **The design-specificity verdict reads as authored**, not interchangeable within its category (impeccable's critique Design Specificity Verdict). This is the visual-quality signal.
+3. **The heuristics score is at least 28/40.** When some heuristics are n/a, keep the same 70% of the applicable maximum (for example at least 23/32 when two heuristics are n/a). This score measures usability (Nielsen), not visual quality; do not read it as one.
+
+How to run the critique so the gate means something:
+
+- Critique runs on rendered screenshots, never on source alone: render the comp artifact, and take Figma frames with `get_screenshot`.
+- The detector (Assessment B) runs on the HTML comp. A Figma-only critique has no Assessment B; report it as degraded and say so in the report.
+- Below the gate: report the gap (which condition failed, the open P0/P1 items, the score) and offer another fix round. Do not call the design done silently.
+
+Builders are held to the same standard: see the builder guidance in [tool-directory.md](tool-directory.md).
+
 ## Without impeccable: built-in critique checklist
 
 Run it on the chosen direction and again on the Figma build. Record each answer as pass, fix applied, or accepted risk.
@@ -40,4 +56,4 @@ Run it on the chosen direction and again on the Figma build. Record each answer 
 9. **Accessibility:** contrast, focus visibility, target sizes, no information carried by color alone.
 10. **Polish pass:** alignment to the grid, consistent corner radii, no stray one-off values, every value bound to a variable.
 
-Fix everything that failed in one batch, then stop.
+Fix everything that failed in one batch, then check the gate above (the checklist has no score: report any unfixed failure as the gap and offer another round).

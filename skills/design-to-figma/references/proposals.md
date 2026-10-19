@@ -10,7 +10,7 @@ When impeccable is present, its direction step supplies the candidates (with the
 
 ## Where to show them
 
-Never target claude.ai/design projects and never call the `DesignSync` tool; it belongs to the user-started `/design-sync` skill and is not a way to make designs.
+Never target claude.ai/design projects and never call the `DesignSync` tool. Claude Design now lives in Claude as artifacts.
 
 | Surface | How |
 |---|---|
