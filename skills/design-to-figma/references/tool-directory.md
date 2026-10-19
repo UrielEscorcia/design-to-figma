@@ -15,7 +15,7 @@ Which tool to use for which job. Reference the named skills and tools; do not co
 | Pull tokens and components into a system | impeccable `extract` | Use before building the Figma library |
 | Review a result | impeccable `critique` (mandatory) and `audit` (accessibility, responsive, optional) | Findings feed the next Figma edit. Without impeccable: critique checklist in [quality-bar.md](quality-bar.md) |
 | Final refinement pass | impeccable `polish` (mandatory) | Run on the chosen direction, then apply to Figma |
-| Create the Figma file | `figma-create-new-file` → `create_new_file` | Suggest a name (`<Product> — <Scope>`) and get the user's confirmation first; resolve the plan with `whoami` and ask which team or plan when there are several |
+| Create the Figma file | `figma-create-new-file` → `create_new_file` | Ask the file name as its own question first, suggesting `<Product> — <Scope>`, before the team or plan question; resolve the plan with `whoami` and ask which team or plan when there are several |
 | Brief the Figma builders (including delegated subagents) | Prompt contents below | Always include the builder guidance below |
 | Variables, styles, components (foundations) | `figma-generate-library` + `figma-use` → `use_figma` | Build in the order that skill defines |
 | Screens and composed views | `figma-generate-design` + `figma-use` → `use_figma` | Reuse library components and variables |

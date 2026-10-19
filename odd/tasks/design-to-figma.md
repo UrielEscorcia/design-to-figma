@@ -2,7 +2,7 @@
 
 - **Engram mirror:** `odd/design-to-figma/tasks`
 - **Branch:** `feat/d2f-04-quality-loop` (from `main` after PRs #1–#3 merged)
-- **Status:** T5c done (full-project trial); T9 (trial fixes and quality gate) next, then T10 (per-screen loop) and T11 (Design System artifact sync)
+- **Status:** T5c and T9 done; T10 (per-screen loop) next, then T11 (Design System artifact sync)
 
 ## Objective
 
@@ -171,6 +171,7 @@ Original questions:
   - the iteration agent blamed the card shadow for gray corner squares and offered to soften every card's shadow; a read-only inspection found the real cause: parents `Body` and `Suggestions` clip content with square corners at the card's bottom edge. It also hid a card to make the content fit;
   - not plugin issues: the stop-hook error (the parent folder is itself a git repo), a codegraph hook timeout, and an `odd/tasks` file written by the user's global instructions.
 - 2026-10-18: user decisions D17–D22 accepted. Research: unified chat and Cowork (support articles 15520349 and 17444462), Claude Design migration (17440474). T11 (Design System artifact sync) is split into its own slice after T9 and T10.
+- 2026-10-18: T9 committed (`6be37f7`). Fifth native review (lineage `review-a0c15fa96fef63f8`, risk high because of `tests/run.sh`) approved and acknowledged with 9 non-blocking advisories. Applied in a follow-up commit: stale status line; below-gate extra round runs only after the user accepts it and starts a new bounded run; the gate maps onto the built-in checklist without impeccable; the tool-directory file-name row now asks the name as its own question. Left as later work: R1-001 (spell out folder confirmation when several are possible), R2-builder-guidance-dup, R3-tests-skill-only-ordering (order checks only cover SKILL.md headings).
 
 ## Next step
 

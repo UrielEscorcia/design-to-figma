@@ -37,7 +37,7 @@ How to run the critique so the gate means something:
 
 - Critique runs on rendered screenshots, never on source alone: render the comp artifact, and take Figma frames with `get_screenshot`.
 - The detector (Assessment B) runs on the HTML comp. A Figma-only critique has no Assessment B; report it as degraded and say so in the report.
-- Below the gate: report the gap (which condition failed, the open P0/P1 items, the score) and offer another fix round. Do not call the design done silently.
+- Below the gate: report the gap (which condition failed, the open P0/P1 items, the score) and offer another fix round. Do not call the design done silently. The extra round runs only after the user accepts it, and it starts a new bounded run (one critique, one fix batch, one polish pass).
 
 Builders are held to the same standard: see the builder guidance in [tool-directory.md](tool-directory.md).
 
@@ -56,4 +56,4 @@ Run it on the chosen direction and again on the Figma build. Record each answer 
 9. **Accessibility:** contrast, focus visibility, target sizes, no information carried by color alone.
 10. **Polish pass:** alignment to the grid, consistent corner radii, no stray one-off values, every value bound to a variable.
 
-Fix everything that failed in one batch, then check the gate above (the checklist has no score: report any unfixed failure as the gap and offer another round).
+Fix everything that failed in one batch, then check the gate. Without impeccable the gate maps onto this checklist: no item left failed (the P0/P1 condition), items 1 and 2 pass (the specificity condition: the design reads as authored for this product, not as a category template), and there is no heuristics score, so condition 3 does not apply. Report the checklist run as the fallback gate, and report any unfixed failure as the gap and offer another round.
