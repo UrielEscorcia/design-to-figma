@@ -49,7 +49,8 @@ Do not load it for code generation from Figma (a future companion skill), for Fi
 | Existing project | Figma file URL or `PRODUCT.md`/`DESIGN.md` with a Figma header found | Read it; reuse the system; this is an iteration |
 | Existing project | None found (screen mode) | Minimal bootstrap inside the screen flow |
 | Brief | No `PRODUCT.md` brief yet | Interview first (who, problem, essential screens, name, UI language and locale), before style discovery |
-| Category | No confirmed category references recorded | Research real products of the brief's category first (at least 3, with sources), list them and wait for the user: [style-discovery.md](references/style-discovery.md) |
+| Locale | `PRODUCT.md` exists without a UI locale | Ask the UI language and locale once and record it before any UI copy is written |
+| Category | No confirmed category references recorded | Research real products of the brief's category first (at least 3, with sources; with no research tool, an unverified list plus a request for the user's references), list them and wait for the user: [style-discovery.md](references/style-discovery.md) |
 | Style | No confirmed style recorded | Run style discovery after the category references, building on them: [style-discovery.md](references/style-discovery.md) |
 | Palette | No confirmed palette | Show it as swatches and get explicit confirmation before any direction is generated |
 | Style | Style recorded in `DESIGN.md` / Brief page | Reuse it as a constraint; say so in one line |

@@ -188,6 +188,8 @@ Original questions:
 
 - 2026-10-19: T5d (barbershop booking app, Editorial) findings so far: brief, dark-mode and artifact opt-in questions all worked in Spanish; but the research was two generic searches (template and font sites), no real barbershop apps, reference brands from model knowledge, disclosed only after the proposals; each direction carried its own palette that the user never confirmed and disliked; UI copy came out in English for a Spanish-speaking user. User decisions D24–D26.
 
+- 2026-10-19: T14 committed (`1e22994`, `ef13fc1`); reviews `review-7af672a41e7bba98` and `review-79d26cdc8eefc678` approved and acknowledged. Follow-up: each style-discovery gate is skipped only by its own recorded confirmation (a recorded style no longer skips the category and palette gates for projects created on v0.2.0); an existing `PRODUCT.md` without a locale gets the locale question; the Category row states the no-tool fallback.
+
 ## Next step
 
 Open and merge the T14 PR (v0.3.0); the user finishes the T5d retest (on v0.2.0, steering the T14 gates by hand) and later verifies them on v0.3.0. Then T12 (review advisories, including keyword-only test assertions and the D22/D23–D26 table order), T6, T7.

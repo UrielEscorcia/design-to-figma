@@ -1,6 +1,6 @@
 # Style discovery
 
-Run after the product brief (`PRODUCT.md`: who, problem, essential screens, name, UI locale) and before any direction work, in both modes, for every new design (a new project, or a new screen without a recorded style). Skip only when `DESIGN.md` or the Brief page already records a confirmed style, and say so in one line.
+Run after the product brief (`PRODUCT.md`: who, problem, essential screens, name, UI locale) and before any direction work, in both modes, for every new design (a new project, or a new screen without a recorded style). Each gate is skipped only when its own confirmation is recorded: the category references (section 1), the style (sections 2–4) and the palette (section 5). A recorded style does not skip the category or palette gates; a project created before these gates (no category references or confirmed palette recorded) runs them before the next direction work. Say in one line which gates were skipped and why.
 
 ## 1. Research the category first
 
