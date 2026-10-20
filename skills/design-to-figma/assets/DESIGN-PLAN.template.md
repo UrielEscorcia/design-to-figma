@@ -25,7 +25,7 @@ States: Brief, Style, Palette/foundations and Components use `pending → user-a
 ### <Flow> / <Screen>
 
 - State: `pending`
-- Definition: <agreed behavior: purpose, primary action, content, states, edge cases>
+- Definition (agreed with the user on <date>): <purpose, primary action, content, states, edge cases>
 - Notes: <open gaps, decisions>
 - Dark (only when dark mode was requested): `pending`
 

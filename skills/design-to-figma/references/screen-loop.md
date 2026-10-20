@@ -8,9 +8,10 @@ Cost: each loop spends Figma MCP calls (per Figma's rate-limit documentation, ch
 
 ## 1. Define the screen
 
-- Ask how the screen should work when that adds value: purpose, primary action, content, states, edge cases. One question at a time; wait for each answer.
+- Ask how the screen should work: purpose, primary action, content, states, edge cases. One question at a time; wait for each answer.
+- A definition you derived yourself (from the chosen direction, a critique or an earlier screen) is only a proposal. Show it in a few lines with the choices that change behavior (for example time-slot spacing, defaults, what is hidden), contrast those choices with the category references, and wait for the user's yes before building.
 - Do not accept every request as-is. Contrast it with the confirmed style research ([style-discovery.md](style-discovery.md)) and with real screens of the same type from the reference source ([tool-directory.md](tool-directory.md)). Propose concrete suggestions: "in products X and Y this is solved by...; here it would look like...". Mark references as unverified when no research tool exists.
-- Use the user-review findings for the category (PRODUCT.md, [style-discovery.md](style-discovery.md)): what users ask for and what frustrates them in this type of screen. Agree with the user what will be built. Record the agreed definition in `DESIGN-PLAN.md` under that screen when a plan exists ([DESIGN-PLAN.template.md](../assets/DESIGN-PLAN.template.md)); otherwise record it in the screen section of `DESIGN.md` and in the report. Skip the questions only when the user already gave a complete definition.
+- Use the user-review findings for the category (PRODUCT.md, [style-discovery.md](style-discovery.md)): what users ask for and what frustrates them in this type of screen. Agree with the user what will be built. Record the agreed definition, with the date the user agreed it, in `DESIGN-PLAN.md` under that screen when a plan exists ([DESIGN-PLAN.template.md](../assets/DESIGN-PLAN.template.md)); otherwise record it in the screen section of `DESIGN.md` and in the report. Skip the questions only when the user already gave a complete definition.
 
 ## 2. Build
 
@@ -35,7 +36,7 @@ After the gate passes and polish is done, and before the user review (if the gat
 
 ## 6. User review
 
-Always ask for human review. Show the screenshot or Figma link, the verdict, the score, what the elevate pass changed and any open gap. When a requested change applies to the whole app rather than this screen, handle it as an app-wide rule ([iteration.md](iteration.md), step 9). The user approves or requests changes; apply each change in Figma per [iteration.md](iteration.md) and show it again until the user approves. State becomes `user-approved`. Do not start the next screen before approval unless the user explicitly says to batch.
+Always ask for human review. Show the screenshot or Figma link, the verdict, the score, what the elevate pass changed and any open gap. When a requested change applies to the whole app rather than this screen, handle it as an app-wide rule ([iteration.md](iteration.md), step 9). The user approves or requests changes; apply each change in Figma per [iteration.md](iteration.md) and show it again until the user approves. Never add a new product feature (an action, a label, content or a behavior the agreed definition does not have) on your own, whether it comes up in a fix, the polish or elevate pass or a user-review change: recommend it, say why, and add it only after the user agrees. State becomes `user-approved`. Do not start the next screen before approval unless the user explicitly says to batch.
 
 ## 7. Final verify
 

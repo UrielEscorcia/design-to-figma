@@ -141,6 +141,13 @@ grep -qiE 'progress updates' "$d/SKILL.md" || { echo "FAIL SKILL.md must keep pr
 grep -qE 'directions/' "$r/proposals.md" || { echo "FAIL proposals.md must persist the chosen direction in the project folder"; status=1; }
 grep -qiE 'direction' "$d/assets/DESIGN-PLAN.template.md" || { echo "FAIL DESIGN-PLAN.template.md must record where the chosen direction lives"; status=1; }
 
+# Content rules from the T5d Date & time screen: agreed definitions, no unrequested features.
+! grep -qiE 'when that adds value' "$sl" || { echo "FAIL screen-loop.md must not let the define step skip the user"; status=1; }
+grep -qiE 'only a proposal' "$sl" || { echo "FAIL screen-loop.md must treat a self-derived definition as a proposal"; status=1; }
+grep -qiE 'new product feature' "$sl" || { echo "FAIL screen-loop.md must ask before adding a new product feature"; status=1; }
+grep -qiE 'agreed with the user' "$d/assets/DESIGN-PLAN.template.md" || { echo "FAIL DESIGN-PLAN.template.md must mark the definition as agreed with the user"; status=1; }
+grep -qiE 'dispatch' "$d/SKILL.md" || { echo "FAIL SKILL.md must keep the line after dispatching a subagent in the user's language"; status=1; }
+
 if [[ -f "$d/SKILL.md" ]]; then
   for f in "$d"/references/*.md "$d"/assets/*; do
     [[ -e "$f" ]] || continue
