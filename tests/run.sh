@@ -136,6 +136,11 @@ grep -qE '`(bolder|delight|typeset)`' "$sl" || { echo "FAIL screen-loop.md must 
 grep -qiE 'app-wide' "$r/iteration.md" || { echo "FAIL iteration.md must turn app-wide requests into rules"; status=1; }
 grep -qiE 'user reviews' "$r/style-discovery.md" || { echo "FAIL style-discovery.md must research user reviews of category apps"; status=1; }
 
+# Content rules from the T5d resume: progress updates in the user's language, persisted direction comps.
+grep -qiE 'progress updates' "$d/SKILL.md" || { echo "FAIL SKILL.md must keep progress updates in the user's language"; status=1; }
+grep -qE 'directions/' "$r/proposals.md" || { echo "FAIL proposals.md must persist the chosen direction in the project folder"; status=1; }
+grep -qiE 'direction' "$d/assets/DESIGN-PLAN.template.md" || { echo "FAIL DESIGN-PLAN.template.md must record where the chosen direction lives"; status=1; }
+
 if [[ -f "$d/SKILL.md" ]]; then
   for f in "$d"/references/*.md "$d"/assets/*; do
     [[ -e "$f" ]] || continue

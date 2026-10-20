@@ -17,6 +17,7 @@ States: Brief, Style, Palette/foundations and Components use `pending → user-a
 - [ ] Brief: `pending`
 - [ ] Style and references: `pending`
 - [ ] Palette and foundations: `pending`
+- Chosen direction: <name>; comps in `directions/` (artifact: <url>)
 - [ ] Components: `pending`
 
 ## Screens

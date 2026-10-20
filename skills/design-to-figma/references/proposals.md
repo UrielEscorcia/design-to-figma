@@ -27,4 +27,5 @@ When the project has a Design System artifact (`design_system_url` in `DESIGN.md
 1. Ask which direction to build, or whether to adjust or generate more. Wait for the answer.
 2. If the user rejects the palette after seeing the directions, return to the palette gate, confirm a new palette, then regenerate. If the user asks for other changes or more options, regenerate within the same style and show them again. At most two extra rounds in total, palette resets included, then ask the user to pick.
 3. Record the chosen direction (name, one-line rationale) in `DESIGN.md` Overview and, in project mode, in the Brief page.
+   - Persist the direction comps: a session scratchpad is temporary and a resume must not depend on it. With a writable project folder, copy the comp source files into `directions/` at the folder root. In every case, record the folder and the artifact URL in `DESIGN-PLAN.md` (`Chosen direction`). On resume, build the remaining screens from there.
 4. Run impeccable `critique` (or the built-in checklist) on the chosen direction before the Figma build ([quality-bar.md](quality-bar.md)).

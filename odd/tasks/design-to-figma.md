@@ -194,6 +194,8 @@ Original questions:
 
 - 2026-10-19: `df0f2b0` reviewed (`review-826935da4d9dc2c7`) and approved. Follow-up: keep the elevated version when it still passes the gate with no new P0/P1 (score differences between two reviewers are noise), skip elevate when the gate still fails, restore the duplicate before a rate-limit stop, and a `PRODUCT.md` slot for user needs from reviews. Left for T12: keyword-only assertions, command-to-opportunity mapping for elevate.
 
+- 2026-10-19: T5d resumed after the Figma quota reset (not a rolling 24h window) from `DESIGN-PLAN.md`. Services was final-verified (26/36) and the Design System artifact re-synced (v4); Choose barber went through define, build, critique 29/40, polish and user review. Two gaps fixed in PR #8 (inline, 4 small edits): progress lines between subagent results drifted to English, so rule 13 now names progress updates; the chosen direction comps lived only in the session scratchpad, so `proposals.md` persists them in `directions/` and `DESIGN-PLAN.md` records the folder and artifact URL. RED: 3 FAIL lines → GREEN.
+
 ## Next step
 
 Open and merge the T14 PR (v0.3.0); the user finishes the T5d retest (on v0.2.0, steering the T14 gates by hand) and later verifies them on v0.3.0. Then T12 (review advisories, including keyword-only test assertions and the D22/D23–D26 table order), T6, T7.
