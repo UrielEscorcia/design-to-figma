@@ -200,6 +200,8 @@ Original questions:
 
 - 2026-10-20: T5d Date & time approved after the user moved slots to 15-minute starts (recorded in `DESIGN.md` as an app-wide rule); Review & confirm defined with the user ("agreed 2026-10-20") and built with its Confirmed state (32/40). Gap: the Date & time definition in `DESIGN-PLAN.md` still described 75-minute spacing and "from the direction critique" after the user's change, contradicting `DESIGN.md`. The user-review step now updates the screen's definition and agreement date whenever a change alters behavior. RED: 1 FAIL line → GREEN.
 
+- 2026-10-22: T5d My appointments and Appointment detail. With explicit instructions the agent proposed first, researched the category (Fresha, Booksy) and wrote in Spanish. Gap: the Appointment detail self-fix changed agreed behavior (undo banner 5 s to 8 s, "Agregar al calendario" from a labeled button to an icon-only nav button) and reported it, but the definition kept the old values; the update rule only named user-review changes. It now covers self-fix, polish and elevate changes too and asks to name them in the review. RED: 1 FAIL line → GREEN. Left for T12: the Design System artifact sync has no readback, previews were published unchecked.
+
 ## Next step
 
 Open and merge the T14 PR (v0.3.0); the user finishes the T5d retest (on v0.2.0, steering the T14 gates by hand) and later verifies them on v0.3.0. Then T12 (review advisories, including keyword-only test assertions and the D22/D23–D26 table order), T6, T7.
