@@ -148,6 +148,9 @@ grep -qiE 'new product feature' "$sl" || { echo "FAIL screen-loop.md must ask be
 grep -qiE 'agreed with the user' "$d/assets/DESIGN-PLAN.template.md" || { echo "FAIL DESIGN-PLAN.template.md must mark the definition as agreed with the user"; status=1; }
 grep -qiE 'update the (screen.s )?definition' "$sl" || { echo "FAIL screen-loop.md must keep the plan definition current after user changes"; status=1; }
 grep -qiE 'self-fix, the polish or elevate pass' "$sl" || { echo "FAIL screen-loop.md must keep the plan definition current after agent-made changes too"; status=1; }
+
+# Content rule from the T5d closing: the stand-in font swap was never verified because screenshots render the platform font blank.
+grep -qiE 'line count' "$r/figma-structure.md" || { echo "FAIL figma-structure.md must verify the platform font swap structurally"; status=1; }
 grep -qiE 'dispatch' "$d/SKILL.md" || { echo "FAIL SKILL.md must keep the line after dispatching a subagent in the user's language"; status=1; }
 
 if [[ -f "$d/SKILL.md" ]]; then

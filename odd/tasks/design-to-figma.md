@@ -202,6 +202,8 @@ Original questions:
 
 - 2026-10-22: T5d My appointments and Appointment detail. With explicit instructions the agent proposed first, researched the category (Fresha, Booksy) and wrote in Spanish. Gap: the Appointment detail self-fix changed agreed behavior (undo banner 5 s to 8 s, "Agregar al calendario" from a labeled button to an icon-only nav button) and reported it, but the definition kept the old values; the update rule only named user-review changes. It now covers self-fix, polish and elevate changes too and asks to name them in the review. RED: 1 FAIL line → GREEN. Left for T12: the Design System artifact sync has no readback, previews were published unchecked.
 
+- 2026-10-23: T5d closed: seven screens final-verified (26/36 to 35/40), cross-screen review 31/40, local files synced, Design System artifact v12. Gap: the Inter stand-in was swapped back to SF Pro after the final renders, because SF Pro renders blank in MCP screenshots, so the delivered file was never checked and line breaks were left to the user. `figma-structure.md` now compares each text node's line count before and after the swap, fixes changes and overflows, and reports those screens as structurally verified. RED: 1 FAIL line → GREEN. Still open for T12: Design System previews published unchecked (v9 to v12).
+
 ## Next step
 
 Open and merge the T14 PR (v0.3.0); the user finishes the T5d retest (on v0.2.0, steering the T14 gates by hand) and later verifies them on v0.3.0. Then T12 (review advisories, including keyword-only test assertions and the D22/D23–D26 table order), T6, T7.
