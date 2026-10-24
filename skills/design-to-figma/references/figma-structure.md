@@ -36,7 +36,7 @@ The Brief page carries no sync timestamp: sync state lives in the local files. N
 
 ## Fonts
 
-Before writing text styles, check availability with `figma.listAvailableFontsAsync()` and load only fonts that exist. Platform fonts can be missing or render blank in MCP screenshots (iOS: SF Pro, SF Pro Rounded). When one is not usable, tell the user and ask before substituting (for example Inter); never swap silently. Record an approved substitution in `DESIGN.md` as a known deviation.
+Before writing text styles, check availability with `figma.listAvailableFontsAsync()` and load only fonts that exist. Platform fonts can be missing or render blank in MCP screenshots (iOS: SF Pro, SF Pro Rounded). When one is not usable, tell the user and ask before substituting (for example Inter); never swap silently. Record an approved substitution in `DESIGN.md` as a known deviation. When the platform font replaces the stand-in at the end, screenshots can no longer check the result: before the swap, record each text node's line count (height divided by line height) with a script; after it, compare, fix every node whose line count changed or that now overflows its container, and report those screens as structurally verified, not visually.
 
 ## Rules
 

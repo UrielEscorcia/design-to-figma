@@ -35,7 +35,14 @@ scope: <full | minimal>
 
 <Names, logos, colors, fonts that must stay. Mark inferred facts as "(inferred)".>
 
+Category references: <real products of the same category, names and traits>.
+User needs from reviews: <what users of category apps ask for and what frustrates them, with sources>
+
 Style and references: <confirmed style; reference product names and traits; no copied assets>.
+
+## Locale
+
+<UI language and locale of the product, e.g. Spanish (Mexico): date, currency and number formats. All UI copy in proposals and Figma uses it; this file stays in English.>
 
 ## Dark Mode
 
