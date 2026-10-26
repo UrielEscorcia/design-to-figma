@@ -151,6 +151,7 @@ grep -qiE 'self-fix, the polish or elevate pass' "$sl" || { echo "FAIL screen-lo
 
 # Content rule from the T5d closing: the stand-in font swap was never verified because screenshots render the platform font blank.
 grep -qiE 'line count' "$r/figma-structure.md" || { echo "FAIL figma-structure.md must verify the platform font swap structurally"; status=1; }
+grep -qE 'exportAsync' "$r/figma-structure.md" || { echo "FAIL figma-structure.md must check flagged text visually with a client-side export"; status=1; }
 grep -qiE 'dispatch' "$d/SKILL.md" || { echo "FAIL SKILL.md must keep the line after dispatching a subagent in the user's language"; status=1; }
 
 if [[ -f "$d/SKILL.md" ]]; then

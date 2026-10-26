@@ -204,6 +204,8 @@ Original questions:
 
 - 2026-10-23: T5d closed: seven screens final-verified (26/36 to 35/40), cross-screen review 31/40, local files synced, Design System artifact v12. Gap: the Inter stand-in was swapped back to SF Pro after the final renders, because SF Pro renders blank in MCP screenshots, so the delivered file was never checked and line breaks were left to the user. `figma-structure.md` now compares each text node's line count before and after the swap, fixes changes and overflows, and reports those screens as structurally verified. RED: 1 FAIL line → GREEN. Still open for T12: Design System previews published unchecked (v9 to v12).
 
+- 2026-10-26: tested a visual check for the platform font. `get_screenshot` renders SF Pro blank, but `exportAsync` inside `use_figma` runs in the user's Figma desktop app and rendered SF Pro text ("Perfil" from the Navaja detail screen). A whole screen is about 69 KB of PNG, over the 48 KB return limit (3 calls per screen), so the rule exports only the parent blocks of the nodes the line-count comparison flags. RED: 1 FAIL line → GREEN.
+
 ## Next step
 
 Open and merge the T14 PR (v0.3.0); the user finishes the T5d retest (on v0.2.0, steering the T14 gates by hand) and later verifies them on v0.3.0. Then T12 (review advisories, including keyword-only test assertions and the D22/D23–D26 table order), T6, T7.
