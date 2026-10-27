@@ -36,7 +36,16 @@ The Brief page carries no sync timestamp: sync state lives in the local files. N
 
 ## Fonts
 
-Before writing text styles, check availability with `figma.listAvailableFontsAsync()` and load only fonts that exist. Platform fonts can be missing or render blank in MCP screenshots (iOS: SF Pro, SF Pro Rounded). When one is not usable, tell the user and ask before substituting (for example Inter); never swap silently. Record an approved substitution in `DESIGN.md` as a known deviation. When the platform font replaces the stand-in at the end, screenshots can no longer check the result: before the swap, record each text node's height with a script (it works with any line height, AUTO included); after it, compare, and fix every node whose height changed (it gained or lost a line) or that now overflows its container. Then check those flagged nodes visually: in `use_figma`, export each one's parent block with `exportAsync` as PNG and return it as base64. The export renders in the user's Figma desktop app, which has the local font. Export blocks, never whole screens, because a call's return value is limited (about 48 KB). Report the screens as structurally verified, plus the blocks checked visually.
+Before writing text styles, check availability with `figma.listAvailableFontsAsync()` and load only fonts that exist. Platform fonts can be missing or render blank in MCP screenshots (iOS: SF Pro, SF Pro Rounded). When one is not usable, tell the user and ask before substituting (for example Inter); never swap silently. Record an approved substitution in `DESIGN.md` as a known deviation. Text styles use pixel line heights (platform type ramps define them), so a text node's line count is its height divided by its line height.
+
+Never apply the platform font by script. The Figma that `use_figma` runs in lacks local platform fonts even when `listAvailableFontsAsync()` lists them: their text nodes report `hasMissingFont`, keep their previous size and line breaks after any script change, and export as last drawn. Only the user's Figma desktop app, which has the font, lays them out again. So keep the stand-in through every verify, and swap at the end:
+1. Record each text node's height and line count with a script.
+2. Ask the user to change the font family to the platform font in each text style, in Figma desktop. Editing the styles, not the nodes, lays out every text that uses them.
+3. Read the heights again. Flag every node whose line count changed or that now overflows its container, plus every fixed-height text node (`textAutoResize` `NONE` or `TRUNCATE`), whose height cannot show a new line.
+4. Check the flagged nodes visually: in `use_figma`, export each one's parent block with `exportAsync` as PNG and return it as base64. Right after the desktop layout, the export shows the real font and breaks. Export blocks, never whole screens, because a call's return value is limited (about 48 KB).
+5. Fix flagged nodes in Figma desktop with the user: a script change to a platform-font text node or its width leaves it stale again.
+
+Report the screens as structurally verified, plus the blocks checked visually.
 
 ## Rules
 

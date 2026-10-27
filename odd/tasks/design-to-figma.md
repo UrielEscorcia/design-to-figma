@@ -206,6 +206,7 @@ Original questions:
 
 - 2026-10-26: tested a visual check for the platform font. `get_screenshot` renders SF Pro blank, but `exportAsync` inside `use_figma` runs in the user's Figma desktop app and rendered SF Pro text ("Perfil" from the Navaja detail screen). A whole screen is about 69 KB of PNG, over the 48 KB return limit (3 calls per screen), so the rule exports only the parent blocks of the nodes the line-count comparison flags. RED: 1 FAIL line → GREEN.
 - 2026-10-26: the 841c23e review flagged that a line count from height divided by line height breaks with AUTO line height, the Figma default. The font swap check now compares each text node's height before and after the swap; a changed height means a line was gained or lost. User: "si de una metelo en el pr abierto".
+- 2026-10-27: tested in Navaja: the `use_figma` runtime lacks SF Pro (`hasMissingFont: true` although `listAvailableFontsAsync()` lists it). Script changes leave SF Pro text with its old size and breaks, and `exportAsync` shows the last drawn layout (an 80 px test text exported as one 264 px line). After the user re-set the font in Figma desktop, the script read the new layout (443 x 40, two lines) and the export matched; a later script change froze it again. The rule now leaves the swap to the user in Figma desktop, through the text styles, and requires pixel line heights. User: "si corrije eso".
 
 ## Next step
 

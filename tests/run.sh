@@ -151,8 +151,10 @@ grep -qiE 'self-fix, the polish or elevate pass' "$sl" || { echo "FAIL screen-lo
 
 # Content rule from the T5d closing: the stand-in font swap was never verified because screenshots render the platform font blank.
 grep -qiE "each text node's height" "$r/figma-structure.md" || { echo "FAIL figma-structure.md must verify the platform font swap structurally"; status=1; }
-grep -qiE 'divided by line height' "$r/figma-structure.md" && { echo "FAIL figma-structure.md must compare node heights, which also work with AUTO line height"; status=1; }
-grep -qE 'exportAsync' "$r/figma-structure.md" || { echo "FAIL figma-structure.md must check flagged text visually with a client-side export"; status=1; }
+grep -qE 'hasMissingFont' "$r/figma-structure.md" || { echo "FAIL figma-structure.md must say the use_figma runtime cannot lay out a platform font"; status=1; }
+grep -qiE 'never apply the platform font by script' "$r/figma-structure.md" || { echo "FAIL figma-structure.md must leave the platform font swap to the user's Figma desktop app"; status=1; }
+grep -qiE 'pixel line heights' "$r/figma-structure.md" || { echo "FAIL figma-structure.md must require pixel line heights so height gives the line count"; status=1; }
+grep -qE 'exportAsync' "$r/figma-structure.md" || { echo "FAIL figma-structure.md must check flagged text visually with an export"; status=1; }
 grep -qiE 'dispatch' "$d/SKILL.md" || { echo "FAIL SKILL.md must keep the line after dispatching a subagent in the user's language"; status=1; }
 
 if [[ -f "$d/SKILL.md" ]]; then
