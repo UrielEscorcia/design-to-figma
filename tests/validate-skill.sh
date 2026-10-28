@@ -13,9 +13,17 @@ errors=()
 
 frontmatter="$(awk 'NR==1 && $0!="---"{exit} NR>1 && $0=="---"{exit} NR>1{print}' "$file")"
 [[ -n "$frontmatter" ]] || errors+=("missing YAML frontmatter")
-# Without a closing line the whole body would be read as frontmatter.
-if [[ -n "$frontmatter" ]] && ! awk 'NR>1 && $0=="---"{found=1; exit} END{exit !found}' "$file"; then
-  echo "FAIL $dir"; echo "  - frontmatter is not closed (no second '---' line)"; exit 1
+# Without a closing line the body would be read as frontmatter, up to the end of the file or up to a
+# Markdown horizontal rule. Either way a body line shows up that is not a key, an indented value, a
+# comment or a list item.
+if [[ -n "$frontmatter" ]]; then
+  if ! awk 'NR>1 && $0=="---"{found=1; exit} END{exit !found}' "$file"; then
+    echo "FAIL $dir"; echo "  - frontmatter is not closed (no second '---' line)"; exit 1
+  fi
+  stray="$(printf '%s\n' "$frontmatter" | grep -nvE '^$|^([A-Za-z_-]+:.*|[[:space:]].*|#.*|-.*)$' | head -1 || true)"
+  if [[ -n "$stray" ]]; then
+    echo "FAIL $dir"; echo "  - frontmatter is not closed before line $(( ${stray%%:*} + 1 )): ${stray#*:}"; exit 1
+  fi
 fi
 
 seen=" "
