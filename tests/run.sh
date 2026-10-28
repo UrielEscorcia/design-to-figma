@@ -24,6 +24,7 @@ expect fail tests/fixtures/unclosed-frontmatter "frontmatter is not closed"
 expect fail tests/fixtures/duplicate-key "duplicate frontmatter key: description"
 expect fail tests/fixtures/dotted-key "key not allowed outside Claude Code: x2.mode"
 expect fail tests/fixtures/quoted-key "key not allowed outside Claude Code: user-invocable"
+expect fail tests/fixtures/quoted-duplicate "duplicate frontmatter key: license"
 # Oversized fixture is generated at runtime to keep 500 filler lines out of the repo.
 tmp="$(mktemp -d)"; trap 'rm -rf "$tmp"' EXIT
 mkdir -p "$tmp/too-long" && touch "$tmp/too-long/reference.md"
