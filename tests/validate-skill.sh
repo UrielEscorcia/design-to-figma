@@ -13,10 +13,17 @@ errors=()
 
 frontmatter="$(awk 'NR==1 && $0!="---"{exit} NR>1 && $0=="---"{exit} NR>1{print}' "$file")"
 [[ -n "$frontmatter" ]] || errors+=("missing YAML frontmatter")
+# Without a closing line the whole body would be read as frontmatter.
+if [[ -n "$frontmatter" ]] && ! awk 'NR>1 && $0=="---"{found=1; exit} END{exit !found}' "$file"; then
+  echo "FAIL $dir"; echo "  - frontmatter is not closed (no second '---' line)"; exit 1
+fi
 
+seen=" "
 while IFS= read -r key; do
   [[ -z "$key" ]] && continue
   [[ "$allowed" == *" $key "* ]] || errors+=("frontmatter key not allowed outside Claude Code: $key")
+  [[ "$seen" == *" $key "* ]] && errors+=("duplicate frontmatter key: $key")
+  seen+="$key "
 done < <(printf '%s\n' "$frontmatter" | sed -nE 's/^([A-Za-z_-]+):.*/\1/p')
 
 value_of() { printf '%s\n' "$frontmatter" | sed -nE "s/^$1:[[:space:]]*//p" | head -1 | sed -E 's/^["'\'']//; s/["'\'']$//'; }

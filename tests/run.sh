@@ -20,6 +20,8 @@ expect pass tests/fixtures/valid
 expect fail tests/fixtures/extra-key "key not allowed"
 expect fail tests/fixtures/long-description "exceeds 200"
 expect fail tests/fixtures/broken-link "broken link"
+expect fail tests/fixtures/unclosed-frontmatter "frontmatter is not closed"
+expect fail tests/fixtures/duplicate-key "duplicate frontmatter key: description"
 # Oversized fixture is generated at runtime to keep 500 filler lines out of the repo.
 tmp="$(mktemp -d)"; trap 'rm -rf "$tmp"' EXIT
 mkdir -p "$tmp/too-long" && touch "$tmp/too-long/reference.md"
@@ -34,6 +36,7 @@ for s in ${skills[@]+"${skills[@]}"}; do tests/validate-skill.sh "${s%/}" || sta
 
 # design-to-figma content: required files exist and SKILL.md links every supporting file.
 d=skills/design-to-figma
+r="$d/references"; sl="$r/screen-loop.md"; sd="$r/style-discovery.md"; das="$r/design-system-artifact.md"
 required=(
   SKILL.md
   references/preflight.md references/tool-directory.md references/workflow-project.md
@@ -54,19 +57,18 @@ if [[ -f "$b" ]]; then
   grep -qiE 'last[ -]?sync' "$b" && { echo "FAIL $b must not contain a last-sync line"; status=1; }
   grep -qE '(/Users/|/home/|[A-Za-z]:\\|<absolute|<path)' "$b" && { echo "FAIL $b must not contain an absolute-path placeholder"; status=1; }
 fi
-grep -qiE 'last[ -]?sync' "$d/references/figma-structure.md" && { echo "FAIL figma-structure.md must not mention a Brief last-sync line"; status=1; }
-grep -qE 'Required tools:[^.]*get_design_context' "$d/references/preflight.md" && { echo "FAIL preflight.md must not require get_design_context"; status=1; }
+grep -qiE 'last[ -]?sync' "$r/figma-structure.md" && { echo "FAIL figma-structure.md must not mention a Brief last-sync line"; status=1; }
+grep -qE 'Required tools:[^.]*get_design_context' "$r/preflight.md" && { echo "FAIL preflight.md must not require get_design_context"; status=1; }
 grep -rq '/design-sync' "$d" && { echo "FAIL /design-sync is outdated (Claude Design lives in Claude as artifacts); remove every mention"; status=1; }
-grep -qE 'figma\.root\.children' "$d/references/sync-rules.md" || { echo "FAIL sync-rules.md must enumerate pages with figma.root.children"; status=1; }
+grep -qE 'figma\.root\.children' "$r/sync-rules.md" || { echo "FAIL sync-rules.md must enumerate pages with figma.root.children"; status=1; }
 
 # Content rules from the trial fixes and quality gate (T9).
-r="$d/references"
 grep -qiE "user's language" "$d/SKILL.md" || { echo "FAIL SKILL.md must state the reply-in-the-user's-language rule"; status=1; }
 brief_line="$(grep -nE '\*\*Product brief' "$d/SKILL.md" | head -1 | cut -d: -f1)"
 style_line="$(grep -nE '\*\*Style discovery' "$d/SKILL.md" | head -1 | cut -d: -f1)"
 { [[ -n "$brief_line" && -n "$style_line" ]] && (( brief_line < style_line )); } || { echo "FAIL SKILL.md must run the product brief step before style discovery (brief line '${brief_line:-none}', style line '${style_line:-none}')"; status=1; }
-grep -qiE 'swatch' "$r/style-discovery.md" || { echo "FAIL style-discovery.md must show palettes as a visual swatch artifact"; status=1; }
-grep -qiE 'seed' "$r/style-discovery.md" || { echo "FAIL style-discovery.md must mention the seed-color option"; status=1; }
+grep -qiE 'swatch' "$sd" || { echo "FAIL style-discovery.md must show palettes as a visual swatch artifact"; status=1; }
+grep -qiE 'seed' "$sd" || { echo "FAIL style-discovery.md must mention the seed-color option"; status=1; }
 grep -qiE 'file name[^.]*(own|separate) question' "$d/SKILL.md" || { echo "FAIL SKILL.md must ask the file name as its own question before the team"; status=1; }
 grep -rqE 'listAvailableFontsAsync' "$d" || { echo "FAIL no file mentions the listAvailableFontsAsync font check"; status=1; }
 grep -qE 'clipsContent' "$r/iteration.md" || { echo "FAIL iteration.md must tell to inspect ancestors (clipsContent)"; status=1; }
@@ -87,12 +89,11 @@ for st in pending built agent-verified user-approved final-verified; do
   grep -q -- "$st" "$d/assets/DESIGN-PLAN.template.md" 2>/dev/null || { echo "FAIL DESIGN-PLAN.template.md must carry the state '$st'"; status=1; }
 done
 grep -qF 'pending → built → agent-verified → user-approved → final-verified' "$d/assets/DESIGN-PLAN.template.md" || { echo "FAIL DESIGN-PLAN.template.md must state the full screen sequence on one line"; status=1; }
-grep -qiE 'budget' "$r/screen-loop.md" || { echo "FAIL screen-loop.md must state its own budget"; status=1; }
+grep -qiE 'budget' "$sl" || { echo "FAIL screen-loop.md must state its own budget"; status=1; }
 grep -q 'screen-loop.md' "$r/quality-bar.md" || { echo "FAIL quality-bar.md must point screens to screen-loop.md"; status=1; }
-grep -qE '70%|28/40' "$r/screen-loop.md" && { echo "FAIL screen-loop.md must not hardcode the gate threshold"; status=1; }
-grep -qiE 'when a plan exists|otherwise record' "$r/screen-loop.md" || { echo "FAIL screen-loop.md must handle the no-plan case"; status=1; }
-grep -qiE 'rate[- ]limit' "$r/screen-loop.md" || { echo "FAIL screen-loop.md must handle rate limits"; status=1; }
-sl="$r/screen-loop.md"
+grep -qE '70%|28/40' "$sl" && { echo "FAIL screen-loop.md must not hardcode the gate threshold"; status=1; }
+grep -qiE 'when a plan exists|otherwise record' "$sl" || { echo "FAIL screen-loop.md must handle the no-plan case"; status=1; }
+grep -qiE 'rate[- ]limit' "$sl" || { echo "FAIL screen-loop.md must handle rate limits"; status=1; }
 grep -qiE 'only one mode' "$sl" || { echo "FAIL screen-loop.md must add a Dark mode when dark mode is requested after foundations"; status=1; }
 grep -q 'polish' "$r/workflow-project.md" || { echo "FAIL workflow-project.md must reach the polish pass"; status=1; }
 grep -qiE 'user review' "$sl" 2>/dev/null || { echo "FAIL screen-loop.md must include the user review step"; status=1; }
@@ -103,10 +104,9 @@ grep -qiE 'dark mode[^.]*ask|ask[^.]*dark mode' "$d/SKILL.md" || { echo "FAIL SK
 grep -rqiE 'single[- ]mode' "$r" || { echo "FAIL references must document the single-mode semantic collection"; status=1; }
 grep -rqiE '(in|both) light and dark' "$d" && { echo "FAIL wording implies Light and Dark are always built"; status=1; }
 grep -qiE 'reference source' "$r/tool-directory.md" || { echo "FAIL tool-directory.md must declare a reference source slot"; status=1; }
-grep -qE '`polish`' "$d/references/screen-loop.md" || { echo "FAIL screen-loop.md must keep the mandatory polish pass"; status=1; }
+grep -qE '`polish`' "$sl" || { echo "FAIL screen-loop.md must keep the mandatory polish pass"; status=1; }
 
 # Content rules from the Design System artifact sync (T11).
-das="$r/design-system-artifact.md"
 grep -qiE 'one-way' "$das" 2>/dev/null || { echo "FAIL design-system-artifact.md must state the sync is one-way"; status=1; }
 grep -q 'from-design-tool.md' "$das" 2>/dev/null || { echo "FAIL design-system-artifact.md must name the type's from-design-tool.md procedure"; status=1; }
 grep -qiE 'never hardcode' "$das" 2>/dev/null || { echo "FAIL design-system-artifact.md must forbid hardcoding the type URL"; status=1; }
@@ -118,7 +118,6 @@ grep -rqE 'claude\.ai/(code/)?artifact/' "$d" && { echo "FAIL no artifact URL ma
 grep -qiE 'mode limit|limits modes' "$sl" || { echo "FAIL screen-loop.md must handle the Figma mode limit when adding Dark"; status=1; }
 
 # Content rules from the trial T5d: category research gate (D24), palette gate (D25), product locale (D26).
-sd="$r/style-discovery.md"
 grep -qiE 'category' "$sd" || { echo "FAIL style-discovery.md must research the product category before style"; status=1; }
 grep -qiE 'at least 3' "$sd" || { echo "FAIL style-discovery.md must require at least 3 real category products"; status=1; }
 grep -qiE 'before (continuing|any style|asking)' "$sd" || { echo "FAIL style-discovery.md must show the category references before continuing"; status=1; }
@@ -134,7 +133,7 @@ grep -qiE 'blind' "$r/quality-bar.md" || { echo "FAIL quality-bar.md must run th
 grep -qiE 'elevate' "$sl" || { echo "FAIL screen-loop.md must include the elevate pass"; status=1; }
 grep -qE '`(bolder|delight|typeset)`' "$sl" || { echo "FAIL screen-loop.md must name the impeccable elevate commands"; status=1; }
 grep -qiE 'app-wide' "$r/iteration.md" || { echo "FAIL iteration.md must turn app-wide requests into rules"; status=1; }
-grep -qiE 'user reviews' "$r/style-discovery.md" || { echo "FAIL style-discovery.md must research user reviews of category apps"; status=1; }
+grep -qiE 'user reviews' "$sd" || { echo "FAIL style-discovery.md must research user reviews of category apps"; status=1; }
 
 # Content rules from the T5d resume: progress updates in the user's language, persisted direction comps.
 grep -qiE 'progress updates' "$d/SKILL.md" || { echo "FAIL SKILL.md must keep progress updates in the user's language"; status=1; }
@@ -168,22 +167,26 @@ fi
 
 # Versioning: `claude plugin update` skips a plugin whose version did not change, so the plugin and
 # skill versions must match, and any change to the plugin since main must bump the version.
+# The base is origin/main, or the local main when there is no remote.
 version_of_plugin() { grep -oE '"version": *"[^"]+"' | grep -oE '[0-9][^"]*'; }
 pv="$(version_of_plugin < .claude-plugin/plugin.json)"
+# Plain X.Y.Z only: `sort -V` ranks 0.3.0-rc.1 above 0.3.0, so a prerelease would pass as a bump.
+[[ "$pv" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo "FAIL plugin.json version '$pv' must be X.Y.Z"; status=1; }
 sv="$(grep -oE '^ +version: *"[^"]+"' "$d/SKILL.md" | head -1 | grep -oE '[0-9][^"]*')"
 [[ -n "$pv" && "$pv" == "$sv" ]] || { echo "FAIL plugin.json version ($pv) and SKILL.md metadata version ($sv) must match"; status=1; }
-if base="$(git merge-base HEAD origin/main 2>/dev/null)"; then
+base_ref=origin/main; git rev-parse -q --verify origin/main >/dev/null || base_ref=main
+if base="$(git merge-base HEAD "$base_ref" 2>/dev/null)"; then
   if ! git diff --quiet "$base" -- skills .claude-plugin; then
     bv="$(git show "$base:.claude-plugin/plugin.json" 2>/dev/null | version_of_plugin)"
     newest="$(printf '%s\n%s\n' "$bv" "$pv" | sort -V | tail -1)"
     if [[ -z "$bv" ]]; then
-      echo "FAIL cannot read the plugin version on main; fetch origin and rerun"; status=1
+      echo "FAIL cannot read the plugin version on $base_ref; fetch origin and rerun"; status=1
     elif [[ "$pv" == "$bv" || "$newest" != "$pv" ]]; then
-      echo "FAIL the plugin changed since main but its version $pv is not higher than main's $bv; bump it"; status=1
+      echo "FAIL the plugin changed since $base_ref but its version $pv is not higher than $bv; bump it"; status=1
     fi
   fi
 else
-  echo "SKIP version bump check (no origin/main)"
+  echo "SKIP version bump check (no origin/main or main)"
 fi
 
 if command -v claude >/dev/null; then
