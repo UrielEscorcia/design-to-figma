@@ -26,6 +26,7 @@ States: Brief, Style, Palette/foundations and Components use `pending → user-a
 
 - State: `pending`
 - Definition (agreed with the user on <date>): <purpose, primary action, content, states, edge cases>
+- Figma calls used: <count, for the next screens' estimate>
 - Notes: <open gaps, decisions>
 - Dark (only when dark mode was requested): `pending`
 

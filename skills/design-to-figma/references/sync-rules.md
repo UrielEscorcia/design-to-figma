@@ -7,7 +7,7 @@ Figma is the source of truth for design data. Local `PRODUCT.md` / `DESIGN.md` a
 | Direction | Behavior |
 |---|---|
 | Figma → local `.md` | Automatic, at the end of every run (and when reading detects drift). |
-| Figma → Design System artifact | Write-only third target, one-way, when the user agreed and the tool and type exist: [design-system-artifact.md](design-system-artifact.md). Never read back from the artifact. Otherwise tell the user the updated `DESIGN.md` is available as context. Never call the `DesignSync` tool and never target claude.ai/design projects. |
+| Figma → Design System artifact | Write-only third target, one-way, when the user agreed and the tool and type exist: [design-system-artifact.md](design-system-artifact.md). Never take design data from the artifact; read it only to check a sync (the read-back in [design-system-artifact.md](design-system-artifact.md)). Otherwise tell the user the updated `DESIGN.md` is available as context. Never call the `DesignSync` tool and never target claude.ai/design projects. |
 | Local `.md` → Figma | Never automatic. Show the diff, then ask: **push to Figma** or **discard**. |
 
 ## Read before every step

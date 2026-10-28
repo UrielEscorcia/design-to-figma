@@ -4,7 +4,12 @@ Every screen runs this loop: each screen of a project, and the single screen in 
 
 **Budget.** The loop has its own explicit budget, stated here once and replacing the per-run limit in [quality-bar.md](quality-bar.md) for screens: one build; one agent verify plus at most 2 re-verifies after self-fix; at most 2 self-fix batches; one polish pass; one elevate pass with one extra verify (step 5); the user-requested iterations; one final verify; one Dark verify when requested. An extra round after a failed gate runs only with the user's consent, as a new bounded run.
 
-Cost: each loop spends Figma MCP calls (per Figma's rate-limit documentation, checked 2026-10-15: 200 per day on Dev and Full seats on Starter and Professional plans, 600 on Enterprise). Batch screenshots and take one render per verify. If calls run low or a rate-limit error occurs, stop at a clean point (finish or revert the current write), record the state and the next step in the plan, tell the user and resume later. Never leave a half-built screen unrecorded.
+Cost: each loop spends Figma MCP calls (per Figma's rate-limit documentation, checked 2026-10-15: 200 per day on Dev and Full seats on Starter and Professional plans, 600 on Enterprise). Batch screenshots and take one render per verify.
+
+- Record the calls each screen used on its `Figma calls used` line in the plan (or in the report when there is no plan). The first screen's count is the estimate for the next ones.
+- Before a screen or a pass, check that the calls made today, as far as you can count them, plus the estimate stay under the daily limit. When they would not, stop at a clean point while calls remain (finish or revert the current write), record the state and the next step in the plan, tell the user and resume later.
+- After a rate-limit error, no Figma call can revert anything. Record the partial state in the plan instead: what was written, what is missing, and any duplicate frame left by the elevate pass. Clean it up first on resume.
+- Never leave a half-built screen unrecorded.
 
 ## 1. Define the screen
 
@@ -19,7 +24,7 @@ Build the screen in Light (or the single mode) with the builder guidance in [too
 
 ## 3. Agent verify
 
-- A fresh, isolated reviewer (a subagent when available) runs impeccable's `critique` Assessment A on `get_screenshot` renders of this screen. Scoring is blind: the reviewer's prompt never includes the gate thresholds, the target score or any previous report or score. It receives the renders, `PRODUCT.md`, `DESIGN.md`, the screen definition and impeccable's critique instructions, and returns the full scores, the specificity verdict and P0–P3 findings, including the single biggest opportunity to move the screen from correct to excellent. The parent applies the quality gate in [quality-bar.md](quality-bar.md) to that report: P0/P1, specificity and heuristics conditions. Declare the run degraded (no Assessment B on Figma).
+- A fresh, isolated reviewer (a subagent when available) runs impeccable's `critique` Assessment A on `get_screenshot` renders of this screen. Scoring is blind, with the inputs and outputs set in [quality-bar.md](quality-bar.md) (Quality gate), including the single biggest opportunity to move the screen from correct to excellent. The parent applies the quality gate in [quality-bar.md](quality-bar.md) to that report: P0/P1, specificity and heuristics conditions. Declare the run degraded (no Assessment B on Figma).
 - Without impeccable, the reviewer applies the built-in checklist in [quality-bar.md](quality-bar.md).
 - A re-verify is a fresh blind reviewer that does not see the earlier report; the parent checks separately whether the earlier P0/P1 items are resolved.
 - State becomes `agent-verified` when the gate passes.
@@ -32,11 +37,31 @@ Then run one mandatory `polish` pass on the screen (impeccable's `polish`, or it
 
 ## 5. Elevate pass
 
-After the gate passes and polish is done, and before the user review (if the gate still fails after the self-fix rounds, skip this pass and carry the gap to the user review), move the screen from correct to excellent. Take the reviewer's named biggest opportunity (character, hierarchy, typography, color, delight) and apply one elevate pass with the matching impeccable command: `bolder`, `delight`, `typeset`, `colorize`, `layout`, `distill` or `quieter`. Duplicate the frame first so the previous version can be restored. Stay within the confirmed style, palette and rules. Without impeccable, apply the opportunity directly. Then verify again with a fresh blind reviewer. Keep the elevated version only if it still passes the gate, adds no P0 or P1 finding and breaks no rule; small score differences between two reviewers are noise, not a reason to restore. Otherwise restore the duplicate and report it. Delete the unused duplicate. A rate limit mid-pass follows the clean-stop rule above: restore the duplicate first. One elevate pass and one extra verify per screen.
+After the gate passes and polish is done, and before the user review, move the screen from correct to excellent. If the gate still fails after the self-fix rounds, skip this pass and carry the gap to the user review. Skip it too when the remaining calls cannot cover it (Cost, above), and say so.
+
+Take the reviewer's named biggest opportunity and apply one pass with the matching impeccable command:
+
+| Opportunity | Command |
+|---|---|
+| Character: the screen reads generic or safe | `bolder`, or `delight` for small moments |
+| Hierarchy or layout | `layout` |
+| Too many elements competing | `distill` |
+| Too loud or busy | `quieter` |
+| Typography | `typeset` |
+| Color | `colorize` |
+
+- Duplicate the frame first so the previous version can be restored. Stay within the confirmed style, palette and rules. Without impeccable, apply the opportunity directly.
+- Verify again with a fresh blind reviewer. Keep the elevated version when it still passes the gate, adds no P0 or P1 finding and breaks no rule. Scores are not compared between the two reviewers: their differences are noise. Otherwise restore the duplicate and report it. Delete the unused duplicate.
+- A rate-limit error mid-pass follows the rule in Cost, above: record the duplicate in the plan and restore it on resume.
+- One elevate pass and one extra verify per screen.
 
 ## 6. User review
 
-Always ask for human review. Show the screenshot or Figma link, the verdict, the score, what the elevate pass changed and any open gap. When a requested change applies to the whole app rather than this screen, handle it as an app-wide rule ([iteration.md](iteration.md), step 9). The user approves or requests changes; apply each change in Figma per [iteration.md](iteration.md) and show it again until the user approves. When a change alters the agreed behavior, whether it came from a self-fix, the polish or elevate pass or a user-review change, name it in the review as a change to what was agreed and update the screen's definition in `DESIGN-PLAN.md` in the same step (with the new agreement date once the user approves), so the plan never contradicts `DESIGN.md` or Figma. Never add a new product feature (an action, a label, content or a behavior the agreed definition does not have) on your own, whether it comes up in a fix, the polish or elevate pass or a user-review change: recommend it, say why, and add it only after the user agrees. State becomes `user-approved`. Do not start the next screen before approval unless the user explicitly says to batch.
+- Always ask for human review. Show the screenshot or Figma link, the verdict, the score, what the elevate pass changed and any open gap.
+- The user approves or requests changes. Apply each change in Figma per [iteration.md](iteration.md) and show it again until the user approves. A change for the whole app rather than this screen is an app-wide rule ([iteration.md](iteration.md), step 9).
+- When a change alters the agreed behavior, whether it came from a self-fix, the polish or elevate pass or a user-review change, name it in the review as a change to what was agreed. Update the screen's definition in `DESIGN-PLAN.md` in the same step (with the new agreement date once the user approves), so the plan never contradicts `DESIGN.md` or Figma.
+- Never add a new product feature (an action, a label, content or a behavior the agreed definition does not have) on your own, whether it comes up in a fix, the polish or elevate pass or a user-review change. Recommend it, say why, and add it only after the user agrees.
+- State becomes `user-approved`. Do not start the next screen before approval unless the user explicitly says to batch.
 
 ## 7. Final verify
 

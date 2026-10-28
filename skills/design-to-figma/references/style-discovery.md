@@ -16,7 +16,7 @@ Also look at user reviews of the category apps (App Store / Play Store reviews, 
 
 Present the list before continuing: at least 3 real products, each with its name, one line on what is relevant (flow, layout, tone) and the source link. Then ask the user to confirm, add or remove references, and wait.
 
-If the research finds fewer than 3 real category products, say so plainly now, never after the proposals, and ask how to proceed: more searches, references from the user, or continue with style references only. The style research below builds on the confirmed category references.
+If the research finds fewer than 3 real category products, say so plainly now, never after the proposals, and ask how to proceed: more searches, references from the user, or continue with style references only. Record the user's choice in `PRODUCT.md` (Category references), so the gate counts as confirmed on the next run. The style research below builds on the confirmed category references.
 
 ## 2. Ask which style
 
@@ -66,7 +66,7 @@ The confirmed category references, style, palette and traits are constraints fro
 
 - **Proposals:** every direction stays inside the style ([proposals.md](proposals.md)).
 - **impeccable (when present):** pass them as pinned aesthetics ([quality-bar.md](quality-bar.md)).
-- **Local files:** record them in `PRODUCT.md` (Brand Commitments and Product Principles) and `DESIGN.md` (Overview, under a "Style and references" line).
+- **Local files:** each gate reads its own record, so write all three, with the date of the user's confirmation: in `PRODUCT.md` (Brand Commitments) the `Category references` line, the `Style and references` line and the `Palette: confirmed` line ([PRODUCT.template.md](../assets/PRODUCT.template.md)); in `DESIGN.md` the style under Overview and the palette values and roles. In project mode, also mark Brief, Style and references and Palette in `DESIGN-PLAN.md` when it exists.
 - **Brief page:** add a "Style and references" block with the style name, both reference lists (category and style) and the traits ([brief-page.template.md](../assets/brief-page.template.md)).
 
 Record both lists (category references and style references) as names and traits only. Never copy assets, screenshots, logos or copy from reference products.

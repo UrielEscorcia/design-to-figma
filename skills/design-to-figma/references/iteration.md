@@ -16,7 +16,7 @@ After the first build, the user changes the design by asking in natural language
 6. **Verify.** `get_screenshot` of the changed frames; compare with the request.
 7. **Quality check.** For visual changes, run the critique checklist in [quality-bar.md](quality-bar.md) on the changed area; apply fixes in one batch.
 8. **Sync.** Update `DESIGN.md` and the snapshot per [sync-rules.md](sync-rules.md) (Figma → local), and report what changed under the Output Contract.
-9. **App-wide requests become rules.** When a user change applies to the whole app rather than one screen (layout, copy, language, spacing, behavior), record it as an app-wide rule in `DESIGN.md` (behavior or usage rules) and in the Brief page's usage rules, apply it to every screen already built, and respect it in later screens without being asked again. Ask when it is unclear whether a request is screen-only or app-wide.
+9. **App-wide requests become rules.** When a user change applies to the whole app rather than one screen (layout, copy, language, spacing, behavior), record it as an app-wide rule in `DESIGN.md` (behavior or usage rules) and in the Brief page's usage rules, apply it to every screen already built, and respect it in later screens without being asked again. Screens it changes that were already past `built` go back to `built` in the plan: run agent verify on them again and show them in the next user review, so no state claims approval of a version the user has not seen. Ask when it is unclear whether a request is screen-only or app-wide.
 
 ## Examples
 
