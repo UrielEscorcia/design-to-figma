@@ -1,8 +1,8 @@
 # Feature: design-to-figma plugin
 
 - **Engram mirror:** `odd/design-to-figma/tasks`
-- **Branch:** `feat/d2f-08-research-gate` (from `main` after PR #7 merged)
-- **Status:** T9–T11 merged (PRs #4–#6); T13 merged (PR #7, v0.2.0); T5d retest in progress on v0.2.0; T14 (research and palette gates, v0.3.0) done, PR pending; next: finish T5d, then T12, T6, T7
+- **Branch:** `fix/d2f-09-review-advisories` (from `main` after PR #8 merged, `d242c81`)
+- **Status:** T9–T11 merged (PRs #4–#6); T13 merged (PR #7, v0.2.0); T5d done on v0.2.0; T14 merged (PR #8, v0.3.0); T12 in progress; next: T6, T7
 
 ## Objective
 
@@ -45,11 +45,11 @@ Figma already ships an official remote MCP server (`mcp.figma.com/mcp`) and a Cl
 | D19 | Screen definition (2026-10-18) | Before building a screen, ask how it should work when that adds value. Do not accept every request as-is: contrast it with the research and with real screens of the same type, and suggest how it would look, so both sides agree on what is built. A reference-source slot in the tool directory is reserved for a future references MCP (for example Mobbin). |
 | D20 | Dark mode optional (2026-10-18) | Ask whether dark mode is needed when a project or screen is created; never assume it. Semantic color variables are created anyway in a single-mode collection, so adding Dark later is one new mode. When requested, Dark is built after the user approves the Light screen. |
 | D21 | Quality gate (2026-10-18) | A design is done only when: no P0/P1 issues, the impeccable design-specificity verdict reads as authored (not category-interchangeable), and the heuristic score is at least 28/40 (70% of the applicable maximum when heuristics are n/a). Builders receive impeccable's craft guidance (`craft-floor`, `layout`, `typeset`, the platform reference) plus `PRODUCT.md`/`DESIGN.md`. Critique runs on rendered screenshots; detector Assessment B runs on the HTML comp, and Figma-only critique is declared degraded. Below the gate, offer another round. |
+| D22 | Unified Claude experience (2026-10-18) | Chat and Cowork are merging ("Claude Cowork is now just Claude"); connected local folders are readable and writable from the desktop app. The write path is chosen by capability (a connected or project folder is writable), not by surface name. Downloads stay as the fallback. Claude Design now lives in Claude as artifacts, including design systems. |
 | D23 | Versioning (2026-10-19) | Every change to the plugin bumps its version (semver) in `plugin.json` and the SKILL.md `metadata.version`, which must match. `claude plugin update` skips a plugin whose version did not change: after PRs #4–#6 merged, the marketplace clone was current but the installed plugin stayed at the old commit. `tests/run.sh` enforces both rules against the local `origin/main` (fetch first; a downgrade or an unreadable base version fails). |
 | D24 | Category research gate (2026-10-19) | Before style work, research real products in the same category (for example barbershop booking apps) with sources, list them to the user and wait before continuing, so the user knows where the references come from. A references connector (for example Mobbin) is preferred when connected; without web tools, say the list is unverified and ask the user for references. |
 | D25 | Palette gate (2026-10-19) | The palette is defined and confirmed by the user (as a swatch artifact) before any direction is generated. Directions share the confirmed palette and differ in structure. |
 | D26 | Product locale (2026-10-19) | The brief asks the language and locale of the product's UI. All UI copy in proposals and Figma uses it. The English rule covers documentation and generated files, not product UI copy. |
-| D22 | Unified Claude experience (2026-10-18) | Chat and Cowork are merging ("Claude Cowork is now just Claude"); connected local folders are readable and writable from the desktop app. The write path is chosen by capability (a connected or project folder is writable), not by surface name. Downloads stay as the fallback. Claude Design now lives in Claude as artifacts, including design systems. |
 
 Proposed default Figma structure (adjustable): `📋 Brief & Rules` · `🎨 Foundations` (variables, styles) · `🧩 Components` · `📱 Screens`.
 
@@ -100,7 +100,7 @@ Original questions:
 |---|---|---|---|---|
 | T1 | Research the open questions; write `docs/research/platform-capabilities.md` | delegated (broad web research) + inline verification of the key claims | done | research doc |
 | T2 | Plugin scaffold: `plugin.json`, `marketplace.json`, validation test harness (RED first) | inline | done | RED: no manifest / no skills → GREEN `tests/run.sh` exit 0; commits `6c43e6e`, `083e224`; native review approved (4 lenses, lineage `review-ae3fc37288c0f62c`, acknowledged) |
-| T2b | Validator hardening from review advisories R3-003…006 (frontmatter parsing edge cases) | inline | pending | — |
+| T2b | Validator hardening from review advisories R3-003…006 (frontmatter parsing edge cases) | inline | folded into T12 (S12.22) | — |
 | T3 | `SKILL.md`: preflight, tool directory, both mode flows | delegated writer (writer trigger: 2+ non-trivial files) | done | RED: required-file check failed for all 10 missing files (the writer's pasted RED excerpt was partly reconstructed) → GREEN `tests/run.sh` exit 0, verified by the parent |
 | T4 | References: sync rules, Figma structure, minimal-system checklist, `.md` templates | delegated writer (with T3) | done | 7 references plus 3 assets; SKILL.md is 84 lines with a 187-character description |
 | T5 | Claude Code trial: local marketplace, both modes, a manual Figma edit round-trip. Also verify that `/design-sync` accepts `DESIGN.md` and what it targets after the claude.ai/design closure | inline + user | in progress | Single-screen mode passed (build, Figma → local, local → Figma); findings below. Full-project mode is retested after T5a/T5b |
@@ -109,15 +109,53 @@ Original questions:
 | T5c | Retest in Claude Code with the reinstalled plugin: full-project mode end to end, including proposals and an iteration request in Figma | user-assisted | done | Full project "Tino" (iOS finance app) built in about 58 minutes: 100 variables, 41 components, 10 screens Light and Dark; critique 25/40 → 27/40; iteration applied in Figma and synced. Findings in the progress log (2026-10-18) |
 | T9 | Trial fixes and quality gate: reply in the user's language; brief before style; visual palette by default; file name as its own question; iOS font check; iteration inspects ancestors and prefers local fixes; D21 quality gate; impeccable craft guidance to builders; D22 capability-based write path; D6 revision (`/design-sync` outdated) | delegated writer (writer trigger: 2+ non-trivial files) | done | RED: 16 FAIL lines, exit 1 (writer report) → GREEN `tests/run.sh` exit 0, rerun by the parent. Parent fix: scaled threshold wording (23/32 when two heuristics are n/a). SKILL.md 110 lines, description 191 characters |
 | T10 | Per-screen loop (D17), `DESIGN-PLAN.md` tracker (D18), screen definition with research contrast and a reference-source slot (D19), optional dark mode (D20) | delegated writer (writer trigger: 2+ non-trivial files) | done | RED: 16 FAIL lines, exit 1 (writer report) → GREEN `tests/run.sh` exit 0, rerun by the parent. New `screen-loop.md` and `DESIGN-PLAN.template.md`; SKILL.md 114 lines. Parent fixes: screen mode defines the screen before the proposals; Dark adds a mode to a single-mode `Semantic` collection first |
-| T12 | Round-2 review advisories (lineage `review-706145da1b2cb93f`): SKILL.md proposals before screen definition; explicit foundations approval; `design_system_url` with no writable folder; retry scope for failed artifact files; no revert call after a rate limit; capability-based artifact availability; opt-in record in screen mode without a plan; duplicated builder-guidance list; mixed path aliases and keyword-only assertions in `tests/run.sh` | delegated writer | pending | — |
+| T12 | Review advisories from rounds 2 and 3 and PR #8, with T2b folded in; items S12.1–S12.24 below | inline (small independent edits; no writer trigger) | in progress | — |
 | T13 | Version bump to 0.2.0 and the D23 checks in `tests/run.sh` | inline (3 files, mechanical) | done | RED: version mismatch and an unbumped skill change each failed → GREEN `tests/run.sh` exit 0 |
-| T14 | D24 category research gate, D25 palette gate, D26 product locale; bump to 0.3.0 | delegated writer (writer trigger: 2+ non-trivial files) | done | RED: 8 FAIL lines, exit 1 (writer report) → GREEN `tests/run.sh` exit 0, rerun by the parent. Parent addition: the Brief template lists category and style references separately. SKILL.md 120 lines |
-| T5d | Clean full-project retest in Claude Code with v0.2.0: screen loop, user review per screen, dark-mode question, Design System artifact | user-assisted | pending | — |
+| T14 | D24 category research gate, D25 palette gate, D26 product locale; bump to 0.3.0 | delegated writer (writer trigger: 2+ non-trivial files) | done (PR #8 merged, `d242c81`) | RED: 8 FAIL lines, exit 1 (writer report) → GREEN `tests/run.sh` exit 0, rerun by the parent. Parent addition: the Brief template lists category and style references separately. SKILL.md 120 lines |
+| T5d | Clean full-project retest in Claude Code with v0.2.0: screen loop, user review per screen, dark-mode question, Design System artifact | user-assisted | done | Navaja (barbershop booking, Editorial): 7 screens final-verified (26/36 to 35/40), cross-screen review 31/40, Design System artifact v12. Fixes shipped in PR #8. v0.3.0 gates are verified in T6 |
 | T11 | One-way sync from Figma foundations to a Claude Design System artifact, so later proposals use the project's system | delegated writer (writer trigger: 2+ non-trivial files) | done | RED: 9 FAIL lines, exit 1 (writer report) → GREEN `tests/run.sh` exit 0, rerun by the parent. New `design-system-artifact.md` defers file shapes and re-sync rules to the type's own `SKILL.md` and `from-design-tool.md` (read by the parent from the account's Design System type); adds all-mode tokens via the script read, `design_system_url`, opt-in, sync points and non-blocking failure. SKILL.md 118 lines |
 | T6a | Desktop smoke test: Figma connector in chat exposes `use_figma` | user-assisted | done | User screenshot (2026-10-16): Desktop chat lists about 42 Figma tools, `use_figma` included; invocation is tested in T6 |
 | T6 | Claude Desktop trial: zip upload, same cases | user-assisted | pending | — |
 | T7 | README: install and usage for Code and Desktop | inline | pending | — |
-| T8 | Publish the marketplace on GitHub (push is the user's decision) | user decision | in progress | Repo https://github.com/UrielEscorcia/design-to-figma (public, MIT); PRs #1–#3 open; merge pending |
+| T8 | Publish the marketplace on GitHub (push is the user's decision) | user decision | in progress | Repo https://github.com/UrielEscorcia/design-to-figma (public, MIT); PRs #1–#8 merged. Close after T7 |
+
+### T12 items
+
+Sources: review `review-706145da1b2cb93f` (round 2), the PR #8 reviews, and the T5d font-swap reviews. Each item is a fix to existing text or tests; none adds a product feature.
+
+Flow and gates:
+- S12.1 Screen mode defines the screen before the proposals at the SKILL.md level too (R2-skill-step-order-drift).
+- S12.2 Project mode asks the user to approve the foundations and components before the first Design System artifact sync and the screen plan (R3-foundations-approval-trigger).
+- S12.3 Each style-discovery confirmation is recorded where its gate reads it: the category list (or the user's choice to continue with fewer than 3), the style and the palette with its confirmation date (palette record target, category fallback).
+- S12.4 Direction comps with no writable folder are delivered as downloads, and the plan records the artifact URL (proposals.md:30).
+- S12.5 Figma structure names (pages, frames, layers, variables, styles, components) and the Brief page follow the documentation language rule; only product UI text uses the UI locale (SKILL.md:38).
+- S12.6 Decision Gates rows keep related rows together (the recorded-style row sits with the style rows); the feature doc's decision table runs D22 before D23.
+
+Screen loop and quality:
+- S12.7 After a rate-limit error no Figma call can revert: record the partial state (what was written, any duplicate frame) in the plan and restore at resume; stop at a clean point only while calls remain (R4-rate-limit-revert, screen-loop.md:35).
+- S12.8 The elevate pass maps each opportunity to its impeccable command and is skipped when the remaining calls cannot cover it; the keep/restore rule does not compare scores between reviewers.
+- S12.9 Each screen records the Figma calls it used; the first screen's count is the estimate for the next ones (per-screen call budget).
+- S12.10 The blind-critique rule is stated once (quality-bar.md); the screen loop points to it.
+- S12.11 The user-review step is split into short bullets (overloaded step 6).
+- S12.12 An app-wide rule applied to already approved screens sends them back for verification and user review instead of leaving stale states.
+- S12.13 The builder guidance list lives only in tool-directory.md; workflow-screen.md points to it (R2-builder-guidance-restated).
+- S12.14 Platform font swap: an unstyled text node binds to the text style with the same size, weight and line height; with no match or several, list it and ask (R3-unstyled-target-ambiguous, R2-001/R2-002 on figma-structure.md:42).
+
+Design System artifact:
+- S12.15 With no writable folder, tell the user `design_system_url` and include it in the downloaded `DESIGN.md` (R4-ds-artifact-url-no-writable-folder).
+- S12.16 Files that failed to save are listed as pending and retried at the next sync point even when their source did not change (R4-ds-artifact-retry-scope).
+- S12.17 Availability is decided by capability (tool, type, a publish that succeeds), not by surface name (R2-dsa-surface-name-gate).
+- S12.18 The opt-in is recorded in `PRODUCT.md`, and in the plan only when one exists (R3-plan-optin-screen-mode).
+- S12.19 Each sync reads the artifact back (file list and previews) and reports unchecked previews.
+
+Tests and validator:
+- S12.20 `tests/run.sh` uses one path alias per directory.
+- S12.21 Phrase assertions that guard an ordered or step-specific rule are scoped to the section that owns it; the runner states that phrase checks are regression guards, not proof of meaning (R3-keyword-only-assertions).
+- S12.22 The validator fails an unclosed frontmatter and a duplicate top-level key with a clear reason (T2b).
+- S12.23 The version check accepts only `X.Y.Z` versions and falls back to the local `main` when `origin/main` is missing.
+- S12.24 Version bump (D23).
+
+Open, verified in T6 (needs Figma desktop): editing a text style's font family re-lays out every node that uses it.
 
 ## Acceptance criteria
 
@@ -208,6 +246,8 @@ Original questions:
 - 2026-10-26: the 841c23e review flagged that a line count from height divided by line height breaks with AUTO line height, the Figma default. The font swap check now compares each text node's height before and after the swap; a changed height means a line was gained or lost. User: "si de una metelo en el pr abierto".
 - 2026-10-27: tested in Navaja: the `use_figma` runtime lacks SF Pro (`hasMissingFont: true` although `listAvailableFontsAsync()` lists it). Script changes leave SF Pro text with its old size and breaks, and `exportAsync` shows the last drawn layout (an 80 px test text exported as one 264 px line). After the user re-set the font in Figma desktop, the script read the new layout (443 x 40, two lines) and the export matched; a later script change froze it again. The rule now leaves the swap to the user in Figma desktop, through the text styles, and requires pixel line heights. User: "si corrije eso".
 
+- 2026-10-28: PR #8 merged (`d242c81`); the user updated the installed plugin to 0.3.0 (verified: the installed skill files match `main`). T12 started on `fix/d2f-09-review-advisories` with T2b folded in. L: user "arranca".
+
 ## Next step
 
-Open and merge the T14 PR (v0.3.0); the user finishes the T5d retest (on v0.2.0, steering the T14 gates by hand) and later verifies them on v0.3.0. Then T12 (review advisories, including keyword-only test assertions and the D22/D23–D26 table order), T6, T7.
+Finish T12 (S12.1–S12.24), then T6 (Desktop trial, also the v0.3.x verification), then T7 and close T8.
