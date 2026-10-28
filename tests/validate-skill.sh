@@ -15,14 +15,14 @@ frontmatter="$(awk 'NR==1 && $0!="---"{exit} NR>1 && $0=="---"{exit} NR>1{print}
 [[ -n "$frontmatter" ]] || errors+=("missing YAML frontmatter")
 # Without a closing line the body would be read as frontmatter, up to the end of the file or up to a
 # Markdown horizontal rule. Either way a body line shows up that is not a key, an indented value, a
-# comment or a list item.
+# comment or a list item. Limit: a body made only of such lines (headings, lists, "Word:" lines) is not caught.
 if [[ -n "$frontmatter" ]]; then
   if ! awk 'NR>1 && $0=="---"{found=1; exit} END{exit !found}' "$file"; then
     echo "FAIL $dir"; echo "  - frontmatter is not closed (no second '---' line)"; exit 1
   fi
-  stray="$(printf '%s\n' "$frontmatter" | grep -nvE '^$|^([A-Za-z0-9_-]+:.*|[[:space:]].*|#.*|-.*)$' | head -1 || true)"
+  stray="$(printf '%s\n' "$frontmatter" | grep -nvE '^$|^([A-Za-z0-9_.-]+:.*|"[^"]*":.*|'"'"'[^'"'"']*'"'"':.*|[[:space:]].*|#.*|-.*)$' | head -1 || true)"
   if [[ -n "$stray" ]]; then
-    echo "FAIL $dir"; echo "  - frontmatter is not closed before line $(( ${stray%%:*} + 1 )): ${stray#*:}"; exit 1
+    echo "FAIL $dir"; echo "  - frontmatter is not closed before line $(( ${stray%%:*} + 1 )), or that line is not YAML: ${stray#*:}"; exit 1
   fi
 fi
 
@@ -32,7 +32,7 @@ while IFS= read -r key; do
   [[ "$allowed" == *" $key "* ]] || errors+=("frontmatter key not allowed outside Claude Code: $key")
   [[ "$seen" == *" $key "* ]] && errors+=("duplicate frontmatter key: $key")
   seen+="$key "
-done < <(printf '%s\n' "$frontmatter" | sed -nE 's/^([A-Za-z0-9_-]+):.*/\1/p')
+done < <(printf '%s\n' "$frontmatter" | sed -nE 's/^([A-Za-z0-9_.-]+):.*/\1/p')
 
 value_of() { printf '%s\n' "$frontmatter" | sed -nE "s/^$1:[[:space:]]*//p" | head -1 | sed -E 's/^["'\'']//; s/["'\'']$//'; }
 

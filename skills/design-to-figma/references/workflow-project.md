@@ -12,7 +12,7 @@ Use when the user wants a design system plus several screens. Read Figma before 
 
 ## 2. Style discovery
 
-Follow [style-discovery.md](style-discovery.md), using the brief from step 1: research real category products and get the list confirmed, then ask the style, research current references, present the style with popular products and traits, and get the user's confirmation, and get the palette confirmed as swatches. Record each confirmation where section 6 of [style-discovery.md](style-discovery.md) says, so a later run skips only the gates already confirmed.
+Follow [style-discovery.md](style-discovery.md), using the brief from step 1: research real category products and get the list confirmed, then ask the style, research current references, present the style with popular products and traits, and get the user's confirmation, and get the palette confirmed as swatches. Record each confirmation as the "Record and pass on" section of [style-discovery.md](style-discovery.md) says, so a later run skips only the gates already confirmed.
 
 ## 3. Direction and proposals
 
@@ -34,7 +34,7 @@ Follow [style-discovery.md](style-discovery.md), using the brief from step 1: re
 
 ## 5. Screen list and plan
 
-Agree the screen list with the user (from the essential screens in the brief), then create `DESIGN-PLAN.md` from [DESIGN-PLAN.template.md](../assets/DESIGN-PLAN.template.md) in the project folder (or deliver it as a download), with Brief, Style and references, Palette and foundations and Components already marked `user-approved` from the confirmations recorded so far. Ask whether dark mode is needed if not yet recorded; never assume it. Keep the plan current after every state change.
+Agree the screen list with the user (from the essential screens in the brief), then create `DESIGN-PLAN.md` from [DESIGN-PLAN.template.md](../assets/DESIGN-PLAN.template.md) in the project folder (or deliver it as a download), with `Brief`, `Style and references`, `Palette and foundations` and `Components` already marked `user-approved` from the confirmations recorded so far. Ask whether dark mode is needed if not yet recorded; never assume it. Keep the plan current after every state change.
 
 ## 6. Per-screen loop
 

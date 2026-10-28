@@ -52,7 +52,7 @@ Take the reviewer's named biggest opportunity and apply one pass with the matchi
 
 - Duplicate the frame first so the previous version can be restored. Stay within the confirmed style, palette and rules. Without impeccable, apply the opportunity directly.
 - Verify again with a fresh blind reviewer. Keep the elevated version when it still passes the gate, adds no P0 or P1 finding and breaks no rule. Scores are not compared between the two reviewers: their differences are noise. Otherwise restore the duplicate and report it. Delete the unused duplicate.
-- A rate-limit error mid-pass follows the rule in Cost, above: record the duplicate in the plan; on resume, restore the version from before the elevate pass and delete the duplicate.
+- A rate-limit error mid-pass follows the rule in Cost, above.
 - One elevate pass and one extra verify per screen.
 
 ## 6. User review
