@@ -8,6 +8,8 @@ dir="${1:?usage: validate-skill.sh <skill-dir>}"
 file="$dir/SKILL.md"
 allowed=" name description license compatibility metadata allowed-tools "
 errors=()
+# One grammar for a top-level key: double-quoted, single-quoted or bare. Groups 2-4 hold the unquoted name.
+key_re="(\"([^\"]*)\"|'([^']*)'|([A-Za-z0-9_.-]+))"
 
 [[ -f "$file" ]] || { echo "FAIL $dir: SKILL.md not found"; exit 1; }
 
@@ -20,7 +22,7 @@ if [[ -n "$frontmatter" ]]; then
   if ! awk 'NR>1 && $0=="---"{found=1; exit} END{exit !found}' "$file"; then
     echo "FAIL $dir"; echo "  - frontmatter is not closed (no second '---' line)"; exit 1
   fi
-  stray="$(printf '%s\n' "$frontmatter" | grep -nvE '^$|^([A-Za-z0-9_.-]+:.*|"[^"]*":.*|'"'"'[^'"'"']*'"'"':.*|[[:space:]].*|#.*|-.*)$' | head -1 || true)"
+  stray="$(printf '%s\n' "$frontmatter" | grep -nvE "^\$|^${key_re}:|^([[:space:]]|#|-)" | head -1 || true)"
   if [[ -n "$stray" ]]; then
     echo "FAIL $dir"; echo "  - frontmatter is not closed before line $(( ${stray%%:*} + 1 )), or that line is not YAML: ${stray#*:}"; exit 1
   fi
@@ -32,7 +34,7 @@ while IFS= read -r key; do
   [[ "$allowed" == *" $key "* ]] || errors+=("frontmatter key not allowed outside Claude Code: $key")
   [[ "$seen" == *" $key "* ]] && errors+=("duplicate frontmatter key: $key")
   seen+="$key "
-done < <(printf '%s\n' "$frontmatter" | sed -nE 's/^("([^"]*)"|'"'"'([^'"'"']*)'"'"'|([A-Za-z0-9_.-]+)):.*/\2\3\4/p')
+done < <(printf '%s\n' "$frontmatter" | sed -nE "s/^${key_re}:.*/\\2\\3\\4/p")
 
 value_of() { printf '%s\n' "$frontmatter" | sed -nE "s/^$1:[[:space:]]*//p" | head -1 | sed -E 's/^["'\'']//; s/["'\'']$//'; }
 

@@ -20,7 +20,8 @@ expect pass tests/fixtures/valid
 expect fail tests/fixtures/extra-key "key not allowed"
 expect fail tests/fixtures/long-description "exceeds 200"
 expect fail tests/fixtures/broken-link "broken link"
-expect fail tests/fixtures/unclosed-frontmatter "frontmatter is not closed"
+expect fail tests/fixtures/unclosed-frontmatter "or that line is not YAML"
+expect fail tests/fixtures/no-closing-line "no second '---' line"
 expect fail tests/fixtures/duplicate-key "duplicate frontmatter key: description"
 expect fail tests/fixtures/dotted-key "key not allowed outside Claude Code: x2.mode"
 expect fail tests/fixtures/quoted-key "key not allowed outside Claude Code: user-invocable"
@@ -198,6 +199,8 @@ grep -qiE 'Foundations: approved' "$d/assets/DESIGN.template.md" || { echo "FAIL
 grep -qiE 'creating it fails' "$das" || { echo "FAIL design-system-artifact.md must skip only when creating the artifact fails, and retry later saves"; status=1; }
 grep -qiE 'foundations build used' "$sl" || { echo "FAIL screen-loop.md must define the call estimate before the first screen"; status=1; }
 grep -qiE 'clean it up first' "$sl" && { echo "FAIL screen-loop.md must use one wording for the leftover elevate duplicate"; status=1; }
+grep -qiE 'if it was kept, delete the duplicate' "$sl" || { echo "FAIL screen-loop.md must keep an accepted elevate after a rate-limit stop"; status=1; }
+grep -E 'Continue the screen loop from step 3' "$r/workflow-screen.md" | grep -qi 'elevate' || { echo "FAIL workflow-screen.md must list the elevate pass among the remaining loop steps"; status=1; }
 grep -rqE 'Palette/foundations|and Palette in' "$d" && { echo "FAIL plan items must use the template names (Brief, Style and references, Palette and foundations, Components)"; status=1; }
 for item in 'Brief' 'Style and references' 'Palette and foundations' 'Components'; do
   grep -qF -- "- [ ] $item: \`pending\`" "$d/assets/DESIGN-PLAN.template.md" || { echo "FAIL DESIGN-PLAN.template.md must list the plan item '$item'"; status=1; }

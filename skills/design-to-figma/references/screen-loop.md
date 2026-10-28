@@ -8,7 +8,7 @@ Cost: each loop spends Figma MCP calls (per Figma's rate-limit documentation, ch
 
 - Record the calls each screen used on its `Figma calls used` line in the plan (or in the report when there is no plan). The first screen's count is the estimate for the next ones; before it, use the calls the foundations build used.
 - Before each screen, check that the calls made today, as far as you can count them, plus the estimate stay under the daily limit. When they would not, stop at a clean point while calls remain (finish or revert the current write), record the state and the next step in the plan, tell the user and resume later.
-- After a rate-limit error, no Figma call can revert anything. Record the partial state in the plan instead: what was written, what is missing, and any duplicate frame left by the elevate pass. On resume, handle that first: restore the version from before the elevate pass from the duplicate, then delete the duplicate.
+- After a rate-limit error, no Figma call can revert anything. Record the partial state in the plan instead: what was written, what is missing, and any duplicate frame left by the elevate pass, with whether the elevated version was already kept (step 5). On resume, handle that first: if it was kept, delete the duplicate; otherwise restore the version from before the elevate pass from the duplicate, then delete the duplicate.
 - Never leave a half-built screen unrecorded.
 
 ## 1. Define the screen

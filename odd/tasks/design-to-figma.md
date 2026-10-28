@@ -255,6 +255,8 @@ Open, verified in T6 (needs Figma desktop): editing a text style's font family r
 
 - 2026-10-28: `02eceaa` reviewed and approved; last correction batch for its warnings: one key-extraction substitution (a quoted key with a colon was emitted twice) and a `quoted-duplicate` fixture (single quotes plus a bare/quoted duplicate). Left as advisory: `value_of` reads only bare keys (pre-existing). Correction bound reached; remaining suggestions go to later work.
 
+- 2026-10-28: PR #9 opened (https://github.com/UrielEscorcia/design-to-figma/pull/9). Four-lens review of `dadf4a3..608323e` (`review-6e85cdc9d1897142`) approved and acknowledged; its advisories fixed in the same PR (user: "En el mismo PR"): a `no-closing-line` fixture for the end-of-file branch, the plan records whether the elevated version was kept so a rate-limit resume does not discard it (RED → GREEN), `workflow-screen.md` lists the elevate pass (RED → GREEN), and one key grammar (`key_re`) for the stray-line check and the key extraction.
+
 ## Next step
 
 Push `fix/d2f-09-review-advisories` and open its PR (the user's decision), then T6 (Desktop trial, also the v0.3.x verification, including whether a text style's font edit in Figma desktop re-lays out every node), then T7 and close T8.
