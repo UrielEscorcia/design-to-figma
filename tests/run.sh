@@ -23,6 +23,7 @@ expect fail tests/fixtures/broken-link "broken link"
 expect fail tests/fixtures/unclosed-frontmatter "frontmatter is not closed"
 expect fail tests/fixtures/duplicate-key "duplicate frontmatter key: description"
 expect fail tests/fixtures/dotted-key "key not allowed outside Claude Code: x2.mode"
+expect fail tests/fixtures/quoted-key "key not allowed outside Claude Code: user-invocable"
 # Oversized fixture is generated at runtime to keep 500 filler lines out of the repo.
 tmp="$(mktemp -d)"; trap 'rm -rf "$tmp"' EXIT
 mkdir -p "$tmp/too-long" && touch "$tmp/too-long/reference.md"
@@ -201,6 +202,7 @@ for item in 'Brief' 'Style and references' 'Palette and foundations' 'Components
   grep -qF -- "- [ ] $item: \`pending\`" "$d/assets/DESIGN-PLAN.template.md" || { echo "FAIL DESIGN-PLAN.template.md must list the plan item '$item'"; status=1; }
 done
 grep -qE 'section [0-9]+ of \[style-discovery' "$r/workflow-project.md" && { echo "FAIL workflow-project.md must name the style-discovery section, not its number"; status=1; }
+[[ -n "$(section "$sl" '^## 5\.')" ]] || { echo "FAIL screen-loop.md has no section 5 (the elevate pass); the scoped checks would test nothing"; status=1; }
 section "$sl" '^## 5\.' | grep -qiE 'restore the version from before' && { echo "FAIL screen-loop.md elevate pass must point to Cost for rate-limit recovery instead of restating it"; status=1; }
 
 if [[ -f "$d/SKILL.md" ]]; then

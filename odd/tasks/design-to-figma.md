@@ -251,6 +251,8 @@ Open, verified in T6 (needs Figma desktop): editing a text style's font family r
 
 - 2026-10-28: the stop hook required a four-lens review of the combined range `dadf4a3..23d2ca0` (`review-24213262b2e9533a`), approved and acknowledged. Its two warnings fixed before the PR (user: "Corrige y ya subes el PR"): plan items use the template names (`Brief`, `Style and references`, `Palette and foundations`, `Components`), and a closed frontmatter with a dotted or quoted key no longer fails as unclosed (new `dotted-key` fixture). Also: the style-discovery section is named, not numbered, and the elevate pass points to Cost for rate-limit recovery. RED: 4 FAIL lines → GREEN.
 
+- 2026-10-28: `e0a99a3` reviewed (reliability) and approved; its warning R3-001 was a regression from that commit: a quoted key skipped the allowed-key and duplicate checks. Fixed: key extraction strips quotes (new `quoted-key` fixture, RED: expected fail, got pass → GREEN), and the scoped negative checks on the elevate section first assert that the section exists.
+
 ## Next step
 
 Push `fix/d2f-09-review-advisories` and open its PR (the user's decision), then T6 (Desktop trial, also the v0.3.x verification, including whether a text style's font edit in Figma desktop re-lays out every node), then T7 and close T8.
