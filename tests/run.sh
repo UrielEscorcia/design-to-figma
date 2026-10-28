@@ -117,6 +117,47 @@ grep -qiE 'design system' "$r/proposals.md" || { echo "FAIL proposals.md must us
 grep -rqE 'claude\.ai/(code/)?artifact/' "$d" && { echo "FAIL no artifact URL may be hardcoded in the skill"; status=1; }
 grep -qiE 'mode limit|limits modes' "$sl" || { echo "FAIL screen-loop.md must handle the Figma mode limit when adding Dark"; status=1; }
 
+# Content rules from the trial T5d: category research gate (D24), palette gate (D25), product locale (D26).
+sd="$r/style-discovery.md"
+grep -qiE 'category' "$sd" || { echo "FAIL style-discovery.md must research the product category before style"; status=1; }
+grep -qiE 'at least 3' "$sd" || { echo "FAIL style-discovery.md must require at least 3 real category products"; status=1; }
+grep -qiE 'before (continuing|any style|asking)' "$sd" || { echo "FAIL style-discovery.md must show the category references before continuing"; status=1; }
+grep -qiE 'confirm(ed)? .*palette|palette .*confirm' "$r/proposals.md" || { echo "FAIL proposals.md must gate on a confirmed palette"; status=1; }
+grep -qiE 'share the confirmed palette' "$r/proposals.md" || { echo "FAIL proposals.md must make directions share the confirmed palette"; status=1; }
+grep -qiE 'locale' "$d/SKILL.md" || { echo "FAIL SKILL.md must ask the UI language and locale in the brief"; status=1; }
+grep -qiE 'locale' "$d/assets/PRODUCT.template.md" || { echo "FAIL PRODUCT.template.md must carry a Locale field"; status=1; }
+grep -qiE 'UI copy' "$d/SKILL.md" || { echo "FAIL SKILL.md must say the English rule does not cover UI copy"; status=1; }
+
+# Content rules from the live trial (v0.2.0): blind scoring, elevate pass, app-wide rules, user-review research.
+grep -qiE 'never includes the gate|without the gate|blind' "$sl" || { echo "FAIL screen-loop.md must score blind (reviewer never sees the gate)"; status=1; }
+grep -qiE 'blind' "$r/quality-bar.md" || { echo "FAIL quality-bar.md must run the critique blind"; status=1; }
+grep -qiE 'elevate' "$sl" || { echo "FAIL screen-loop.md must include the elevate pass"; status=1; }
+grep -qE '`(bolder|delight|typeset)`' "$sl" || { echo "FAIL screen-loop.md must name the impeccable elevate commands"; status=1; }
+grep -qiE 'app-wide' "$r/iteration.md" || { echo "FAIL iteration.md must turn app-wide requests into rules"; status=1; }
+grep -qiE 'user reviews' "$r/style-discovery.md" || { echo "FAIL style-discovery.md must research user reviews of category apps"; status=1; }
+
+# Content rules from the T5d resume: progress updates in the user's language, persisted direction comps.
+grep -qiE 'progress updates' "$d/SKILL.md" || { echo "FAIL SKILL.md must keep progress updates in the user's language"; status=1; }
+grep -qE 'directions/' "$r/proposals.md" || { echo "FAIL proposals.md must persist the chosen direction in the project folder"; status=1; }
+grep -qiE 'direction' "$d/assets/DESIGN-PLAN.template.md" || { echo "FAIL DESIGN-PLAN.template.md must record where the chosen direction lives"; status=1; }
+
+# Content rules from the T5d Date & time screen: agreed definitions, no unrequested features.
+! grep -qiE 'when that adds value' "$sl" || { echo "FAIL screen-loop.md must not let the define step skip the user"; status=1; }
+grep -qiE 'only a proposal' "$sl" || { echo "FAIL screen-loop.md must treat a self-derived definition as a proposal"; status=1; }
+grep -qiE 'new product feature' "$sl" || { echo "FAIL screen-loop.md must ask before adding a new product feature"; status=1; }
+grep -qiE 'agreed with the user' "$d/assets/DESIGN-PLAN.template.md" || { echo "FAIL DESIGN-PLAN.template.md must mark the definition as agreed with the user"; status=1; }
+grep -qiE 'update the (screen.s )?definition' "$sl" || { echo "FAIL screen-loop.md must keep the plan definition current after user changes"; status=1; }
+grep -qiE 'self-fix, the polish or elevate pass' "$sl" || { echo "FAIL screen-loop.md must keep the plan definition current after agent-made changes too"; status=1; }
+
+# Content rule from the T5d closing: the stand-in font swap was never verified because screenshots render the platform font blank.
+grep -qiE "each text node's height" "$r/figma-structure.md" || { echo "FAIL figma-structure.md must verify the platform font swap structurally"; status=1; }
+grep -qE 'hasMissingFont' "$r/figma-structure.md" || { echo "FAIL figma-structure.md must say the use_figma runtime cannot lay out a platform font"; status=1; }
+grep -qiE 'never apply the platform font by script' "$r/figma-structure.md" || { echo "FAIL figma-structure.md must leave the platform font swap to the user's Figma desktop app"; status=1; }
+grep -qiE 'pixel line heights' "$r/figma-structure.md" || { echo "FAIL figma-structure.md must require pixel line heights so height gives the line count"; status=1; }
+grep -qiE 'no text style' "$r/figma-structure.md" || { echo "FAIL figma-structure.md must bind unstyled text before the style-based font swap"; status=1; }
+grep -qE 'exportAsync' "$r/figma-structure.md" || { echo "FAIL figma-structure.md must check flagged text visually with an export"; status=1; }
+grep -qiE 'dispatch' "$d/SKILL.md" || { echo "FAIL SKILL.md must keep the line after dispatching a subagent in the user's language"; status=1; }
+
 if [[ -f "$d/SKILL.md" ]]; then
   for f in "$d"/references/*.md "$d"/assets/*; do
     [[ -e "$f" ]] || continue

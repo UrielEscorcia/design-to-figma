@@ -35,6 +35,7 @@ A design is done only when all three hold:
 
 How to run the critique so the gate means something:
 
+- Critique is blind: the reviewer never receives the gate thresholds, the target score or any earlier report or score, only the renders, `PRODUCT.md`, `DESIGN.md`, the screen definition and impeccable's critique instructions. It returns the full scores, the specificity verdict, P0–P3 findings and the single biggest opportunity to move the screen from correct to excellent. The parent applies the gate and runs the elevate pass ([screen-loop.md](screen-loop.md)).
 - Critique runs on rendered screenshots, never on source alone: render the comp artifact, and take Figma frames with `get_screenshot`.
 - The detector (Assessment B) runs on the HTML comp. A Figma-only critique has no Assessment B; report it as degraded and say so in the report.
 - Below the gate: report the gap (which condition failed, the open P0/P1 items, the score) and offer another fix round. Do not call the design done silently. The extra round runs only after the user accepts it, and it starts a new bounded run (one critique, one fix batch, one polish pass).
