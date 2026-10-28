@@ -33,6 +33,8 @@ components:
 
 Style and references: <style name; reference product names; traits (type, color use, density, radius, motion, imagery)>. Chosen direction: <name and one-line rationale>.
 
+Foundations: approved by the user on <date> (foundations and components, before the screen plan).
+
 ## Colors
 
 <Roles and how they are used. Values live in the frontmatter above and in Figma variables. Modes: Light (single mode), plus Dark only when requested.>

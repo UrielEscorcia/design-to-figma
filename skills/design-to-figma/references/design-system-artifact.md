@@ -5,7 +5,7 @@ Keep a Claude Design System artifact in step with the Figma file, so Claude's de
 ## Opt-in and availability
 
 - Ask once at project start (or at the minimal bootstrap in screen mode) whether the user wants the Design System artifact kept (default yes when the Artifact tool and the type are available). Record the answer in `PRODUCT.md`, and in the plan when one exists.
-- Decide availability by capability, never by the surface's name: the Artifact tool is present, the account lists a "Design System" Artifact type, and the first publish succeeds. When any of these fails, skip, say so once and continue. The Figma file and the local files remain complete.
+- Decide availability by capability, never by the surface's name: the Artifact tool is present, the account lists a "Design System" Artifact type, and creating the artifact succeeds. When creating it fails, skip, say so once, record no `design_system_url` and continue. Once the artifact exists, a failed save is retried instead (Failure, below). The Figma file and the local files remain complete.
 
 ## When to sync
 

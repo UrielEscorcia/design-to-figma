@@ -66,7 +66,7 @@ Do not load it for code generation from Figma (a future companion skill), for Fi
 | Write path | No writable folder (web, mobile, desktop app closed, older chat) or detection fails | Deliver files as downloads |
 | Design surface | Claude Code, or desktop/web Claude | Artifact Design type (`/design` in Code), or Output → Design |
 | Design System artifact | Artifact tool and the "Design System" type available, and the user agreed | Keep it synced one-way from Figma: [design-system-artifact.md](references/design-system-artifact.md) |
-| Design System artifact | No Artifact tool, no "Design System" type, or the first publish fails | Skip it and say so once; the Figma file and local files stay complete |
+| Design System artifact | No Artifact tool, no "Design System" type, or creating the artifact fails | Skip it and say so once; the Figma file and local files stay complete |
 | Both sides changed | Figma and local files differ | Figma wins for design data; ask before dropping local prose |
 
 Per-surface details and the capability-based write path: [preflight.md](references/preflight.md).

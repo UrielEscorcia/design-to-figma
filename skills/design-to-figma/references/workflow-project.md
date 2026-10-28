@@ -29,7 +29,7 @@ Follow [style-discovery.md](style-discovery.md), using the brief from step 1: re
 3. Check fonts ([figma-structure.md](figma-structure.md)). Load `figma-use` and `figma-generate-library`. Build `🎨 Foundations` (variable collections, with `Semantic` in a single-mode collection, or Light and Dark modes when dark mode was requested up front; text and effect styles) and `🧩 Components` (variants bound to variables).
 4. Fill `📋 Brief & Rules` from [brief-page.template.md](../assets/brief-page.template.md), including the style and references.
 5. Verify by enumerating pages and reading them, plus `get_screenshot` ([sync-rules.md](sync-rules.md)).
-6. Show the `🎨 Foundations` and `🧩 Components` screenshots and ask the user to approve the foundations and components. Apply requested changes ([iteration.md](iteration.md)) and show them again until the user approves. Record the approval in `DESIGN-PLAN.md` when it is created (section 5). Screens are not built on unapproved foundations.
+6. Show the `🎨 Foundations` and `🧩 Components` screenshots and ask the user to approve the foundations and components. Apply requested changes ([iteration.md](iteration.md)) and show them again until the user approves. Record the approval with its date in `DESIGN.md` (the `Foundations: approved` line), so it survives a stop before the plan exists; section 5 carries it into `DESIGN-PLAN.md`. Screens are not built on unapproved foundations.
 7. Once the foundations are user-approved, run the first Design System artifact sync when kept ([design-system-artifact.md](design-system-artifact.md)).
 
 ## 5. Screen list and plan

@@ -20,7 +20,7 @@ if [[ -n "$frontmatter" ]]; then
   if ! awk 'NR>1 && $0=="---"{found=1; exit} END{exit !found}' "$file"; then
     echo "FAIL $dir"; echo "  - frontmatter is not closed (no second '---' line)"; exit 1
   fi
-  stray="$(printf '%s\n' "$frontmatter" | grep -nvE '^$|^([A-Za-z_-]+:.*|[[:space:]].*|#.*|-.*)$' | head -1 || true)"
+  stray="$(printf '%s\n' "$frontmatter" | grep -nvE '^$|^([A-Za-z0-9_-]+:.*|[[:space:]].*|#.*|-.*)$' | head -1 || true)"
   if [[ -n "$stray" ]]; then
     echo "FAIL $dir"; echo "  - frontmatter is not closed before line $(( ${stray%%:*} + 1 )): ${stray#*:}"; exit 1
   fi
@@ -32,7 +32,7 @@ while IFS= read -r key; do
   [[ "$allowed" == *" $key "* ]] || errors+=("frontmatter key not allowed outside Claude Code: $key")
   [[ "$seen" == *" $key "* ]] && errors+=("duplicate frontmatter key: $key")
   seen+="$key "
-done < <(printf '%s\n' "$frontmatter" | sed -nE 's/^([A-Za-z_-]+):.*/\1/p')
+done < <(printf '%s\n' "$frontmatter" | sed -nE 's/^([A-Za-z0-9_-]+):.*/\1/p')
 
 value_of() { printf '%s\n' "$frontmatter" | sed -nE "s/^$1:[[:space:]]*//p" | head -1 | sed -E 's/^["'\'']//; s/["'\'']$//'; }
 

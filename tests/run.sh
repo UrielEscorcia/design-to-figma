@@ -37,7 +37,10 @@ for s in ${skills[@]+"${skills[@]}"}; do tests/validate-skill.sh "${s%/}" || sta
 # design-to-figma content: required files exist and SKILL.md links every supporting file.
 # Content checks are phrase guards against regressions found in trials and reviews; they do not prove
 # what the prose means. Rules that belong to one step are checked inside that step's section.
-section() { awk -v h="$2" 'f && /^#/ {exit} $0 ~ h {f=1} f' "$1"; } # section <file> <heading-regex>
+# section <file> <heading-regex>: from the matching heading to the next heading of the same or a higher level.
+# The regex goes through ENVIRON because awk -v would process its escapes. Code fences are not handled.
+section() { H="$2" awk 'f && /^#+ / {match($0, /^#+/); if (RLENGTH <= lvl) exit}
+  !f && $0 ~ ENVIRON["H"] {f=1; match($0, /^#+/); lvl=RLENGTH} f' "$1"; }
 d=skills/design-to-figma
 r="$d/references"; sl="$r/screen-loop.md"; sd="$r/style-discovery.md"; das="$r/design-system-artifact.md"
 required=(
@@ -160,7 +163,9 @@ grep -qiE 'no text style' "$r/figma-structure.md" || { echo "FAIL figma-structur
 grep -qE 'exportAsync' "$r/figma-structure.md" || { echo "FAIL figma-structure.md must check flagged text visually with an export"; status=1; }
 grep -qiE 'dispatch' "$d/SKILL.md" || { echo "FAIL SKILL.md must keep the line after dispatching a subagent in the user's language"; status=1; }
 
-# Content rules from the review advisories (T12). Each check is scoped to the section that owns the rule.
+# Content rules from the review advisories of rounds 2-3 and PR #8 (T12 items in odd/tasks/design-to-figma.md).
+# Rules that belong to one step are checked inside that step's section; checks that fail when a phrase is
+# present guard against an old wording coming back.
 grep -E '\*\*Direction and proposals' "$d/SKILL.md" | grep -qiE 'screen mode[^.]*defin' || { echo "FAIL SKILL.md step 5 must define the screen before the proposals in screen mode"; status=1; }
 section "$r/workflow-project.md" '^## 4\.' | grep -qiE 'ask the user to approve the foundations' || { echo "FAIL workflow-project.md step 4 must ask the user to approve the foundations"; status=1; }
 section "$sd" '^## 1\.' | grep -qiE "record the user's choice" || { echo "FAIL style-discovery.md must record the choice to continue with fewer than 3 category products"; status=1; }
@@ -186,6 +191,10 @@ grep -qiE 'even when (its|their) source did not change' "$das" || { echo "FAIL d
 grep -qiE 'Claude Code or a Cowork' "$das" && { echo "FAIL design-system-artifact.md must decide availability by capability, not surface name"; status=1; }
 grep -qiE 'plan when one exists' "$das" || { echo "FAIL design-system-artifact.md must record the opt-in in the plan only when one exists"; status=1; }
 grep -qiE 'read (it|the artifact) back' "$das" || { echo "FAIL design-system-artifact.md must read the artifact back after a sync"; status=1; }
+grep -qiE 'Foundations: approved' "$d/assets/DESIGN.template.md" || { echo "FAIL DESIGN.template.md must keep the foundations approval until the plan exists"; status=1; }
+grep -qiE 'creating it fails' "$das" || { echo "FAIL design-system-artifact.md must skip only when creating the artifact fails, and retry later saves"; status=1; }
+grep -qiE 'foundations build used' "$sl" || { echo "FAIL screen-loop.md must define the call estimate before the first screen"; status=1; }
+grep -qiE 'clean it up first' "$sl" && { echo "FAIL screen-loop.md must use one wording for the leftover elevate duplicate"; status=1; }
 
 if [[ -f "$d/SKILL.md" ]]; then
   for f in "$d"/references/*.md "$d"/assets/*; do

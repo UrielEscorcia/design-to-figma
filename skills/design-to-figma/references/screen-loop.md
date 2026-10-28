@@ -6,9 +6,9 @@ Every screen runs this loop: each screen of a project, and the single screen in 
 
 Cost: each loop spends Figma MCP calls (per Figma's rate-limit documentation, checked 2026-10-15: 200 per day on Dev and Full seats on Starter and Professional plans, 600 on Enterprise). Batch screenshots and take one render per verify.
 
-- Record the calls each screen used on its `Figma calls used` line in the plan (or in the report when there is no plan). The first screen's count is the estimate for the next ones.
-- Before a screen or a pass, check that the calls made today, as far as you can count them, plus the estimate stay under the daily limit. When they would not, stop at a clean point while calls remain (finish or revert the current write), record the state and the next step in the plan, tell the user and resume later.
-- After a rate-limit error, no Figma call can revert anything. Record the partial state in the plan instead: what was written, what is missing, and any duplicate frame left by the elevate pass. Clean it up first on resume.
+- Record the calls each screen used on its `Figma calls used` line in the plan (or in the report when there is no plan). The first screen's count is the estimate for the next ones; before it, use the calls the foundations build used.
+- Before each screen, check that the calls made today, as far as you can count them, plus the estimate stay under the daily limit. When they would not, stop at a clean point while calls remain (finish or revert the current write), record the state and the next step in the plan, tell the user and resume later.
+- After a rate-limit error, no Figma call can revert anything. Record the partial state in the plan instead: what was written, what is missing, and any duplicate frame left by the elevate pass. On resume, handle that first: restore the version from before the elevate pass from the duplicate, then delete the duplicate.
 - Never leave a half-built screen unrecorded.
 
 ## 1. Define the screen
@@ -37,7 +37,7 @@ Then run one mandatory `polish` pass on the screen (impeccable's `polish`, or it
 
 ## 5. Elevate pass
 
-After the gate passes and polish is done, and before the user review, move the screen from correct to excellent. If the gate still fails after the self-fix rounds, skip this pass and carry the gap to the user review. Skip it too when the remaining calls cannot cover it (Cost, above), and say so.
+After the gate passes and polish is done, and before the user review, move the screen from correct to excellent. If the gate still fails after the self-fix rounds, skip this pass and carry the gap to the user review. Skip it too, and say so, when fewer calls are left today than this screen has used so far (Cost, above).
 
 Take the reviewer's named biggest opportunity and apply one pass with the matching impeccable command:
 
@@ -52,7 +52,7 @@ Take the reviewer's named biggest opportunity and apply one pass with the matchi
 
 - Duplicate the frame first so the previous version can be restored. Stay within the confirmed style, palette and rules. Without impeccable, apply the opportunity directly.
 - Verify again with a fresh blind reviewer. Keep the elevated version when it still passes the gate, adds no P0 or P1 finding and breaks no rule. Scores are not compared between the two reviewers: their differences are noise. Otherwise restore the duplicate and report it. Delete the unused duplicate.
-- A rate-limit error mid-pass follows the rule in Cost, above: record the duplicate in the plan and restore it on resume.
+- A rate-limit error mid-pass follows the rule in Cost, above: record the duplicate in the plan; on resume, restore the version from before the elevate pass and delete the duplicate.
 - One elevate pass and one extra verify per screen.
 
 ## 6. User review
