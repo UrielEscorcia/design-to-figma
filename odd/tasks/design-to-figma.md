@@ -259,4 +259,4 @@ Open, verified in T6 (needs Figma desktop): editing a text style's font family r
 
 ## Next step
 
-Push `fix/d2f-09-review-advisories` and open its PR (the user's decision), then T6 (Desktop trial, also the v0.3.x verification, including whether a text style's font edit in Figma desktop re-lays out every node), then T7 and close T8.
+The user merges PR #9 (open, head on `fix/d2f-09-review-advisories`) and updates the installed plugin to 0.3.1, then T6 (Desktop trial, also the v0.3.x verification, including whether a text style's font edit in Figma desktop re-lays out every node), then T7 and close T8.
