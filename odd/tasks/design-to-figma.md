@@ -2,7 +2,7 @@
 
 - **Engram mirror:** `odd/design-to-figma/tasks`
 - **Branch:** `fix/d2f-10-desktop-trial` (from `main` after PR #9 merged, `984e1c2`)
-- **Status:** T9–T11 merged (PRs #4–#6); T13 merged (PR #7, v0.2.0); T5d done on v0.2.0; T14 merged (PR #8, v0.3.0); T12 merged (PR #9, v0.3.1); T6 done; T15 done (v0.3.2, PR pending); next: T16, T7
+- **Status:** T9–T11 merged (PRs #4–#6); T13 merged (PR #7, v0.2.0); T5d done on v0.2.0; T14 merged (PR #8, v0.3.0); T12 merged (PR #9, v0.3.1); T6 done; T15 merged (PR #10, v0.3.2); T16 in progress; next: T7
 
 ## Objective
 
@@ -117,7 +117,7 @@ Original questions:
 | T6a | Desktop smoke test: Figma connector in chat exposes `use_figma` | user-assisted | done | User screenshot (2026-10-16): Desktop chat lists about 42 Figma tools, `use_figma` included; invocation is tested in T6 |
 | T6 | Claude Desktop trial: zip upload, same cases | user-assisted | done | Zip v0.3.1 uploaded without errors; Sattva (yoga studio booking): 3 screens final-verified (cross-screen 37/34/36 of 40). Findings F1–F11 go to T15. Font question answered (see T12 items) |
 | T15 | Desktop trial fixes F1–F11; bump to 0.3.2; items S15.1–S15.7 below | inline (one understood change, no writer trigger) | done | `f2d6b34`, `6332c34` + this commit. RED: 21 FAIL lines → GREEN `tests/run.sh` exit 0. Mutation probe: dropping "alone" from gate step 6 fails the run. Version 0.3.2 |
-| T16 | Desktop-compatible impeccable repack (outside the plugin) and a short second Desktop trial | inline + user-assisted | pending | — |
+| T16 | Desktop-compatible impeccable repack (outside the plugin) and a short second Desktop trial | inline + user-assisted | in progress | Repack built locally, not committed (D-out: no redistribution): `~/Downloads/impeccable-desktop-4.3.1.zip` (660 KB) passes `tests/validate-skill.sh`; frontmatter keys stripped, description 172 characters, body identical, `scripts/bin` and live scripts dropped, `NOTICE.md` lists the changes. Plugin zip `~/Downloads/design-to-figma-0.3.2.zip`. Trial pending |
 | T7 | README: install and usage for Code and Desktop | inline | pending | — |
 | T8 | Publish the marketplace on GitHub (push is the user's decision) | user decision | in progress | Repo https://github.com/UrielEscorcia/design-to-figma (public, MIT); PRs #1–#8 merged. Close after T7 |
 
@@ -278,4 +278,6 @@ Source: the T6 Desktop trial (Sattva, v0.3.1, 2026-10-28/29). User words: "no ha
 
 ## Next step
 
-The user opens and merges the T15 PR (v0.3.2) and updates the plugin; then T16 (impeccable repack and a short Desktop trial with the 0.3.2 zip), then T7 and close T8.
+- 2026-10-29: PR #10 merged (ddbd273); plugin 0.3.2 installed. T16 repack built (see the T16 row).
+
+The user uploads both zips to Claude Desktop and runs a short trial (one screen); then T7 and close T8.
