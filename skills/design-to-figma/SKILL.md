@@ -3,7 +3,7 @@ name: design-to-figma
 description: "Design a full project or one screen in Figma, or iterate on an existing Figma design. Orchestrates Claude Design, impeccable (optional) and the Figma MCP; Figma stays the source of truth."
 license: MIT
 metadata:
-  version: "0.3.0"
+  version: "0.3.1"
   author: "Uriel Escorcia"
 ---
 
@@ -35,7 +35,7 @@ Do not load it for code generation from Figma (a future companion skill), for Fi
 10. **Aim for excellent, current design.** Research real category products and confirm them with the user, then confirm a style and a palette ([style-discovery.md](references/style-discovery.md)), show proposals before building, and verify every screen against the quality gate ([quality-bar.md](references/quality-bar.md)). No skeuomorphism or literal metaphors unless the user asks.
 11. **Never write absolute local paths, usernames or machine details into Figma.**
 12. **Enumerate Figma pages with a read-only `use_figma` script.** An unscoped `get_metadata` lists only the first page.
-13. **Reply in the user's language.** Prose, questions, reports and progress updates alike (including the lines written right after you dispatch a subagent or receive its result; subagent prompts and results are often English), never mixed. Generated documentation (`PRODUCT.md`, `DESIGN.md`, the plan, specs) stays in English unless the user asks otherwise. That rule never covers the product's UI copy: proposals, Figma screens and component text use the UI language and locale from the brief.
+13. **Reply in the user's language.** Prose, questions, reports and progress updates alike (including the lines written right after you dispatch a subagent or receive its result; subagent prompts and results are often English), never mixed. Generated documentation (`PRODUCT.md`, `DESIGN.md`, the plan, specs) stays in English unless the user asks otherwise. Figma page, frame, layer, variable, style and component names and the Brief page follow that documentation rule. It never covers the product's UI copy: text shown in the product (proposals, Figma screens, component text) uses the UI language and locale from the brief.
 14. **Builders follow the craft guides.** Every Figma builder, including delegated subagents, receives impeccable's craft guidance or the fallback checklist ([tool-directory.md](references/tool-directory.md)).
 15. **Track the plan.** In project mode create `DESIGN-PLAN.md` ([DESIGN-PLAN.template.md](assets/DESIGN-PLAN.template.md)) once the screen list is agreed, update it after every state change, and read it first on resume to continue with the next unfinished item. Every screen runs [screen-loop.md](references/screen-loop.md); never start the next screen before the user approves the current one, unless the user says to batch.
 
@@ -52,8 +52,8 @@ Do not load it for code generation from Figma (a future companion skill), for Fi
 | Locale | `PRODUCT.md` exists without a UI locale | Ask the UI language and locale once and record it before any UI copy is written |
 | Category | No confirmed category references recorded | Research real products of the brief's category first (at least 3, with sources; with no research tool, an unverified list plus a request for the user's references), list them and wait for the user: [style-discovery.md](references/style-discovery.md) |
 | Style | No confirmed style recorded | Run style discovery after the category references, building on them: [style-discovery.md](references/style-discovery.md) |
-| Palette | No confirmed palette | Show it as swatches and get explicit confirmation before any direction is generated |
 | Style | Style recorded in `DESIGN.md` / Brief page | Reuse it as a constraint; say so in one line |
+| Palette | No confirmed palette | Show it as swatches and get explicit confirmation before any direction is generated |
 | Web research | Web tool available (Code: WebSearch/WebFetch; Desktop: web search) | Research current references; otherwise label them unverified |
 | Proposals | Design surface available | Show 2 or 3 directions as Claude Design artifacts: [proposals.md](references/proposals.md) |
 | Proposals | No design surface | Quick frames on a `🧪 Explorations` page in Figma |
@@ -66,7 +66,7 @@ Do not load it for code generation from Figma (a future companion skill), for Fi
 | Write path | No writable folder (web, mobile, desktop app closed, older chat) or detection fails | Deliver files as downloads |
 | Design surface | Claude Code, or desktop/web Claude | Artifact Design type (`/design` in Code), or Output → Design |
 | Design System artifact | Artifact tool and the "Design System" type available, and the user agreed | Keep it synced one-way from Figma: [design-system-artifact.md](references/design-system-artifact.md) |
-| Design System artifact | Tool, type or publishing surface unavailable | Skip it and say so once; the Figma file and local files stay complete |
+| Design System artifact | No Artifact tool, no "Design System" type, or creating the artifact fails | Skip it and say so once; the Figma file and local files stay complete |
 | Both sides changed | Figma and local files differ | Figma wins for design data; ask before dropping local prose |
 
 Per-surface details and the capability-based write path: [preflight.md](references/preflight.md).
@@ -80,10 +80,10 @@ Per-surface details and the capability-based write path: [preflight.md](referenc
    - If none exists, continue with step 3. Templates: [PRODUCT.template.md](assets/PRODUCT.template.md), [DESIGN.template.md](assets/DESIGN.template.md), [DESIGN-PLAN.template.md](assets/DESIGN-PLAN.template.md).
 3. **Product brief.** Interview the user before any style work: who the users are, the problem, the essential screens, the product name, the UI language and locale (for example Spanish, Mexico: dates, currency, number formats) and whether dark mode is needed (ask; never assume) (impeccable `init`, or the questions in [minimal-system-checklist.md](references/minimal-system-checklist.md)). Wait for the answers; write `PRODUCT.md`.
 4. **Style discovery.** Using the brief, first research real products of the same category and get the user's confirmation of that list (category gate); then ask the style, research current references, present them with traits, get confirmation, and get the palette confirmed as swatches ([style-discovery.md](references/style-discovery.md)).
-5. **Direction and proposals.** Direction within the style (impeccable, or the checklist), then 2 or 3 directions that share the confirmed palette as Claude Design artifacts; the user picks ([proposals.md](references/proposals.md)). Critique the chosen direction ([quality-bar.md](references/quality-bar.md)).
+5. **Direction and proposals.** In screen mode, define the screen first (step 1 of [screen-loop.md](references/screen-loop.md)), so the proposals show the agreed screen. Direction within the style (impeccable, or the checklist), then 2 or 3 directions that share the confirmed palette as Claude Design artifacts; the user picks ([proposals.md](references/proposals.md)). Critique the chosen direction ([quality-bar.md](references/quality-bar.md)).
 6. **Run the mode flow.** Project: [workflow-project.md](references/workflow-project.md). Screen: [workflow-screen.md](references/workflow-screen.md). Tool choice at each step: [tool-directory.md](references/tool-directory.md).
 7. **Write to Figma.** Ask the file name as its own question first (before the team or plan question), then check fonts ([figma-structure.md](references/figma-structure.md)). Follow the page structure in [figma-structure.md](references/figma-structure.md); place the Brief page from [brief-page.template.md](assets/brief-page.template.md). Use `figma-create-new-file` for a new file, then `figma-use` with `figma-generate-library` / `figma-generate-design`. Validate with `get_screenshot` and structural reads. Build only the chosen direction, with the builder guidance from [tool-directory.md](references/tool-directory.md).
-8. **Screen loop.** Every screen (project: each one in turn; screen mode: the single screen) runs define, build, agent verify (`critique`), self-fix, `polish`, elevate, user review, final verify ([screen-loop.md](references/screen-loop.md)); critique and polish are mandatory for every screen. Done only when the quality gate passes, otherwise report the gap and offer another round ([quality-bar.md](references/quality-bar.md)). Project mode ends with a cross-screen critique.
+8. **Screen loop.** Every screen (project: each one in turn; screen mode: the single screen, already defined in step 5) runs define, build, agent verify (`critique`), self-fix, `polish`, elevate, user review, final verify ([screen-loop.md](references/screen-loop.md)); critique and polish are mandatory for every screen. Done only when the quality gate passes, otherwise report the gap and offer another round ([quality-bar.md](references/quality-bar.md)). Project mode ends with a cross-screen critique.
 9. **Sync the local files.** Update `PRODUCT.md` / `DESIGN.md` from Figma, refresh the frontmatter and snapshot, and re-sync the Design System artifact when kept ([design-system-artifact.md](references/design-system-artifact.md)). Handle local-only edits per [sync-rules.md](references/sync-rules.md).
 10. **Iterate on request.** Natural-language changes are applied in Figma, then synced ([iteration.md](references/iteration.md)).
 11. **Report** using the Output Contract.

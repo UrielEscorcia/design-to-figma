@@ -8,16 +8,33 @@ dir="${1:?usage: validate-skill.sh <skill-dir>}"
 file="$dir/SKILL.md"
 allowed=" name description license compatibility metadata allowed-tools "
 errors=()
+# One grammar for a top-level key: double-quoted, single-quoted or bare. Groups 2-4 hold the unquoted name.
+key_re="(\"([^\"]*)\"|'([^']*)'|([A-Za-z0-9_.-]+))"
 
 [[ -f "$file" ]] || { echo "FAIL $dir: SKILL.md not found"; exit 1; }
 
 frontmatter="$(awk 'NR==1 && $0!="---"{exit} NR>1 && $0=="---"{exit} NR>1{print}' "$file")"
 [[ -n "$frontmatter" ]] || errors+=("missing YAML frontmatter")
+# Without a closing line the body would be read as frontmatter, up to the end of the file or up to a
+# Markdown horizontal rule. Either way a body line shows up that is not a key, an indented value, a
+# comment or a list item. Limit: a body made only of such lines (headings, lists, "Word:" lines) is not caught.
+if [[ -n "$frontmatter" ]]; then
+  if ! awk 'NR>1 && $0=="---"{found=1; exit} END{exit !found}' "$file"; then
+    echo "FAIL $dir"; echo "  - frontmatter is not closed (no second '---' line)"; exit 1
+  fi
+  stray="$(printf '%s\n' "$frontmatter" | grep -nvE "^\$|^${key_re}:|^([[:space:]]|#|-)" | head -1 || true)"
+  if [[ -n "$stray" ]]; then
+    echo "FAIL $dir"; echo "  - frontmatter is not closed before line $(( ${stray%%:*} + 1 )), or that line is not YAML: ${stray#*:}"; exit 1
+  fi
+fi
 
+seen=" "
 while IFS= read -r key; do
   [[ -z "$key" ]] && continue
   [[ "$allowed" == *" $key "* ]] || errors+=("frontmatter key not allowed outside Claude Code: $key")
-done < <(printf '%s\n' "$frontmatter" | sed -nE 's/^([A-Za-z_-]+):.*/\1/p')
+  [[ "$seen" == *" $key "* ]] && errors+=("duplicate frontmatter key: $key")
+  seen+="$key "
+done < <(printf '%s\n' "$frontmatter" | sed -nE "s/^${key_re}:.*/\\2\\3\\4/p")
 
 value_of() { printf '%s\n' "$frontmatter" | sed -nE "s/^$1:[[:space:]]*//p" | head -1 | sed -E 's/^["'\'']//; s/["'\'']$//'; }
 

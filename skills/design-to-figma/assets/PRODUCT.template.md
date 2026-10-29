@@ -35,10 +35,12 @@ scope: <full | minimal>
 
 <Names, logos, colors, fonts that must stay. Mark inferred facts as "(inferred)".>
 
-Category references: <real products of the same category, names and traits>.
+Category references (confirmed <date>): <real products of the same category, names and traits; or the user's choice when fewer than 3 were found>.
 User needs from reviews: <what users of category apps ask for and what frustrates them, with sources>
 
 Style and references: <confirmed style; reference product names and traits; no copied assets>.
+
+Palette: confirmed <date> as swatches (<seed color or chosen option>); values and roles in `DESIGN.md`.
 
 ## Locale
 

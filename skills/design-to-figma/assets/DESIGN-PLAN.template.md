@@ -10,7 +10,7 @@ design_system_artifact: <yes | no | unavailable>
 
 Tracker for the sections to design. Update the state after every change; read this file first on resume and continue with the next unfinished item.
 
-States: Brief, Style, Palette/foundations and Components use `pending → user-approved`. Screens use `pending → built → agent-verified → user-approved → final-verified`. Closing items use `pending → done`. Per-screen loop: [screen-loop.md](../references/screen-loop.md).
+States: `Brief`, `Style and references`, `Palette and foundations` and `Components` use `pending → user-approved`. Screens use `pending → built → agent-verified → user-approved → final-verified`. Closing items use `pending → done`. Per-screen loop: [screen-loop.md](../references/screen-loop.md).
 
 ## Foundations
 
@@ -26,6 +26,7 @@ States: Brief, Style, Palette/foundations and Components use `pending → user-a
 
 - State: `pending`
 - Definition (agreed with the user on <date>): <purpose, primary action, content, states, edge cases>
+- Figma calls used: <count, for the next screens' estimate>
 - Notes: <open gaps, decisions>
 - Dark (only when dark mode was requested): `pending`
 
