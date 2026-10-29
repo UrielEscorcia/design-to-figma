@@ -17,11 +17,16 @@ Required tools: `use_figma`, `get_metadata`, `get_screenshot`, `create_new_file`
 
 `figma-use`, `figma-generate-library`, `figma-generate-design`, `figma-create-new-file` ship with the Figma plugin. If they are not available, continue with the MCP tools but warn that quality rules are reduced.
 
-## 3. impeccable (optional)
+## 3. impeccable (optional, asked when missing)
 
-- **Present** (an `impeccable` skill is listed): USE it as described in [tool-directory.md](tool-directory.md).
-- **Absent:** recommend it once ("install impeccable for deeper discovery, critique and polish"), then continue with [minimal-system-checklist.md](minimal-system-checklist.md).
-- **Claude Desktop:** impeccable cannot be uploaded as-is (extra frontmatter keys and a bundled launcher). Expect it to be absent there and use the fallback without treating it as an error.
+Check the skill list now, at the start, on every surface; never assume it is present or absent.
+
+- **Present** (an `impeccable` skill is listed): load it now, report "impeccable: used", and USE it for every step [tool-directory.md](tool-directory.md) names. On Desktop its launcher cannot run; impeccable then says "Context loading did not run" and reads `PRODUCT.md` / `DESIGN.md` directly. That is expected, not a failure.
+- **Absent:** ask one question, as its own gate, before the brief: impeccable is not available, and it gives deeper discovery, critique and polish. Options:
+  - **Install impeccable first:** give the steps for the current surface, then wait and check the skill list again.
+    - Claude Code: install it from its official source (https://impeccable.style), then start a new session.
+    - Claude Desktop: the upstream folder cannot be uploaded as is. Build a personal copy from an installed impeccable: in `SKILL.md` remove the `version`, `user-invocable` and `argument-hint` frontmatter keys, shorten `description` to 200 characters or less, keep `license`, remove `scripts/bin/`, zip the `impeccable` folder and upload it under Settings → Capabilities → Skills. Keep the Apache 2.0 notice and list the changes; never share the copy.
+  - **Continue without impeccable:** record the choice, use [minimal-system-checklist.md](minimal-system-checklist.md) and the critique checklist in [quality-bar.md](quality-bar.md), and list it under Warnings in the report.
 
 ## 4. Design-capable surface
 
@@ -59,4 +64,4 @@ The project folder holds `PRODUCT.md`, `DESIGN.md`, optionally `DESIGN.sync.json
 
 ## 8. Preflight report
 
-Before continuing, state in one short block: Figma tools (ok or BLOCKED), seat note, impeccable (used or fallback), design surface, web research (available or unverified), write path (target and whether confirmed).
+Before any other question, send the report as its own message, never skipped or folded into the brief: Figma tools (ok or BLOCKED), seat note, impeccable (used, or missing and asked next), design surface, web research (available or unverified), write path (the target). End it by asking the user to confirm the write path; that answer is the confirmation section 5 requires, so `PRODUCT.md` is written right after the brief, not at the final sync.

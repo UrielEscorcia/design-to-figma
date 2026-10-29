@@ -3,7 +3,7 @@ name: design-to-figma
 description: "Design a full project or one screen in Figma, or iterate on an existing Figma design. Orchestrates Claude Design, impeccable (optional) and the Figma MCP; Figma stays the source of truth."
 license: MIT
 metadata:
-  version: "0.3.2"
+  version: "0.3.3"
   author: "Uriel Escorcia"
 ---
 
@@ -62,7 +62,7 @@ Do not load it for code generation from Figma (a future companion skill), for Fi
 | Dark mode | A project or screen is created | Ask whether dark mode is needed; never assume it. If not requested, `Semantic` is a single-mode collection (Dark can be added later as a new mode); if requested up front, `Semantic` gets Light and Dark modes in foundations and Dark frames are built only after each Light screen is user-approved ([figma-structure.md](references/figma-structure.md)). Record the answer in `PRODUCT.md` and the plan |
 | Change request | User asks to change a built design | Apply in Figma, then sync: [iteration.md](references/iteration.md) |
 | impeccable | Its skill is available | Use it for every design step (context, shape, direction, extraction); `critique` and `polish` are mandatory, and builders get its craft guides |
-| impeccable | Not available | Recommend it once, continue with [minimal-system-checklist.md](references/minimal-system-checklist.md) and the critique checklist in [quality-bar.md](references/quality-bar.md) |
+| impeccable | Not available | Ask as its own question: install it first (steps per surface) or continue with [minimal-system-checklist.md](references/minimal-system-checklist.md) and the critique checklist in [quality-bar.md](references/quality-bar.md) ([preflight.md](references/preflight.md)) |
 | Write path | Claude Code project folder, or any connected local folder (Cowork, or the unified Claude experience on desktop) | Write there after confirming the path |
 | Write path | No writable folder (web, mobile, desktop app closed, older chat) or detection fails | Deliver files as downloads |
 | Design surface | Claude Code, or desktop/web Claude | Artifact Design type (`/design` in Code), or Output → Design |
@@ -76,7 +76,8 @@ Per-surface details and the capability-based write path: [preflight.md](referenc
 
 One gate per turn: ask it, wait for the answer, record it, then move to the next. Never bundle two gates into one message or one multi-question form, even when the surface offers a form tool; the brief's own questions are one gate. Before each step, read the reference it names; this list is a checkpoint, not a replacement for the reference. Steps 7 and 8 are project mode; screen mode follows [workflow-screen.md](references/workflow-screen.md) and keeps the other steps.
 
-1. **Brief** ([workflow-project.md](references/workflow-project.md) or [workflow-screen.md](references/workflow-screen.md)): users, problem, essential screens, name, UI locale, dark mode → `PRODUCT.md`. Then, in project mode, the Design System artifact opt-in as its own question → `PRODUCT.md`.
+0. **Preflight report** ([preflight.md](references/preflight.md)) as its own message: confirm the write path. Then, only when impeccable is missing, ask install or continue as its own question.
+1. **Brief** ([workflow-project.md](references/workflow-project.md) or [workflow-screen.md](references/workflow-screen.md)): users, problem, essential screens, name, UI locale, dark mode → `PRODUCT.md`. Then, in both modes, the Design System artifact opt-in as its own question → `PRODUCT.md`.
 2. **Category references**: list them with sources and wait ([style-discovery.md](references/style-discovery.md)).
 3. **Style**: ask it; never propose one in place of asking. Wait.
 4. **Palette**: swatches only after the style is confirmed. Wait.
@@ -85,7 +86,7 @@ One gate per turn: ask it, wait for the answer, record it, then move to the next
 7. **Foundations and components**, with the Brief page filled; the user approves; write `DESIGN.md` now with the `Foundations: approved` line.
 8. **Screen list** → `DESIGN-PLAN.md`.
 9. **Each screen**: the user review message has every field in [screen-loop.md](references/screen-loop.md) step 6; one screen per review unless the user said to batch.
-10. **Close**: build the snapshot from the read-only enumeration output ([sync-rules.md](references/sync-rules.md)) and check that every required page is not empty, the Brief page included, before the report.
+10. **Close**: build the snapshot from the read-only enumeration output ([sync-rules.md](references/sync-rules.md)) and check that every required page is not empty, the Brief page included, and that the Brief page text matches the current scope (screens and states added since it was written), before the report.
 
 ## Execution Steps
 
