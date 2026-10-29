@@ -1,8 +1,8 @@
 # Feature: design-to-figma plugin
 
 - **Engram mirror:** `odd/design-to-figma/tasks`
-- **Branch:** `fix/d2f-09-review-advisories` (from `main` after PR #8 merged, `d242c81`)
-- **Status:** T9–T11 merged (PRs #4–#6); T13 merged (PR #7, v0.2.0); T5d done on v0.2.0; T14 merged (PR #8, v0.3.0); T12 in progress; next: T6, T7
+- **Branch:** `fix/d2f-10-desktop-trial` (from `main` after PR #9 merged, `984e1c2`)
+- **Status:** T9–T11 merged (PRs #4–#6); T13 merged (PR #7, v0.2.0); T5d done on v0.2.0; T14 merged (PR #8, v0.3.0); T12 merged (PR #9, v0.3.1); T6 done; T15 in progress; next: T16, T7
 
 ## Objective
 
@@ -115,7 +115,9 @@ Original questions:
 | T5d | Clean full-project retest in Claude Code with v0.2.0: screen loop, user review per screen, dark-mode question, Design System artifact | user-assisted | done | Navaja (barbershop booking, Editorial): 7 screens final-verified (26/36 to 35/40), cross-screen review 31/40, Design System artifact v12. Fixes shipped in PR #8. v0.3.0 gates are verified in T6 |
 | T11 | One-way sync from Figma foundations to a Claude Design System artifact, so later proposals use the project's system | delegated writer (writer trigger: 2+ non-trivial files) | done | RED: 9 FAIL lines, exit 1 (writer report) → GREEN `tests/run.sh` exit 0, rerun by the parent. New `design-system-artifact.md` defers file shapes and re-sync rules to the type's own `SKILL.md` and `from-design-tool.md` (read by the parent from the account's Design System type); adds all-mode tokens via the script read, `design_system_url`, opt-in, sync points and non-blocking failure. SKILL.md 118 lines |
 | T6a | Desktop smoke test: Figma connector in chat exposes `use_figma` | user-assisted | done | User screenshot (2026-10-16): Desktop chat lists about 42 Figma tools, `use_figma` included; invocation is tested in T6 |
-| T6 | Claude Desktop trial: zip upload, same cases | user-assisted | pending | — |
+| T6 | Claude Desktop trial: zip upload, same cases | user-assisted | done | Zip v0.3.1 uploaded without errors; Sattva (yoga studio booking): 3 screens final-verified (cross-screen 37/34/36 of 40). Findings F1–F11 go to T15. Font question answered (see T12 items) |
+| T15 | Desktop trial fixes F1–F11; bump to 0.3.2; items S15.1–S15.7 below | inline | in progress | — |
+| T16 | Desktop-compatible impeccable repack (outside the plugin) and a short second Desktop trial | inline + user-assisted | pending | — |
 | T7 | README: install and usage for Code and Desktop | inline | pending | — |
 | T8 | Publish the marketplace on GitHub (push is the user's decision) | user decision | in progress | Repo https://github.com/UrielEscorcia/design-to-figma (public, MIT); PRs #1–#8 merged. Close after T7 |
 
@@ -155,7 +157,19 @@ Tests and validator:
 - S12.23 The version check accepts only `X.Y.Z` versions and falls back to the local `main` when `origin/main` is missing.
 - S12.24 Version bump (D23).
 
-Open, verified in T6 (needs Figma desktop): editing a text style's font family re-lays out every node that uses it.
+Verified in T6 (2026-10-29): editing a text style's font family in Figma desktop re-lays out every node that uses it. `text/label` changed from Manrope to Roboto Mono; each auto-width node's stored width matched a fresh Roboto Mono measurement (152, 85, 59, 101). A first try with `text/body` → Inter was inconclusive: the wrapped texts break into the same lines in both fonts.
+
+### T15 items
+
+Source: the T6 Desktop trial (Sattva, v0.3.1, 2026-10-28/29). User words: "no hace eso de mejorar cada pantalla cuando la termina de una me la manda review mio"; "revisando el figma no hizo nada den el brief"; "al inicio no me pregunto si mantener el artifact de design".
+
+- S15.1 (F1, F2) Each style-discovery gate is its own turn: the category list, then the style question, then the palette. Never batch gates into one multi-question form, never propose a style in place of asking it, never show palettes before the style is confirmed. The file name question comes at the Figma step, alone, without the team.
+- S15.2 (F3) The chosen direction gets its critique before any Figma write, with impeccable or with the fallback checklist, and the result is shown to the user.
+- S15.3 (F4, F5) The step-6 user review uses a fixed message with mandatory fields: verdict, score, polish result, elevate (kept or discarded, and what changed), open gaps. The agent does not ask for approval while a field is missing. One screen per review unless the user asked to batch.
+- S15.4 (F6, F8, F10, F11) Records come from Figma reads: `DESIGN.md` with the `Foundations: approved` line is written when the user approves; the sync snapshot is built only from the read-only enumeration output, with variable names and values; before the final report, every required page is checked non-empty, the Brief page included.
+- S15.5 (F9) Ask before any generation that spends the user's credits (for example Figma AI images); otherwise use placeholders.
+- S15.6 (F7) The Design System artifact opt-in is asked at project start, as its own question.
+- S15.7 Version bump to 0.3.2 (D23).
 
 ## Acceptance criteria
 
@@ -257,6 +271,10 @@ Open, verified in T6 (needs Figma desktop): editing a text style's font family r
 
 - 2026-10-28: PR #9 opened (https://github.com/UrielEscorcia/design-to-figma/pull/9). Four-lens review of `dadf4a3..608323e` (`review-6e85cdc9d1897142`) approved and acknowledged; its advisories fixed in the same PR (user: "En el mismo PR"): a `no-closing-line` fixture for the end-of-file branch, the plan records whether the elevated version was kept so a rate-limit resume does not discard it (RED → GREEN), `workflow-screen.md` lists the elevate pass (RED → GREEN), and one key grammar (`key_re`) for the stray-line check and the key extraction.
 
+- 2026-10-28: PR #9 merged (`984e1c2`); installed plugin 0.3.1 matches `main`.
+
+- 2026-10-29: T6 done in Claude Desktop (zip v0.3.1, Sattva). Verified: automatic trigger from a plain prompt, proposals as a Claude Design artifact, `use_figma` invoked with `resource:figma-use`, foundations approval gate, local write folder. Findings F1–F11 (S15.1–S15.6). The user asked to install impeccable on Desktop; it cannot be uploaded as shipped (rejected frontmatter keys, 800-character description; its launcher has a documented fallback), so a separate repack is T16 (user: "si eso haremos termino esto y metemos impecable adaptados despues").
+
 ## Next step
 
-The user merges PR #9 (open, head on `fix/d2f-09-review-advisories`) and updates the installed plugin to 0.3.1, then T6 (Desktop trial, also the v0.3.x verification, including whether a text style's font edit in Figma desktop re-lays out every node), then T7 and close T8.
+T15 (fixes S15.1–S15.7, v0.3.2), then T16, then T7 and close T8.
