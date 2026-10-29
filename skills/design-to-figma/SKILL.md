@@ -74,17 +74,17 @@ Per-surface details and the capability-based write path: [preflight.md](referenc
 
 ## Gate sequence
 
-One gate per turn: ask it, wait for the answer, record it, then move to the next. Never bundle two gates into one message or one multi-question form, even when the surface offers a form tool; the brief's own questions are one gate. Before each step, read the reference it names; this list is a checkpoint, not a replacement for the reference.
+One gate per turn: ask it, wait for the answer, record it, then move to the next. Never bundle two gates into one message or one multi-question form, even when the surface offers a form tool; the brief's own questions are one gate. Before each step, read the reference it names; this list is a checkpoint, not a replacement for the reference. Steps 7 and 8 are project mode; screen mode follows [workflow-screen.md](references/workflow-screen.md) and keeps the other steps.
 
 1. **Brief** ([workflow-project.md](references/workflow-project.md) or [workflow-screen.md](references/workflow-screen.md)): users, problem, essential screens, name, UI locale, dark mode → `PRODUCT.md`. Then, in project mode, the Design System artifact opt-in as its own question → `PRODUCT.md`.
 2. **Category references**: list them with sources and wait ([style-discovery.md](references/style-discovery.md)).
 3. **Style**: ask it; never propose one in place of asking. Wait.
 4. **Palette**: swatches only after the style is confirmed. Wait.
-5. **Direction**: 2 or 3 proposals; the user picks. Run the critique and show the critique and its fixes before any Figma write.
-6. **File name**: ask it alone, right before the file is created; then the team or plan when there are several.
+5. **Direction**: 2 or 3 proposals; the user picks. Run the critique and show the critique and its fixes before building in Figma (an `🧪 Explorations` fallback page is not a build).
+6. **File name**: right before the file is created (File name row above).
 7. **Foundations and components**, with the Brief page filled; the user approves; write `DESIGN.md` now with the `Foundations: approved` line.
 8. **Screen list** → `DESIGN-PLAN.md`.
-9. **Each screen**: the user review message has every field in [screen-loop.md](references/screen-loop.md) step 6; one screen per review.
+9. **Each screen**: the user review message has every field in [screen-loop.md](references/screen-loop.md) step 6; one screen per review unless the user said to batch.
 10. **Close**: build the snapshot from the read-only enumeration output ([sync-rules.md](references/sync-rules.md)) and check that every required page is not empty, the Brief page included, before the report.
 
 ## Execution Steps
