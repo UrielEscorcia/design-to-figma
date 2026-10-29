@@ -31,7 +31,7 @@ Keep a compact snapshot of Figma as it was at the last sync. It is the **base** 
 - `components`: component and component-set names.
 - `pages`: page names, each with its top-level frame names.
 
-Keep it deterministic: sort every list alphabetically, use the names and values exactly as Figma returns them, and exclude node IDs, positions and anything volatile.
+Build it only from the output of the read-only enumeration script (steps 1–3 above), never by hand or from what the run meant to build. Variables are recorded with their values, not counts. Keep it deterministic: sort every list alphabetically, use the names and values exactly as Figma returns them, and exclude node IDs, positions and anything volatile.
 
 ## Detecting changes (three-way)
 
