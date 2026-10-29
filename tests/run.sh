@@ -239,15 +239,29 @@ pf="$r/preflight.md"
 grep -qiE '^0\. \*\*Preflight report' <<<"$gs" || { echo "FAIL SKILL.md gate sequence must start with the preflight report as step 0"; status=1; }
 grep -qiE 'confirm the write path' <<<"$gs" || { echo "FAIL SKILL.md gate sequence step 0 must confirm the write path"; status=1; }
 grep -qiE 'impeccable.*own question' <<<"$gs" || { echo "FAIL SKILL.md gate sequence must ask about a missing impeccable as its own question"; status=1; }
+# The negative checks below pass on a missing file, so require the file first.
+[[ -f "$pf" ]] || { echo "FAIL missing $pf"; status=1; }
 grep -qiE 'Expect it to be absent' "$pf" && { echo "FAIL preflight.md must not assume impeccable is absent on Desktop"; status=1; }
 grep -qiE 'recommend it once' "$pf" "$d/SKILL.md" && { echo "FAIL a missing impeccable must be a question, not a one-time recommendation"; status=1; }
 ip="$(section "$pf" '^## 3\.')"
+grep -qiE 'never assume it is present or absent' <<<"$ip" || { echo "FAIL preflight.md must check for impeccable on every surface, never assume"; status=1; }
+grep -qiE 'new session or chat' <<<"$ip" || { echo "FAIL preflight.md must fall back to a new session or chat when a new install is not listed yet"; status=1; }
 grep -qiE 'Install impeccable first' <<<"$ip" || { echo "FAIL preflight.md must offer 'Install impeccable first' when it is missing"; status=1; }
 grep -qiE 'Continue without impeccable' <<<"$ip" || { echo "FAIL preflight.md must offer 'Continue without impeccable' when it is missing"; status=1; }
 grep -qiE 'version.*user-invocable.*argument-hint' <<<"$ip" || { echo "FAIL preflight.md must give the Desktop repack steps for impeccable"; status=1; }
 section "$pf" '^## 8\.' | grep -qiE 'own message' || { echo "FAIL preflight.md report must be its own message, never skipped"; status=1; }
 section "$r/workflow-screen.md" '^## B\.' | grep -qiE 'Design System artifact.*own question' || { echo "FAIL workflow-screen.md must ask the Design System artifact opt-in as its own question"; status=1; }
-grep -qiE 'Brief page.*current' <<<"$gs" || { echo "FAIL SKILL.md close step must check the Brief page matches the current scope"; status=1; }
+grep -E '^10\. \*\*Close' <<<"$gs" | grep -qiE 'Brief page text matches the current scope' || { echo "FAIL SKILL.md close step must check the Brief page matches the current scope"; status=1; }
+
+# T7: README with install and usage for Claude Code and Claude Desktop.
+rm_="README.md"
+if [[ -f "$rm_" ]]; then
+  for pat in 'claude plugin marketplace add UrielEscorcia/design-to-figma' 'claude plugin install design-to-figma@design-to-figma' 'claude plugin update design-to-figma@design-to-figma' 'zip -r \.\./design-to-figma\.zip design-to-figma' 'Capabilities → Skills' 'version.*user-invocable.*argument-hint' 'do not share or redistribute' 'Dev or Full seat'; do
+    grep -qE -- "$pat" "$rm_" || { echo "FAIL README.md must include: $pat"; status=1; }
+  done
+else
+  echo "FAIL missing README.md"; status=1
+fi
 
 if [[ -f "$d/SKILL.md" ]]; then
   for f in "$d"/references/*.md "$d"/assets/*; do
