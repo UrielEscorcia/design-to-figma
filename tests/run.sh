@@ -256,12 +256,15 @@ grep -E '^[0-9]+\. \*\*Close\*\*' <<<"$gs" | grep -qiE 'Brief page text matches 
 # T7: README with install and usage for Claude Code and Claude Desktop.
 readme="README.md"  # relative to the repository root; the script cds there at the top
 if [[ -f "$readme" ]]; then
-  for pat in 'claude plugin marketplace add UrielEscorcia/design-to-figma' 'claude plugin install design-to-figma@design-to-figma' 'claude plugin update design-to-figma@design-to-figma' 'zip -r \.\./design-to-figma\.zip design-to-figma' 'Capabilities → Skills' 'version.*user-invocable.*argument-hint' 'do not share or redistribute' 'Dev or Full seat'; do
+  for pat in 'claude plugin marketplace add UrielEscorcia/design-to-figma' 'claude plugin install design-to-figma@design-to-figma' 'claude plugin update design-to-figma@design-to-figma' 'zip -r \.\./design-to-figma\.zip design-to-figma' 'Capabilities → Skills' 'version.*user-invocable.*argument-hint' 'do not share or redistribute' 'Dev or Full seat' 'Add → Add marketplace' 'docs/assets/banner\.svg'; do
     grep -qE -- "$pat" "$readme" || { echo "FAIL README.md must include: $pat"; status=1; }
   done
 else
   echo "FAIL missing README.md"; status=1
 fi
+for img in docs/assets/banner.svg docs/assets/desktop-plugins-list.png docs/assets/desktop-plugin-page.png; do
+  [[ -f "$img" ]] || { echo "FAIL README image missing: $img"; status=1; }
+done
 
 if [[ -f "$d/SKILL.md" ]]; then
   for f in "$d"/references/*.md "$d"/assets/*; do

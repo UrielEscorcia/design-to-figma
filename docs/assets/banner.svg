@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="360" viewBox="0 0 1280 360" role="img" aria-labelledby="title desc">
+  <title id="title">design-to-figma</title>
+  <desc id="desc">A Claude plugin: brief, Claude Design proposals and impeccable critique, built and kept in Figma, the source of truth.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#14161C"/>
+      <stop offset="1" stop-color="#1D1F2A"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#D97757"/>
+      <stop offset="0.5" stop-color="#A259FF"/>
+      <stop offset="1" stop-color="#0ACF83"/>
+    </linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#8B8FA3"/>
+    </marker>
+  </defs>
+  <rect width="1280" height="360" rx="24" fill="url(#bg)"/>
+  <rect x="64" y="64" width="96" height="6" rx="3" fill="url(#accent)"/>
+  <g font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
+    <text x="64" y="132" font-size="56" font-weight="700" fill="#F4F4F6">design-to-figma</text>
+    <text x="64" y="176" font-size="22" fill="#B4B7C5">From a product brief to a reviewed design system and screens.</text>
+    <text x="64" y="206" font-size="22" fill="#B4B7C5">Figma stays the source of truth.</text>
+
+    <g font-size="18" font-weight="600" text-anchor="middle">
+      <rect x="64" y="252" width="200" height="56" rx="28" fill="#2A2D3A" stroke="#3A3E50"/>
+      <text x="164" y="286" fill="#F4F4F6">Brief &amp; style</text>
+
+      <rect x="324" y="252" width="200" height="56" rx="28" fill="#2A2D3A" stroke="#D97757"/>
+      <text x="424" y="286" fill="#F4F4F6">Claude Design</text>
+
+      <rect x="584" y="252" width="200" height="56" rx="28" fill="#2A2D3A" stroke="#A259FF"/>
+      <text x="684" y="286" fill="#F4F4F6">impeccable</text>
+
+      <rect x="844" y="252" width="200" height="56" rx="28" fill="#2A2D3A" stroke="#0ACF83"/>
+      <text x="944" y="286" fill="#F4F4F6">Figma</text>
+    </g>
+    <g stroke="#8B8FA3" stroke-width="2" marker-end="url(#arrow)">
+      <line x1="268" y1="280" x2="318" y2="280"/>
+      <line x1="528" y1="280" x2="578" y2="280"/>
+      <line x1="788" y1="280" x2="838" y2="280"/>
+    </g>
+    <g font-size="14" fill="#8B8FA3" text-anchor="middle">
+      <text x="424" y="334">directions</text>
+      <text x="684" y="334">critique &amp; polish</text>
+      <text x="944" y="334">source of truth</text>
+    </g>
+
+    <g transform="translate(1100 96)">
+      <rect width="116" height="168" rx="16" fill="#23263A" stroke="#3A3E50"/>
+      <rect x="14" y="16" width="88" height="10" rx="5" fill="#F4F4F6" opacity="0.9"/>
+      <rect x="14" y="34" width="60" height="8" rx="4" fill="#8B8FA3"/>
+      <rect x="14" y="56" width="88" height="44" rx="8" fill="url(#accent)" opacity="0.85"/>
+      <rect x="14" y="110" width="88" height="8" rx="4" fill="#8B8FA3"/>
+      <rect x="14" y="124" width="70" height="8" rx="4" fill="#8B8FA3"/>
+      <rect x="14" y="142" width="88" height="14" rx="7" fill="#0ACF83"/>
+    </g>
+  </g>
+</svg>
