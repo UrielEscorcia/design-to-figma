@@ -81,7 +81,7 @@ One gate per turn: ask it, wait for the answer, record it, then move to the next
 3. **Style**: ask it; never propose one in place of asking. Wait.
 4. **Palette**: swatches only after the style is confirmed. Wait.
 5. **Direction**: 2 or 3 proposals; the user picks. Run the critique and show the critique and its fixes before building in Figma (an `🧪 Explorations` fallback page is not a build).
-6. **File name**: right before the file is created (File name row above).
+6. **File name**: ask it alone, right before the file is created; only then the team or plan, when there are several.
 7. **Foundations and components**, with the Brief page filled; the user approves; write `DESIGN.md` now with the `Foundations: approved` line.
 8. **Screen list** → `DESIGN-PLAN.md`.
 9. **Each screen**: the user review message has every field in [screen-loop.md](references/screen-loop.md) step 6; one screen per review unless the user said to batch.
