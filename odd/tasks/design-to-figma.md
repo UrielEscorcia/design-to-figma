@@ -2,7 +2,7 @@
 
 - **Engram mirror:** `odd/design-to-figma/tasks`
 - **Branch:** `fix/d2f-10-desktop-trial` (from `main` after PR #9 merged, `984e1c2`)
-- **Status:** T9–T11 merged (PRs #4–#6); T13 merged (PR #7, v0.2.0); T5d done on v0.2.0; T14 merged (PR #8, v0.3.0); T12 merged (PR #9, v0.3.1); T6 done; T15 merged (PR #10, v0.3.2); T16 in progress; next: T7
+- **Status:** T9–T11 merged (PRs #4–#6); T13 merged (PR #7, v0.2.0); T5d done on v0.2.0; T14 merged (PR #8, v0.3.0); T12 merged (PR #9, v0.3.1); T6 done; T15 merged (PR #10, v0.3.2); T16 done; T17 done (v0.3.3, PR pending); next: T7
 
 ## Objective
 
@@ -117,7 +117,8 @@ Original questions:
 | T6a | Desktop smoke test: Figma connector in chat exposes `use_figma` | user-assisted | done | User screenshot (2026-10-16): Desktop chat lists about 42 Figma tools, `use_figma` included; invocation is tested in T6 |
 | T6 | Claude Desktop trial: zip upload, same cases | user-assisted | done | Zip v0.3.1 uploaded without errors; Sattva (yoga studio booking): 3 screens final-verified (cross-screen 37/34/36 of 40). Findings F1–F11 go to T15. Font question answered (see T12 items) |
 | T15 | Desktop trial fixes F1–F11; bump to 0.3.2; items S15.1–S15.7 below | inline (one understood change, no writer trigger) | done | `f2d6b34`, `6332c34` + this commit. RED: 21 FAIL lines → GREEN `tests/run.sh` exit 0. Mutation probe: dropping "alone" from gate step 6 fails the run. Version 0.3.2 |
-| T16 | Desktop-compatible impeccable repack (outside the plugin) and a short second Desktop trial | inline + user-assisted | in progress | Repack built locally, not committed (D-out: no redistribution): `~/Downloads/impeccable-desktop-4.3.1.zip` (660 KB) passes `tests/validate-skill.sh`; frontmatter keys stripped, description 172 characters, body identical, `scripts/bin` and live scripts dropped, `NOTICE.md` lists the changes. Plugin zip `~/Downloads/design-to-figma-0.3.2.zip`. Trial pending |
+| T16 | Desktop-compatible impeccable repack (outside the plugin) and a short second Desktop trial | inline + user-assisted | in progress | Repack built locally, not committed (D-out: no redistribution): `~/Downloads/impeccable-desktop-4.3.1.zip` (660 KB) passes `tests/validate-skill.sh`; frontmatter keys stripped, description 172 characters, body identical, `scripts/bin` and live scripts dropped, `NOTICE.md` lists the changes. Plugin zip `~/Downloads/design-to-figma-0.3.2.zip`. Trial done 2026-10-29 (Molienda checkout, screen mode, Figma `wJmtPNcMLorbLoyG8jDoK1`): impeccable loaded at the directions step with the documented launcher fallback; findings G1–G7 → T17 |
+| T17 | Second Desktop trial fixes (S17.1–S17.5) | inline | done | RED: 11 FAIL lines → GREEN `tests/run.sh` exit 0; v0.3.3. G4–G6 need no rule change (the gate sequence, Hard Rule 13 and screen-loop step 5 already state them) |
 | T7 | README: install and usage for Code and Desktop | inline | pending | — |
 | T8 | Publish the marketplace on GitHub (push is the user's decision) | user decision | in progress | Repo https://github.com/UrielEscorcia/design-to-figma (public, MIT); PRs #1–#8 merged. Close after T7 |
 
@@ -170,6 +171,17 @@ Source: the T6 Desktop trial (Sattva, v0.3.1, 2026-10-28/29). User words: "no ha
 - S15.5 (F9) Ask before any generation that spends the user's credits (for example Figma AI images); otherwise use placeholders.
 - S15.6 (F7) The Design System artifact opt-in is asked at project start, as its own question.
 - S15.7 Version bump to 0.3.2 (D23).
+
+### T17 items
+
+From the second Desktop trial (2026-10-29, v0.3.2 plus a personal impeccable repack). User: "tal vez deberiamos ser mas rigurosos con impecable, detectarlo y si no lo tenemos que nos mande un aviso tipo pregunta de que no se encontro y si deseamos proceder sin eso y sino que nos diga como instalarlo asi aseguramso que lo use".
+
+- S17.1 (G1) The preflight report is its own first message, never skipped; it ends by confirming the write path, so `PRODUCT.md` is written right after the brief.
+- S17.2 (G2, user request) impeccable is checked at the start on every surface. Present: load it and report "used". Missing: one question, "Install impeccable first" (steps per surface, the Desktop repack steps included) or "Continue without impeccable". The "expect it absent on Desktop" note is removed.
+- S17.3 (G3) Screen mode asks the Design System artifact opt-in as its own question after the brief, like project mode.
+- S17.4 (G7) The close step checks that the Brief page text matches the current scope (screens and states added later).
+- S17.5 Version 0.3.3.
+- Not changed: G4 (two questions in one message), G5 (an English interim line) and G6 (Elevate reported while the gate still failed) are agent deviations from rules already stated.
 
 ## Acceptance criteria
 
@@ -280,4 +292,6 @@ Source: the T6 Desktop trial (Sattva, v0.3.1, 2026-10-28/29). User words: "no ha
 
 - 2026-10-29: PR #10 merged (ddbd273); plugin 0.3.2 installed. T16 repack built (see the T16 row).
 
-The user uploads both zips to Claude Desktop and runs a short trial (one screen); then T7 and close T8.
+- 2026-10-29: T16 trial done; the user approved the screen. User: "lsito ya lo aprobe podemos ahora rrancar con lo que sigue". T17 implemented (S17.1–S17.5).
+
+The user reviews and merges the T17 PR (v0.3.3); then T7 (README, including the impeccable Desktop repack steps) and close T8.

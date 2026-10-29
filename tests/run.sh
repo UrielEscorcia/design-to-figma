@@ -234,6 +234,21 @@ grep -qiE 'not counts' <<<"$snap" || { echo "FAIL sync-rules.md snapshot must re
 section "$wp" '^## 4\.' | grep -qiE 'Brief & Rules. included, is not empty' || { echo "FAIL workflow-project.md must check the Brief page is not empty"; status=1; }
 section "$wp" '^## 1\.' | grep -qiE 'own question' || { echo "FAIL workflow-project.md must ask the Design System artifact opt-in as its own question"; status=1; }
 
+# T17: second Desktop trial findings (listed under "T17 items" in odd/tasks/design-to-figma.md).
+pf="$r/preflight.md"
+grep -qiE '^0\. \*\*Preflight report' <<<"$gs" || { echo "FAIL SKILL.md gate sequence must start with the preflight report as step 0"; status=1; }
+grep -qiE 'confirm the write path' <<<"$gs" || { echo "FAIL SKILL.md gate sequence step 0 must confirm the write path"; status=1; }
+grep -qiE 'impeccable.*own question' <<<"$gs" || { echo "FAIL SKILL.md gate sequence must ask about a missing impeccable as its own question"; status=1; }
+grep -qiE 'Expect it to be absent' "$pf" && { echo "FAIL preflight.md must not assume impeccable is absent on Desktop"; status=1; }
+grep -qiE 'recommend it once' "$pf" "$d/SKILL.md" && { echo "FAIL a missing impeccable must be a question, not a one-time recommendation"; status=1; }
+ip="$(section "$pf" '^## 3\.')"
+grep -qiE 'Install impeccable first' <<<"$ip" || { echo "FAIL preflight.md must offer 'Install impeccable first' when it is missing"; status=1; }
+grep -qiE 'Continue without impeccable' <<<"$ip" || { echo "FAIL preflight.md must offer 'Continue without impeccable' when it is missing"; status=1; }
+grep -qiE 'version.*user-invocable.*argument-hint' <<<"$ip" || { echo "FAIL preflight.md must give the Desktop repack steps for impeccable"; status=1; }
+section "$pf" '^## 8\.' | grep -qiE 'own message' || { echo "FAIL preflight.md report must be its own message, never skipped"; status=1; }
+section "$r/workflow-screen.md" '^## B\.' | grep -qiE 'Design System artifact.*own question' || { echo "FAIL workflow-screen.md must ask the Design System artifact opt-in as its own question"; status=1; }
+grep -qiE 'Brief page.*current' <<<"$gs" || { echo "FAIL SKILL.md close step must check the Brief page matches the current scope"; status=1; }
+
 if [[ -f "$d/SKILL.md" ]]; then
   for f in "$d"/references/*.md "$d"/assets/*; do
     [[ -e "$f" ]] || continue

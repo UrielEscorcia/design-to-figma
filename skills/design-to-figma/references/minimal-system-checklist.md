@@ -1,6 +1,6 @@
 # Minimal system checklist (no impeccable)
 
-Use when impeccable is absent (always on Claude Desktop). Keep it small. Ask, wait for answers, do not invent product decisions. Confirm the results before writing to Figma.
+Use when impeccable is absent and the user chose to continue without it. Keep it small. Ask, wait for answers, do not invent product decisions. Confirm the results before writing to Figma.
 
 ## 1. Brief (4 to 5 questions, one round)
 
