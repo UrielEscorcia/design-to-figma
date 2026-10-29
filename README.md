@@ -109,7 +109,7 @@ Plugins in Desktop are saved to your claude.ai account, so they also work in cha
 
 4. Open the plugin to check the version and that its toggle is on:
 
-   <img src="docs/assets/desktop-plugin-page.png" alt="The Design to figma plugin page in Claude Desktop: version 0.3.4, one skill, an Update button and the enabled toggle" width="720">
+   <img src="docs/assets/desktop-plugin-page.png" alt="The Design to figma plugin page in Claude Desktop: its version, one skill, an Update button and the enabled toggle" width="720">
 
 5. Optional: add impeccable ([next section](#impeccable-optional)).
 6. Start a new chat.
