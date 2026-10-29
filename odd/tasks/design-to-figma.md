@@ -2,7 +2,7 @@
 
 - **Engram mirror:** `odd/design-to-figma/tasks`
 - **Branch:** `fix/d2f-10-desktop-trial` (from `main` after PR #9 merged, `984e1c2`)
-- **Status:** T9–T11 merged (PRs #4–#6); T13 merged (PR #7, v0.2.0); T5d done on v0.2.0; T14 merged (PR #8, v0.3.0); T12 merged (PR #9, v0.3.1); T6 done; T15 merged (PR #10, v0.3.2); T16 done; T17 merged (PR #11, v0.3.3); T7 done (v0.3.4, PR pending); next: close T8
+- **Status:** T9–T11 merged (PRs #4–#6); T13 merged (PR #7, v0.2.0); T5d done on v0.2.0; T14 merged (PR #8, v0.3.0); T12 merged (PR #9, v0.3.1); T6 done; T15 merged (PR #10, v0.3.2); T16 done; T17 merged (PR #11, v0.3.3); T7 merged (PR #12, v0.3.4); T8 done. All tasks done
 
 ## Objective
 
@@ -120,7 +120,7 @@ Original questions:
 | T16 | Desktop-compatible impeccable repack (outside the plugin) and a short second Desktop trial | inline + user-assisted | done | Repack built locally, not committed (D-out: no redistribution): `~/Downloads/impeccable-desktop-4.3.1.zip` (660 KB) passes `tests/validate-skill.sh`; frontmatter keys stripped, description 172 characters, body identical, `scripts/bin` and live scripts dropped, `NOTICE.md` lists the changes. Plugin zip `~/Downloads/design-to-figma-0.3.2.zip`. Trial done 2026-10-29 (Molienda checkout, screen mode, Figma `wJmtPNcMLorbLoyG8jDoK1`): impeccable loaded at the directions step with the documented launcher fallback; findings G1–G7 → T17 |
 | T17 | Second Desktop trial fixes (S17.1–S17.5) | inline | done | RED: 11 FAIL lines → GREEN `tests/run.sh` exit 0; v0.3.3. G4–G6 need no rule change (the gate sequence, Hard Rule 13 and screen-loop step 5 already state them) |
 | T7 | README: install and usage for Code and Desktop, plus the T17 review advisories R3-001–R3-003 | inline | done | RED: 3 FAIL lines without `README.md`, 1 FAIL line for the preflight install fallback → GREEN `tests/run.sh` exit 0; v0.3.4. R3-001: after an install, check the skill list again and fall back to a new session or chat. R3-002: the negative preflight checks require the file and §3 must say "never assume". R3-003: the Brief scope check is scoped to the Close step |
-| T8 | Publish the marketplace on GitHub (push is the user's decision) | user decision | in progress | Repo https://github.com/UrielEscorcia/design-to-figma (public, MIT); PRs #1–#8 merged. Close after T7 |
+| T8 | Publish the marketplace on GitHub (push is the user's decision) | user decision | done | Repo https://github.com/UrielEscorcia/design-to-figma (public, MIT); PRs #1–#12 merged (last `ece450c`); README documents the install |
 
 ### T12 items
 
@@ -296,4 +296,6 @@ From the second Desktop trial (2026-10-29, v0.3.2 plus a personal impeccable rep
 
 - 2026-10-29: PR #11 merged (47993eb). User: "empieza de una con la tarea y agrega los 3 avisos de una ahi". T7 implemented with R3-001–R3-003.
 
-The user reviews and merges the T7 PR (v0.3.4); then close T8.
+- 2026-10-29: PR #12 merged (ece450c). User: "ya esta el merge". T8 closed; every task is done.
+
+Optional follow-up: anchor the Close check in `tests/run.sh` as `^[0-9]+\. \*\*Close\*\*`.
