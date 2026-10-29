@@ -209,6 +209,31 @@ grep -qE 'section [0-9]+ of \[style-discovery' "$r/workflow-project.md" && { ech
 [[ -n "$(section "$sl" '^## 5\.')" ]] || { echo "FAIL screen-loop.md has no section 5 (the elevate pass); the scoped checks would test nothing"; status=1; }
 section "$sl" '^## 5\.' | grep -qiE 'restore the version from before' && { echo "FAIL screen-loop.md elevate pass must point to Cost for rate-limit recovery instead of restating it"; status=1; }
 
+# T15: Desktop trial findings F1-F11 (listed under "T15 items" in odd/tasks/design-to-figma.md). The gate sequence lives in SKILL.md because Desktop runs may skip reading a reference.
+wp="$r/workflow-project.md"
+gs="$(section "$d/SKILL.md" '^## Gate sequence')"
+[[ -n "$gs" ]] || { echo "FAIL SKILL.md must have a Gate sequence section"; status=1; }
+grep -qiE 'one gate per turn' <<<"$gs" || { echo "FAIL SKILL.md gate sequence must require one gate per turn"; status=1; }
+grep -qiE 'multi-question form' <<<"$gs" || { echo "FAIL SKILL.md gate sequence must forbid bundling gates into a multi-question form"; status=1; }
+grep -qiE 'read the reference' <<<"$gs" || { echo "FAIL SKILL.md gate sequence must require reading each step's reference"; status=1; }
+grep -qiE 'File name.*alone, right before the file is created' <<<"$gs" || { echo "FAIL SKILL.md gate sequence must ask the file name alone, right before creating the file"; status=1; }
+grep -qiE 'show the critique' <<<"$gs" || { echo "FAIL SKILL.md gate sequence must show the direction critique before any Figma write"; status=1; }
+grep -qiE 'Design System artifact.*own question' <<<"$gs" || { echo "FAIL SKILL.md gate sequence must ask the Design System artifact opt-in as its own question"; status=1; }
+grep -qiE 'write `DESIGN.md` now' <<<"$gs" || { echo "FAIL SKILL.md gate sequence must write DESIGN.md when the foundations are approved"; status=1; }
+grep -qiE 'not empty' <<<"$gs" || { echo "FAIL SKILL.md gate sequence must check the required pages are not empty before the report"; status=1; }
+section "$d/SKILL.md" '^## Hard Rules' | grep -qiE 'before spending the user.s credits' || { echo "FAIL SKILL.md must ask before spending the user's credits"; status=1; }
+rv="$(section "$sl" '^## 6\.')"
+for field in 'Verdict' 'Score' 'Polish' 'Elevate' 'Open gaps'; do
+  grep -qE -- "^  - \*\*$field:\*\*" <<<"$rv" || { echo "FAIL screen-loop.md user review message must have the field '$field'"; status=1; }
+done
+grep -qiE 'do not ask for approval while' <<<"$rv" || { echo "FAIL screen-loop.md must not ask for approval with a review field missing"; status=1; }
+grep -qiE 'one screen per review' <<<"$rv" || { echo "FAIL screen-loop.md must review one screen at a time"; status=1; }
+snap="$(section "$r/sync-rules.md" '^## Snapshot')"
+grep -qiE 'never by hand' <<<"$snap" || { echo "FAIL sync-rules.md snapshot must come from the enumeration script, never by hand"; status=1; }
+grep -qiE 'not counts' <<<"$snap" || { echo "FAIL sync-rules.md snapshot must record variable values, not counts"; status=1; }
+section "$wp" '^## 4\.' | grep -qiE 'Brief & Rules. included, is not empty' || { echo "FAIL workflow-project.md must check the Brief page is not empty"; status=1; }
+section "$wp" '^## 1\.' | grep -qiE 'own question' || { echo "FAIL workflow-project.md must ask the Design System artifact opt-in as its own question"; status=1; }
+
 if [[ -f "$d/SKILL.md" ]]; then
   for f in "$d"/references/*.md "$d"/assets/*; do
     [[ -e "$f" ]] || continue

@@ -57,7 +57,13 @@ Take the reviewer's named biggest opportunity and apply one pass with the matchi
 
 ## 6. User review
 
-- Always ask for human review. Show the screenshot or Figma link, the verdict, the score, what the elevate pass changed and any open gap.
+- Always ask for human review, one screen per review unless the user said to batch. The review message shows the screenshot or Figma link and these fields:
+  - **Verdict:** pass or fail against the quality gate ([quality-bar.md](quality-bar.md)).
+  - **Score:** the blind reviewer's heuristics score and the specificity verdict.
+  - **Polish:** what the `polish` pass checked and fixed.
+  - **Elevate:** kept or discarded and what it changed, or why it was skipped.
+  - **Open gaps:** P0/P1 left open and product decisions for the user, or "none".
+- Do not ask for approval while a field is missing: run the missing step first.
 - The user approves or requests changes. Apply each change in Figma per [iteration.md](iteration.md) and show it again until the user approves. A change for the whole app rather than this screen is an app-wide rule ([iteration.md](iteration.md), step 9).
 - When a change alters the agreed behavior, whether it came from a self-fix, the polish or elevate pass or a user-review change, name it in the review as a change to what was agreed. Update the screen's definition in `DESIGN-PLAN.md` in the same step (with the new agreement date once the user approves), so the plan never contradicts `DESIGN.md` or Figma.
 - Never add a new product feature (an action, a label, content or a behavior the agreed definition does not have) on your own, whether it comes up in a fix, the polish or elevate pass or a user-review change. Recommend it, say why, and add it only after the user agrees.

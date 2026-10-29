@@ -3,7 +3,7 @@ name: design-to-figma
 description: "Design a full project or one screen in Figma, or iterate on an existing Figma design. Orchestrates Claude Design, impeccable (optional) and the Figma MCP; Figma stays the source of truth."
 license: MIT
 metadata:
-  version: "0.3.1"
+  version: "0.3.2"
   author: "Uriel Escorcia"
 ---
 
@@ -38,6 +38,7 @@ Do not load it for code generation from Figma (a future companion skill), for Fi
 13. **Reply in the user's language.** Prose, questions, reports and progress updates alike (including the lines written right after you dispatch a subagent or receive its result; subagent prompts and results are often English), never mixed. Generated documentation (`PRODUCT.md`, `DESIGN.md`, the plan, specs) stays in English unless the user asks otherwise. Figma page, frame, layer, variable, style and component names and the Brief page follow that documentation rule. It never covers the product's UI copy: text shown in the product (proposals, Figma screens, component text) uses the UI language and locale from the brief.
 14. **Builders follow the craft guides.** Every Figma builder, including delegated subagents, receives impeccable's craft guidance or the fallback checklist ([tool-directory.md](references/tool-directory.md)).
 15. **Track the plan.** In project mode create `DESIGN-PLAN.md` ([DESIGN-PLAN.template.md](assets/DESIGN-PLAN.template.md)) once the screen list is agreed, update it after every state change, and read it first on resume to continue with the next unfinished item. Every screen runs [screen-loop.md](references/screen-loop.md); never start the next screen before the user approves the current one, unless the user says to batch.
+16. **Ask before spending the user's credits.** Before any generation that uses the user's plan credits (for example Figma AI images), say what it costs and ask; without a yes, use placeholders.
 
 ## Decision Gates
 
@@ -57,7 +58,7 @@ Do not load it for code generation from Figma (a future companion skill), for Fi
 | Web research | Web tool available (Code: WebSearch/WebFetch; Desktop: web search) | Research current references; otherwise label them unverified |
 | Proposals | Design surface available | Show 2 or 3 directions as Claude Design artifacts: [proposals.md](references/proposals.md) |
 | Proposals | No design surface | Quick frames on a `🧪 Explorations` page in Figma |
-| File name | New Figma file | Ask the file name as its own question (suggest `<Product> — <Scope>`), never folded into another question; only then ask which team or plan when there are several |
+| File name | New Figma file | Ask the file name as its own question, right before the file is created (suggest `<Product> — <Scope>`), never folded into another question; only then ask which team or plan when there are several |
 | Dark mode | A project or screen is created | Ask whether dark mode is needed; never assume it. If not requested, `Semantic` is a single-mode collection (Dark can be added later as a new mode); if requested up front, `Semantic` gets Light and Dark modes in foundations and Dark frames are built only after each Light screen is user-approved ([figma-structure.md](references/figma-structure.md)). Record the answer in `PRODUCT.md` and the plan |
 | Change request | User asks to change a built design | Apply in Figma, then sync: [iteration.md](references/iteration.md) |
 | impeccable | Its skill is available | Use it for every design step (context, shape, direction, extraction); `critique` and `polish` are mandatory, and builders get its craft guides |
@@ -70,6 +71,21 @@ Do not load it for code generation from Figma (a future companion skill), for Fi
 | Both sides changed | Figma and local files differ | Figma wins for design data; ask before dropping local prose |
 
 Per-surface details and the capability-based write path: [preflight.md](references/preflight.md).
+
+## Gate sequence
+
+One gate per turn: ask it, wait for the answer, record it, then move to the next. Never bundle two gates into one message or one multi-question form, even when the surface offers a form tool; the brief's own questions are one gate. Before each step, read the reference it names; this list is a checkpoint, not a replacement for the reference. Steps 7 and 8 are project mode; screen mode follows [workflow-screen.md](references/workflow-screen.md) and keeps the other steps.
+
+1. **Brief** ([workflow-project.md](references/workflow-project.md) or [workflow-screen.md](references/workflow-screen.md)): users, problem, essential screens, name, UI locale, dark mode → `PRODUCT.md`. Then, in project mode, the Design System artifact opt-in as its own question → `PRODUCT.md`.
+2. **Category references**: list them with sources and wait ([style-discovery.md](references/style-discovery.md)).
+3. **Style**: ask it; never propose one in place of asking. Wait.
+4. **Palette**: swatches only after the style is confirmed. Wait.
+5. **Direction**: 2 or 3 proposals; the user picks. Run the critique and show the critique and its fixes before building in Figma (an `🧪 Explorations` fallback page is not a build).
+6. **File name**: ask it alone, right before the file is created; only then the team or plan, when there are several.
+7. **Foundations and components**, with the Brief page filled; the user approves; write `DESIGN.md` now with the `Foundations: approved` line.
+8. **Screen list** → `DESIGN-PLAN.md`.
+9. **Each screen**: the user review message has every field in [screen-loop.md](references/screen-loop.md) step 6; one screen per review unless the user said to batch.
+10. **Close**: build the snapshot from the read-only enumeration output ([sync-rules.md](references/sync-rules.md)) and check that every required page is not empty, the Brief page included, before the report.
 
 ## Execution Steps
 
