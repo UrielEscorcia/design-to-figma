@@ -121,6 +121,7 @@ Original questions:
 | T17 | Second Desktop trial fixes (S17.1–S17.5) | inline | done | RED: 11 FAIL lines → GREEN `tests/run.sh` exit 0; v0.3.3. G4–G6 need no rule change (the gate sequence, Hard Rule 13 and screen-loop step 5 already state them) |
 | T7 | README: install and usage for Code and Desktop, plus the T17 review advisories R3-001–R3-003 | inline | done | RED: 3 FAIL lines without `README.md`, 1 FAIL line for the preflight install fallback → GREEN `tests/run.sh` exit 0; v0.3.4. R3-001: after an install, check the skill list again and fall back to a new session or chat. R3-002: the negative preflight checks require the file and §3 must say "never assume". R3-003: the Brief scope check is scoped to the Close step |
 | T8 | Publish the marketplace on GitHub (push is the user's decision) | user decision | done | Repo https://github.com/UrielEscorcia/design-to-figma (public, MIT); PRs #1–#12 merged (last `ece450c`); README documents the install |
+| T18 | Visual README: contents menu, banner, Mermaid diagrams, Desktop screenshots; Desktop install through the GitHub marketplace, zip as an alternative | inline | done | RED: 2 FAIL lines for the new README patterns (`Add → Add marketplace`, banner), plus the image checks (each referenced image must exist; the banner and both screenshots must stay referenced) → GREEN `tests/run.sh` exit 0; the 5 diagrams render with mermaid-cli 11 (dark theme) |
 
 ### T12 items
 
@@ -300,3 +301,4 @@ From the second Desktop trial (2026-10-29, v0.3.2 plus a personal impeccable rep
 
 Optional follow-up: anchor the Close check in `tests/run.sh` as `^[0-9]+\. \*\*Close\*\*`.
 - 2026-10-29: PR #13 merged (b334019). User: "si cierrala". T5 closed; its full-project part was covered by T5c and T5d, and the `/design-sync` check stays unverified.
+- 2026-10-29: Desktop install through Customize → Plugins → Add marketplace works (0.3.4); "Sync automatically" did not appear, so updates are manual with the Update button. User: "si actualiza nuestro readme y genera uno bonito con imagenes, graficos y diagramas que expliquen mejor nuestro plugin, como usarlo en claude code y en la app de desktop si quieres armamos un menu en el readme para que tenga secciones y cada una explique todo, se aceptan ideas". T18 done.
