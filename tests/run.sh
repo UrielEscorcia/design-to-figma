@@ -275,11 +275,15 @@ grep -qiE 'without a yes, apply nothing' <<<"$cf" || { echo "FAIL routing.md mus
 section "$rt" '^## 5\.' | grep -qiE 'verbatim' || { echo "FAIL routing.md must record requests verbatim (S7)"; status=1; }
 grep -qE '^## Requests' "$d/assets/DESIGN-PLAN.template.md" || { echo "FAIL DESIGN-PLAN.template.md must have a Requests section (S7)"; status=1; }
 grep -qE -- '- \*\*L1\*\*' "$d/assets/DESIGN-PLAN.template.md" || { echo "FAIL DESIGN-PLAN.template.md must hold the original request as L1 (S7)"; status=1; }
-grep -qiE 'by reference' "$r/tool-directory.md" || { echo "FAIL tool-directory.md must pass the plan to builders by reference (S7)"; status=1; }
+section "$r/tool-directory.md" '^## Builder guidance' | grep -qiE 'by reference' || { echo "FAIL tool-directory.md builder guidance must pass the plan by reference (S7)"; status=1; }
 section "$d/SKILL.md" '^## Output Contract' | grep -qE '\*\*Route and risk:\*\*' || { echo "FAIL SKILL.md Output Contract must report the route and risk (S8)"; status=1; }
 section "$d/SKILL.md" '^## Hard Rules' | grep -qF 'routing.md' || { echo "FAIL SKILL.md Hard Rules must route every request first"; status=1; }
 grep -qiE 'large route' <<<"$gs" || { echo "FAIL SKILL.md gate sequence must say it is the large route (S4)"; status=1; }
-grep -qF 'routing.md' "$r/iteration.md" || { echo "FAIL iteration.md must confirm high-risk changes through routing.md (S6)"; status=1; }
+section "$r/iteration.md" '^## Steps' | grep -E '^4\. ' -A6 | grep -iE 'high risk' | grep -qF 'routing.md' || { echo "FAIL iteration.md step 4 must confirm high-risk changes through routing.md (S6)"; status=1; }
+section "$rt" '^## 5\.' | grep -qiE 'no `## Requests` section' || { echo "FAIL routing.md must handle an older plan without a Requests section (S7)"; status=1; }
+section "$rt" '^## 3\.' | grep -qiE 'unclear[^.]*measure' || { echo "FAIL routing.md must measure an unclear high-risk item before choosing the route (S5)"; status=1; }
+section "$d/SKILL.md" '^## Execution Steps' | grep -E '^0\. ' | grep -qiE 'read-only[^.]*read Figma' || { echo "FAIL SKILL.md step 0 must read Figma before a read-only answer (S3)"; status=1; }
+section "$d/SKILL.md" '^## Execution Steps' | grep -E '^0\. ' | grep -qiE 'small changes.*the report' || { echo "FAIL SKILL.md step 0 must end the small route with the report (S8)"; status=1; }
 grep -qiE 'Request routing' README.md || { echo "FAIL README.md must document request routing"; status=1; }
 
 # T7: README with install and usage for Claude Code and Claude Desktop.

@@ -39,7 +39,7 @@ A change is high risk when a mistake reaches beyond its target or is hard to und
 4. **Brand foundations.** The palette, type families, logo, or the confirmed style or direction.
 5. **App-wide rules.** A change that applies to every built screen and sends approved screens back to `built` ([iteration.md](iteration.md) step 9).
 
-The size check counts a high-risk item only after it is measured. A local override of one instance is not a shared component change.
+Decide from the request and the Figma read whether an item applies. When it is unclear (for example, whether a component has instances on other screens), measure it as in step 4 before choosing the route. A local override of one instance is not a shared component change.
 
 ## 4. Confirm a high-risk change
 
@@ -54,7 +54,7 @@ Ask the user to apply it, take the smaller option or cancel, and wait. Without a
 
 ## 5. Record requests verbatim
 
-When `DESIGN-PLAN.md` exists or is created, its `## Requests` section holds the user's original request as **L1**, verbatim. Later corrections, decisions and high-risk confirmations are appended as L2, L3 and so on, with the date. Never paraphrase them. A screen definition names the L# it comes from. Builders and reviewers, including delegated subagents, get the plan path and the section to read by reference, never a summary ([tool-directory.md](tool-directory.md)). With no plan, the report quotes the request.
+When `DESIGN-PLAN.md` exists or is created, its `## Requests` section holds the user's original request as **L1**, verbatim. Later requests (small changes included), corrections and the user's answers to high-risk confirmations are appended as L2, L3 and so on, with the date. Never paraphrase them. An older plan with no `## Requests` section gets one: record the current request as the next entry and note that earlier requests were not recorded. Never reconstruct them from memory. A screen definition names the L# it comes from. Builders and reviewers, including delegated subagents, get the plan path and the section to read by reference, never a summary ([tool-directory.md](tool-directory.md)). With no plan, the report quotes the request.
 
 ## 6. Close with the route and risk
 

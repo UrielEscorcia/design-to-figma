@@ -92,7 +92,7 @@ This sequence is the large route ([routing.md](references/routing.md)); the smal
 
 ## Execution Steps
 
-0. **Route** the request ([routing.md](references/routing.md)). Read-only requests answer and stop. Small changes run preflight, then [iteration.md](references/iteration.md). Large work continues below.
+0. **Route** the request ([routing.md](references/routing.md)). Read-only requests run preflight and read Figma (step 2), then answer and stop without writing. Small changes run preflight and step 2, then [iteration.md](references/iteration.md), which applies, syncs and ends with the report. Large work continues below.
 1. **Preflight.** Follow [preflight.md](references/preflight.md): Figma MCP tools, seat requirement, impeccable, design-capable surface, local write path. BLOCK on missing Figma tools.
 2. **Load or create the project context.**
    - Look for `PRODUCT.md` / `DESIGN.md` / `DESIGN-PLAN.md` in the confirmed folder, and for a Figma URL in the user's message.
