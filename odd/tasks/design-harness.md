@@ -20,7 +20,7 @@
 | ID | Specs | Task | Route | Status | Commit |
 |---|---|---|---|---|---|
 | T1 | S1–S8 | Base: routing reference, SKILL.md wiring, plan template, report, README, guards, v0.4.0 | inline | done (tests pass; review approved and acknowledged, lineage review-38e6fe8ff763b2a1) | `5a91d75` |
-| T1a | S6, S7 | Review advisories (non-blocking; only the locations were returned): R3-001 `SKILL.md:95` (step 0 Route), R3-002 `routing.md:57` (Requests log; older plans without a Requests section), R3-003 `routing.md:42` (measured high-risk wording), R3-004/R3-005 `tests/run.sh:279,283` (file-wide guards) | inline | done (inferred from the locations; see Log) | this commit |
+| T1a | S6, S7 | Review advisories (non-blocking; only the locations were returned): R3-001 `SKILL.md:95` (step 0 Route), R3-002 `routing.md:57` (Requests log; older plans without a Requests section), R3-003 `routing.md:42` (measured high-risk wording), R3-004/R3-005 `tests/run.sh:279,283` (file-wide guards) | inline | done (inferred from the locations; see Log); review lineage review-aa3e44b1f98ebbb0 approved and acknowledged | `c745b38` |
 | T2 | — | Critique lenses with node ID + screenshot evidence and a refuter | — | pending (next phase) | — |
 | T3 | — | Split the skill into trigger-first skills plus a registry | — | pending (next phase) | — |
 
@@ -34,4 +34,5 @@
   - R3-003: an unclear high-risk item is measured before the route is chosen.
   - R3-002: small requests are logged too, and older plans get a Requests section without reconstructing earlier requests.
   - R3-004/005: the guards are scoped to their sections; mutation probes fail as expected.
+- (2026-10-30) The T1a review (reliability lens) was approved. It again listed non-blocking advisories, still with locations only and no detail, at the same spots: SKILL.md:95, routing.md:42 and :57, and tests/run.sh:282-286. Since there is no detail to act on, the next step is a real Figma trial, not another blind fix.
 - Context: the direction and gap mapping are in Engram obs 6224; the scope decision is in obs 6235. The idea list (handoff/Code Connect, brownfield, prototypes/FigJam, a11y audit, variants, responsive, motion, Figma quota, fonts in screenshots, direct commands, plugin evals) comes after the base.
