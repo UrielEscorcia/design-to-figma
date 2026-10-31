@@ -54,6 +54,7 @@ required=(
   references/minimal-system-checklist.md
   references/style-discovery.md references/proposals.md references/quality-bar.md
   references/iteration.md references/screen-loop.md references/design-system-artifact.md
+  references/routing.md
   assets/PRODUCT.template.md assets/DESIGN.template.md assets/brief-page.template.md
   assets/DESIGN-PLAN.template.md
 )
@@ -252,6 +253,34 @@ grep -qiE 'version.*user-invocable.*argument-hint' <<<"$ip" || { echo "FAIL pref
 section "$pf" '^## 8\.' | grep -qiE 'own message' || { echo "FAIL preflight.md report must be its own message, never skipped"; status=1; }
 section "$r/workflow-screen.md" '^## B\.' | grep -qiE 'Design System artifact.*own question' || { echo "FAIL workflow-screen.md must ask the Design System artifact opt-in as its own question"; status=1; }
 grep -E '^[0-9]+\. \*\*Close\*\*' <<<"$gs" | grep -qiE 'Brief page text matches the current scope' || { echo "FAIL SKILL.md close step must check the Brief page matches the current scope"; status=1; }
+
+# Harness base (T1 in odd/tasks/design-harness.md): route every request before the gates; S# refer to that file.
+rt="$r/routing.md"
+[[ -f "$rt" ]] || { echo "FAIL missing $rt"; status=1; }
+section "$rt" '^## 1\.' | grep -qiE 'read-only[^.]*(writes|changes) nothing' || { echo "FAIL routing.md must keep read-only requests from writing (S3)"; status=1; }
+sz="$(section "$rt" '^## 2\.')"
+grep -qF 'iteration.md' <<<"$sz" || { echo "FAIL routing.md small route must run through iteration.md (S4)"; status=1; }
+grep -qiE 'unchanged' <<<"$sz" || { echo "FAIL routing.md large route must keep the current flow unchanged (S1, S4)"; status=1; }
+grep -qiE 'Hard Rules' <<<"$sz" || { echo "FAIL routing.md small route must keep the Hard Rules (S1)"; status=1; }
+hr="$(section "$rt" '^## 3\.')"
+for item in 'Shared tokens' 'Shared components' 'Deletion' 'Brand foundations'; do
+  grep -qF -- "**$item.**" <<<"$hr" || { echo "FAIL routing.md high-risk items must name '$item' (S5)"; status=1; }
+done
+cf="$(section "$rt" '^## 4\.')"
+for field in 'Change' 'Reach' 'Undo' 'Smaller option'; do
+  grep -qE -- "^- \*\*$field:\*\*" <<<"$cf" || { echo "FAIL routing.md confirmation must show the field '$field' (S6)"; status=1; }
+done
+grep -qiE 'read-only .use_figma.' <<<"$cf" || { echo "FAIL routing.md must measure the reach with a read-only use_figma script (S6)"; status=1; }
+grep -qiE 'without a yes, apply nothing' <<<"$cf" || { echo "FAIL routing.md must apply nothing without a yes (S6)"; status=1; }
+section "$rt" '^## 5\.' | grep -qiE 'verbatim' || { echo "FAIL routing.md must record requests verbatim (S7)"; status=1; }
+grep -qE '^## Requests' "$d/assets/DESIGN-PLAN.template.md" || { echo "FAIL DESIGN-PLAN.template.md must have a Requests section (S7)"; status=1; }
+grep -qE -- '- \*\*L1\*\*' "$d/assets/DESIGN-PLAN.template.md" || { echo "FAIL DESIGN-PLAN.template.md must hold the original request as L1 (S7)"; status=1; }
+grep -qiE 'by reference' "$r/tool-directory.md" || { echo "FAIL tool-directory.md must pass the plan to builders by reference (S7)"; status=1; }
+section "$d/SKILL.md" '^## Output Contract' | grep -qE '\*\*Route and risk:\*\*' || { echo "FAIL SKILL.md Output Contract must report the route and risk (S8)"; status=1; }
+section "$d/SKILL.md" '^## Hard Rules' | grep -qF 'routing.md' || { echo "FAIL SKILL.md Hard Rules must route every request first"; status=1; }
+grep -qiE 'large route' <<<"$gs" || { echo "FAIL SKILL.md gate sequence must say it is the large route (S4)"; status=1; }
+grep -qF 'routing.md' "$r/iteration.md" || { echo "FAIL iteration.md must confirm high-risk changes through routing.md (S6)"; status=1; }
+grep -qiE 'Request routing' README.md || { echo "FAIL README.md must document request routing"; status=1; }
 
 # T7: README with install and usage for Claude Code and Claude Desktop.
 readme="README.md"  # relative to the repository root; the script cds there at the top

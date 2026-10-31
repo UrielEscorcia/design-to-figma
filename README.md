@@ -192,6 +192,20 @@ The first reply is always a **preflight report**:
 
 Then the brief starts, one question at a time.
 
+### Request routing
+
+Every request is routed first, so the work gets only the process it needs:
+
+| Request | Route |
+|---|---|
+| Review, compare or explain | **Read-only**: nothing is written to Figma or to your files |
+| A clear tweak to something that exists ("make the cards denser") | **Small**: applied inline, critiqued, synced; style, palette and proposals are not asked again |
+| One new screen, or a new project | **Large**: the full design flow below, unchanged |
+
+Some changes are **high risk**: shared tokens or variables, components used on several screens, deletions, brand foundations, and app-wide rules. Before applying one ("change the primary color"), the skill measures its reach in Figma and shows what will change, what follows it, how to undo it and a smaller option. Nothing is applied without your yes. The final report states the route and the risk.
+
+In project mode, `DESIGN-PLAN.md` keeps your requests verbatim (L1, L2, …), and builders read them from the plan instead of a summary.
+
 ## The design flow
 
 Each step is one turn: the skill asks, waits for your answer, and records it.
