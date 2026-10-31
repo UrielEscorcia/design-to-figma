@@ -322,6 +322,15 @@ tests/run.sh
 
 It validates the skill frontmatter and structure, checks the rules the trials depend on, and requires a version bump in `.claude-plugin/plugin.json` and the `SKILL.md` metadata for any change to the skill.
 
+Trigger evals check that the skill loads, and not the official Figma skills, for real prompts. They load a local copy of the official Figma plugin next to this one. Run them before you change the skill description:
+
+```sh
+evals/setup.sh   # stages this plugin and the installed Figma plugin in each case (gitignored); rerun after every skill change
+claude plugin eval . --no-publish --scaffold --ablation none
+```
+
+`evals/spanish-module-prompt` is a real Desktop prompt that must load the skill; `--scaffold` stages its attachments (two PDFs and a reference image). `evals/design-to-code-no-fire` must not load it. A case that lists `plugins:` loads only those plugins, so the baseline arm is turned off.
+
 ## License
 
 MIT. See [LICENSE](LICENSE).

@@ -286,6 +286,18 @@ section "$d/SKILL.md" '^## Execution Steps' | grep -E '^0\. ' | grep -qiE 'read-
 section "$d/SKILL.md" '^## Execution Steps' | grep -E '^0\. ' | grep -qiE 'small changes.*the report' || { echo "FAIL SKILL.md step 0 must end the small route with the report (S8)"; status=1; }
 grep -qiE 'Request routing' README.md || { echo "FAIL README.md must document request routing"; status=1; }
 
+# T4 in odd/tasks/design-harness.md: the skill must win over the official Figma skills (Desktop trial, S9).
+# Real triggering is measured by `claude plugin eval` (evals/); these guards keep the wording that won.
+desc="$(grep -m1 '^description:' "$d/SKILL.md")"
+grep -qE '^description: "MANDATORY first step' <<<"$desc" || { echo "FAIL SKILL.md description must start with the MANDATORY directive (S9)"; status=1; }
+grep -qF 'BEFORE reading attachments, figma-use, figma-generate-design' <<<"$desc" || { echo "FAIL SKILL.md description must load before attachments and the Figma skills (S9)"; status=1; }
+grep -qiE 'any language' <<<"$desc" || { echo "FAIL SKILL.md description must trigger in any language (S9)"; status=1; }
+section "$d/SKILL.md" '^## Activation Contract' | grep -qiE 'module by module' || { echo "FAIL SKILL.md activation contract must cover a product built module by module (S9)"; status=1; }
+for f in evals/spanish-module-prompt/case.yaml evals/design-to-code-no-fire/case.yaml evals/setup.sh; do
+  [[ -f "$f" ]] || { echo "FAIL missing trigger eval file: $f (S9)"; status=1; }
+done
+grep -q 'facturación mexicano' evals/spanish-module-prompt/case.yaml 2>/dev/null || { echo "FAIL the trigger eval must keep the real Desktop prompt verbatim (S9)"; status=1; }
+
 # T7: README with install and usage for Claude Code and Claude Desktop.
 readme="README.md"  # relative to the repository root; the script cds there at the top
 if [[ -f "$readme" ]]; then

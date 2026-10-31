@@ -1,9 +1,9 @@
 ---
 name: design-to-figma
-description: "Design a full project or one screen in Figma, or iterate on an existing Figma design. Orchestrates Claude Design, impeccable (optional) and the Figma MCP; Figma stays the source of truth."
+description: "MANDATORY first step to design or change any app, module, flow or screen in Figma, in any language. Load BEFORE reading attachments, figma-use, figma-generate-design or any Figma tool."
 license: MIT
 metadata:
-  version: "0.4.0"
+  version: "0.4.1"
   author: "Uriel Escorcia"
 ---
 
@@ -13,11 +13,13 @@ Orchestrator for design work that must end up in Figma. It decides which tool ru
 
 ## Activation Contract
 
-Load this skill when the user wants to:
+Load this skill first: before reading attachments, and before `figma-use`, `figma-generate-design`, `figma-generate-library` or any Figma tool, whenever the user wants to:
 
-- design a full project (brief, design system, screens) and have it live in Figma;
+- design a full project (brief, design system, screens) and have it live in Figma, including a product built module by module or flow by flow;
 - design a single screen or view that must live in Figma;
 - iterate on, extend or review an existing Figma design, including after someone edited it by hand.
+
+The request may be in any language and may come with attachments (product PDFs, a brief, a reference image) or with decisions already made (palette, typography). Those do not replace this skill; they feed its brief and style gates. Example: "Vamos a crear el diseño en figma de un sistema de facturación mexicano… módulo tras módulo… ya elegimos la paleta y la tipografía".
 
 Do not load it for code generation from Figma (a future companion skill), for FigJam diagrams, or for design work that has no Figma destination.
 

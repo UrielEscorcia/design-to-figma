@@ -1,6 +1,6 @@
 {
   "name": "design-to-figma",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Orchestrates Claude Design, the impeccable skill and the Figma MCP so every design decision lands in Figma, the source of truth.",
   "author": {
     "name": "Uriel Escorcia"
