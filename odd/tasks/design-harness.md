@@ -19,7 +19,8 @@
 
 | ID | Specs | Task | Route | Status | Commit |
 |---|---|---|---|---|---|
-| T1 | S1–S8 | Base: routing reference, SKILL.md wiring, plan template, report, README, guards, v0.4.0 | inline | in progress | — |
+| T1 | S1–S8 | Base: routing reference, SKILL.md wiring, plan template, report, README, guards, v0.4.0 | inline | done (tests pass; review approved and acknowledged, lineage review-38e6fe8ff763b2a1) | `5a91d75` |
+| T1a | S6, S7 | Review advisories (non-blocking; only the locations were returned): R3-001 `SKILL.md:95` (step 0 Route), R3-002 `routing.md:57` (Requests log; older plans without a Requests section), R3-003 `routing.md:42` (measured high-risk wording), R3-004/R3-005 `tests/run.sh:279,283` (file-wide guards) | — | pending (decide whether to address) | — |
 | T2 | — | Critique lenses with node ID + screenshot evidence and a refuter | — | pending (next phase) | — |
 | T3 | — | Split the skill into trigger-first skills plus a registry | — | pending (next phase) | — |
 
@@ -27,4 +28,5 @@
 
 - **L1** (2026-10-30) "aqui vamos a quitar lo de Judgment Day de diseño y los tests ya que no tenemos test en diseño, ahora la idea es implementar harness en este plugin pero sin perder lo que ya tenemos y lo que hacemos bien, se podria implementar eso? para definir bien la base antes de implementar la lista de ideas"
 - **L2** (2026-10-30) "si suna bien ese plan, un cambio de riesgo que pida confirmacion para validar lo que puede pasar"
+- (2026-10-30) T1 RED: 25 new guards failed before the content existed and no earlier guard failed. GREEN: `tests/run.sh` exit 0, and both `claude plugin validate --strict` runs pass. Native review used the readability and reliability lenses: approved with 5 advisories (T1a).
 - Context: the direction and gap mapping are in Engram obs 6224; the scope decision is in obs 6235. The idea list (handoff/Code Connect, brownfield, prototypes/FigJam, a11y audit, variants, responsive, motion, Figma quota, fonts in screenshots, direct commands, plugin evals) comes after the base.
