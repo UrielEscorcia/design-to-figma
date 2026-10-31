@@ -44,6 +44,7 @@ Every Figma builder, including delegated subagents, receives in its prompt:
 
 - **impeccable present:** impeccable's `reference/craft-floor.md`, `reference/layout.md`, `reference/typeset.md` and the platform reference (for example `reference/ios.md`), plus `PRODUCT.md`, `DESIGN.md` and the chosen direction. Pass the content or tell the builder to read them; do not copy impeccable files into this skill.
 - **impeccable absent:** [minimal-system-checklist.md](minimal-system-checklist.md) and [quality-bar.md](quality-bar.md), plus `PRODUCT.md`, `DESIGN.md` and the chosen direction.
+- When `DESIGN-PLAN.md` exists, the plan path and the section to build, with its L# requests, passed by reference: tell the builder to read them, never pass a summary ([routing.md](routing.md) step 5).
 - Before writing text styles, the builder checks font availability ([figma-structure.md](figma-structure.md)).
 
 ## Do not use X for Y

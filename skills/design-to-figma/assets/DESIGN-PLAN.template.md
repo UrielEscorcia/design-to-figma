@@ -12,6 +12,12 @@ Tracker for the sections to design. Update the state after every change; read th
 
 States: `Brief`, `Style and references`, `Palette and foundations` and `Components` use `pending → user-approved`. Screens use `pending → built → agent-verified → user-approved → final-verified`. Closing items use `pending → done`. Per-screen loop: [screen-loop.md](../references/screen-loop.md).
 
+## Requests
+
+The user's words, verbatim and never paraphrased ([routing.md](../references/routing.md) step 5). Append corrections, decisions and high-risk confirmations as L2, L3 and so on.
+
+- **L1** (<date>) "<original request, verbatim>"
+
 ## Foundations
 
 - [ ] Brief: `pending`
@@ -25,7 +31,7 @@ States: `Brief`, `Style and references`, `Palette and foundations` and `Componen
 ### <Flow> / <Screen>
 
 - State: `pending`
-- Definition (agreed with the user on <date>): <purpose, primary action, content, states, edge cases>
+- Definition (agreed with the user on <date>, from L<n>): <purpose, primary action, content, states, edge cases>
 - Figma calls used: <count, for the next screens' estimate>
 - Notes: <open gaps, decisions>
 - Dark (only when dark mode was requested): `pending`
