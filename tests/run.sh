@@ -298,6 +298,22 @@ for f in evals/spanish-module-prompt/case.yaml evals/design-to-code-no-fire/case
 done
 grep -q 'facturación mexicano' evals/spanish-module-prompt/case.yaml 2>/dev/null || { echo "FAIL the trigger eval must keep the real Desktop prompt verbatim (S9)"; status=1; }
 
+# T5 in odd/tasks/design-harness.md: decisions the user already made are taken, not asked again (S10).
+pd="$(section "$sd" '^## 0\.')"
+[[ -n "$pd" ]] || { echo "FAIL style-discovery.md must have section 0 for decisions the user already made (S10)"; status=1; }
+grep -qiE 'provided by the user' <<<"$pd" || { echo "FAIL style-discovery.md section 0 must record provided decisions as provided by the user (S10)"; status=1; }
+for item in 'Palette' 'Typography' 'Look'; do
+  grep -qE -- "^- \*\*$item" <<<"$pd" || { echo "FAIL style-discovery.md section 0 must cover '$item' (S10)"; status=1; }
+done
+grep -qiE 'never ask (it|them) again|do not ask (it|them) again' <<<"$pd" || { echo "FAIL style-discovery.md section 0 must not ask provided decisions again (S10)"; status=1; }
+grep -qiE 'category references[^.]*(always|still) run' <<<"$pd" || { echo "FAIL style-discovery.md section 0 must still run the category references (S10)"; status=1; }
+grep -qiE 'how (real|the) products? (are|is) built' <<<"$pd" || { echo "FAIL style-discovery.md section 0 must use category references to learn how the product is built (S10)"; status=1; }
+grep -qE '^\| Provided \|' "$d/SKILL.md" || { echo "FAIL SKILL.md Decision Gates must have a Provided row (S10)"; status=1; }
+grep -E '^[34]\. \*\*(Style|Palette)' <<<"$gs" | grep -qiE 'provided' || { echo "FAIL SKILL.md gate sequence must skip provided style or palette (S10)"; status=1; }
+grep -qiE 'provided by the user' "$r/proposals.md" || { echo "FAIL proposals.md palette gate must accept a palette provided by the user (S10)"; status=1; }
+grep -qiE 'provided by the user' "$d/assets/PRODUCT.template.md" || { echo "FAIL PRODUCT.template.md must record decisions provided by the user (S10)"; status=1; }
+grep -qE '^Typography:' "$d/assets/PRODUCT.template.md" || { echo "FAIL PRODUCT.template.md must have a Typography line (S10)"; status=1; }
+
 # T7: README with install and usage for Claude Code and Claude Desktop.
 readme="README.md"  # relative to the repository root; the script cds there at the top
 if [[ -f "$readme" ]]; then

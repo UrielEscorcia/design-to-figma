@@ -227,6 +227,8 @@ flowchart TD
     class G7,G8 project;
 ```
 
+If your request already brings the palette, the fonts or a reference image of the app, steps 3 and 4 take them as given and are not asked again; the category references in step 2 still run, to learn how real products of the category are built.
+
 Steps 7 and 8 (purple) are project mode. In screen mode, the screen is defined before the directions, and only the tokens and components the screen needs are built.
 
 The Figma file gets four pages:

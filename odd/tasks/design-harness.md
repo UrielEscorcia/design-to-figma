@@ -15,6 +15,7 @@
 - **S7** Verbatim requests: the user's original request is stored verbatim in `DESIGN-PLAN.md` and passed to builders by reference, never paraphrased.
 - **S8** The final report states the route taken and a risk line.
 - **S9** The skill loads for real prompts like L4: "tratemos que se cargue el plugin con este tipo de prompts". In the L4 trial, the agent "no detecto que debia usar el plugin y se fu directo a usar solo figma".
+- **S10** User-provided decisions: "ahi si ya le pasamos la typo y los colores deberia de tomarlos y seguir con lo que falte, ya no repetir esos pasos, pero si seria bueno que tome referencias para saber como se debe contruir el producto con referencias reales".
 
 ## Tasks
 
@@ -23,6 +24,7 @@
 | T1 | S1–S8 | Base: routing reference, SKILL.md wiring, plan template, report, README, guards, v0.4.0 | inline | done (tests pass; review approved and acknowledged, lineage review-38e6fe8ff763b2a1) | `5a91d75` |
 | T1a | S6, S7 | Review advisories (non-blocking; only the locations were returned): R3-001 `SKILL.md:95` (step 0 Route), R3-002 `routing.md:57` (Requests log; older plans without a Requests section), R3-003 `routing.md:42` (measured high-risk wording), R3-004/R3-005 `tests/run.sh:279,283` (file-wide guards) | inline | done (inferred from the locations; see Log); review lineage review-aa3e44b1f98ebbb0 approved and acknowledged | `c745b38` |
 | T4 | S9 | Skill trigger: directive description loaded before the Figma skills, plus a plugin eval with the real prompt and a should-not-fire case | inline | done (eval 2/2 cases, 3/3 runs each) | this commit |
+| T5 | S10 | Take the palette, typography and look the user provided (style-discovery section 0); category references still run | inline | done (guards RED→GREEN) | this commit |
 | T2 | — | Critique lenses with node ID + screenshot evidence and a refuter | — | pending (next phase) | — |
 | T3 | — | Split the skill into trigger-first skills plus a registry | — | pending (next phase) | — |
 
@@ -45,4 +47,5 @@
   3. Without attachments the model stops to ask for the files, so `--scaffold` stages two small PDFs and a reference image.
 
   Valid RED with the main SKILL.md: the skill fired 0/3. The model read the attachments and answered without loading any skill. GREEN with the description "MANDATORY first step ... Load BEFORE reading attachments, figma-use, figma-generate-design or any Figma tool": fired 3/3 with the design-to-figma preflight. The design-to-code control case never fired. Its LLM grader was flaky in both versions, so it became a regex not_contains check.
+- **L5** (2026-11-02) "ahi si ya le pasamos la typo y los colores deberia de tomarlos y seguir con lo que falte, ya no repetir esos pasos, pero si seria bueno que tome referencias para saber como se debe contruir el producto con referencias reales". Chained branch fix/d2f-19-provided-decisions on fix/d2f-18-skill-trigger.
 - Context: the direction and gap mapping are in Engram obs 6224; the scope decision is in obs 6235. The idea list (handoff/Code Connect, brownfield, prototypes/FigJam, a11y audit, variants, responsive, motion, Figma quota, fonts in screenshots, direct commands, plugin evals) comes after the base.

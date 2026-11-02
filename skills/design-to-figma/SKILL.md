@@ -3,7 +3,7 @@ name: design-to-figma
 description: "MANDATORY first step to design or change any app, module, flow or screen in Figma, in any language. Load BEFORE reading attachments, figma-use, figma-generate-design or any Figma tool."
 license: MIT
 metadata:
-  version: "0.4.1"
+  version: "0.4.2"
   author: "Uriel Escorcia"
 ---
 
@@ -55,6 +55,7 @@ Do not load it for code generation from Figma (a future companion skill), for Fi
 | Existing project | None found (screen mode) | Minimal bootstrap inside the screen flow |
 | Brief | No `PRODUCT.md` brief yet | Interview first (who, problem, essential screens, name, UI language and locale), before style discovery |
 | Locale | `PRODUCT.md` exists without a UI locale | Ask the UI language and locale once and record it before any UI copy is written |
+| Provided | The request or its attachments already fix the palette, typography or look (reference image, screenshots, brand guide) | Record them as provided by the user and never ask those gates again; the category references still run: [style-discovery.md](references/style-discovery.md) section 0 |
 | Category | No confirmed category references recorded | Research real products of the brief's category first (at least 3, with sources; with no research tool, an unverified list plus a request for the user's references), list them and wait for the user: [style-discovery.md](references/style-discovery.md) |
 | Style | No confirmed style recorded | Run style discovery after the category references, building on them: [style-discovery.md](references/style-discovery.md) |
 | Style | Style recorded in `DESIGN.md` / Brief page | Reuse it as a constraint; say so in one line |
@@ -83,8 +84,8 @@ This sequence is the large route ([routing.md](references/routing.md)); the smal
 0. **Preflight report** ([preflight.md](references/preflight.md)) as its own message: confirm the write path. Then, only when impeccable is missing, ask install or continue as its own question.
 1. **Brief** ([workflow-project.md](references/workflow-project.md) or [workflow-screen.md](references/workflow-screen.md)): users, problem, essential screens, name, UI locale, dark mode → `PRODUCT.md`. Then, in both modes, the Design System artifact opt-in as its own question → `PRODUCT.md`.
 2. **Category references**: list them with sources and wait ([style-discovery.md](references/style-discovery.md)).
-3. **Style**: ask it; never propose one in place of asking. Wait.
-4. **Palette**: swatches only after the style is confirmed. Wait.
+3. **Style**: ask it; never propose one in place of asking. Wait. When the user provided the look (a reference image or screenshots), state the derived style in one line and continue (section 0 of [style-discovery.md](references/style-discovery.md)).
+4. **Palette**: swatches only after the style is confirmed. Wait. A palette provided by the user is shown once as the record, without waiting; ask only about pairs that fail AA.
 5. **Direction**: 2 or 3 proposals; the user picks. Run the critique and show the critique and its fixes before building in Figma (an `🧪 Explorations` fallback page is not a build).
 6. **File name**: ask it alone, right before the file is created; only then the team or plan, when there are several.
 7. **Foundations and components**, with the Brief page filled; the user approves; write `DESIGN.md` now with the `Foundations: approved` line.
@@ -101,7 +102,7 @@ This sequence is the large route ([routing.md](references/routing.md)); the smal
    - If a Figma file exists, read it: enumerate pages with a read-only `use_figma` script, read each page with `get_metadata(nodeId=pageId)`, read variables and styles by script or `get_variable_defs`, take `get_screenshot` of key frames. Then compare with the sync frontmatter and snapshot ([sync-rules.md](references/sync-rules.md)). If `DESIGN-PLAN.md` exists, read it first and resume at the next unfinished item.
    - If none exists, continue with step 3. Templates: [PRODUCT.template.md](assets/PRODUCT.template.md), [DESIGN.template.md](assets/DESIGN.template.md), [DESIGN-PLAN.template.md](assets/DESIGN-PLAN.template.md).
 3. **Product brief.** Interview the user before any style work: who the users are, the problem, the essential screens, the product name, the UI language and locale (for example Spanish, Mexico: dates, currency, number formats) and whether dark mode is needed (ask; never assume) (impeccable `init`, or the questions in [minimal-system-checklist.md](references/minimal-system-checklist.md)). Wait for the answers; write `PRODUCT.md`.
-4. **Style discovery.** Using the brief, first research real products of the same category and get the user's confirmation of that list (category gate); then ask the style, research current references, present them with traits, get confirmation, and get the palette confirmed as swatches ([style-discovery.md](references/style-discovery.md)).
+4. **Style discovery.** Using the brief, first take the decisions the user already made (section 0), then research real products of the same category and get the user's confirmation of that list (category gate); then, for what was not provided, ask the style, research current references, present them with traits, get confirmation, and get the palette confirmed as swatches ([style-discovery.md](references/style-discovery.md)).
 5. **Direction and proposals.** In screen mode, define the screen first (step 1 of [screen-loop.md](references/screen-loop.md)), so the proposals show the agreed screen. Direction within the style (impeccable, or the checklist), then 2 or 3 directions that share the confirmed palette as Claude Design artifacts; the user picks ([proposals.md](references/proposals.md)). Critique the chosen direction ([quality-bar.md](references/quality-bar.md)).
 6. **Run the mode flow.** Project: [workflow-project.md](references/workflow-project.md). Screen: [workflow-screen.md](references/workflow-screen.md). Tool choice at each step: [tool-directory.md](references/tool-directory.md).
 7. **Write to Figma.** Ask the file name as its own question first (before the team or plan question), then check fonts ([figma-structure.md](references/figma-structure.md)). Follow the page structure in [figma-structure.md](references/figma-structure.md); place the Brief page from [brief-page.template.md](assets/brief-page.template.md). Use `figma-create-new-file` for a new file, then `figma-use` with `figma-generate-library` / `figma-generate-design`. Validate with `get_screenshot` and structural reads. Build only the chosen direction, with the builder guidance from [tool-directory.md](references/tool-directory.md).
