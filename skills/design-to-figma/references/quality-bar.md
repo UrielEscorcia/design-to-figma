@@ -10,6 +10,9 @@ The goal is an excellent, current design, not a standard one, even for a single 
 - Real content: realistic labels, states and data; no lorem ipsum.
 - States are part of the design: default, hover or focus, error, empty, loading, disabled, as the screen needs.
 - Accessibility: text contrast of at least 4.5:1 for body text and 3:1 for large text and UI boundaries; visible focus; touch targets of at least 44 pt on touch platforms.
+- Critique fixes come in two kinds, in every critique: the chosen-direction critique, each screen's verify and the final cross-screen review.
+  - **Design fixes** change how something already agreed looks or reads (type size, spacing, contrast, emphasis, alignment, states of an existing element). Apply them in the fix batch and list them.
+  - **Product additions** add an action, a label, content or a behavior that the brief or the agreed definition does not have (for example an inline "Fix" action, a help popover, a new button on a card). Never apply them on your own. Present them as recommendations with the reason, in one multi-select form (SKILL.md Hard Rule 18), and apply only the accepted ones. Record the answer in the plan's Requests log when a plan exists. Never write "questions skipped" to bypass this.
 
 ## With impeccable
 

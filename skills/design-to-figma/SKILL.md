@@ -3,7 +3,7 @@ name: design-to-figma
 description: "MANDATORY first step to design or change any app, module, flow or screen in Figma, in any language. Load BEFORE reading attachments, figma-use, figma-generate-design or any Figma tool."
 license: MIT
 metadata:
-  version: "0.4.5"
+  version: "0.4.6"
   author: "Uriel Escorcia"
 ---
 
@@ -87,7 +87,7 @@ This sequence is the large route ([routing.md](references/routing.md)); the smal
 2. **Category references**: list them with sources and wait ([style-discovery.md](references/style-discovery.md)).
 3. **Style**: ask it; never propose one in place of asking. Wait. When the user provided the look (a reference image or screenshots), state the derived style in one line and continue (section 0 of [style-discovery.md](references/style-discovery.md)).
 4. **Palette**: swatches only after the style is confirmed. Wait. A palette provided by the user is shown once as the record, without waiting; ask only about pairs that fail AA.
-5. **Direction**: 2 or 3 proposals; the user picks. Run the critique and show the critique and its fixes before building in Figma (an `🧪 Explorations` fallback page is not a build).
+5. **Direction**: 2 or 3 proposals; the user picks. Run the critique and show the critique and its fixes before building in Figma (an `🧪 Explorations` fallback page is not a build). Design fixes are applied; product additions are asked in one form and only the accepted ones are built ([quality-bar.md](references/quality-bar.md)).
 6. **File name**: ask it alone, right before the file is created; only then the team or plan, when there are several.
 7. **Foundations and components**, with the Brief page filled; the user approves; write `DESIGN.md` now with the `Foundations: approved` line.
 8. **Screen list** → `DESIGN-PLAN.md`.

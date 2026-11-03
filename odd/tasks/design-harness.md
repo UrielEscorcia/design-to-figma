@@ -19,6 +19,7 @@
 - **S11** A provided UI reference bounds the directions: "si ajustemos eso, si le pasamos una referencia UI que no se salga de esa referencia".
 - **S12** Every screen in Screens, system test screens included, runs the full loop before approval, and no backup files are left in the user's folder (Desktop trial: Inicio was offered for approval without the review fields, and a DESIGN.md.bak was left behind). L7 "hazlo".
 - **S13** Questions with defined options use the surface's question form: "podemos hacer que las preguntas las haga a travez del form que luego manda con opciones? forzar eso cada vez que pregunte algo definido?".
+- **S14** Critique fixes never add product features without the user's yes. In the point 2 trial, the direction critique said "Questions skipped: las correcciones se aplican directo en la construcción en Figma" and included new actions ("Corregir" inline, a "¿Qué es esto?" help pattern, "Registrar pago" on the mobile card). L9 "hazlo ahora y asi probamos el punto 3 con todo esto".
 
 ## Tasks
 
@@ -31,6 +32,7 @@
 | T6 | S11 | Directions keep the provided look (radius, elevation, color use, type); only structure, hierarchy and density vary | inline | done (guards RED→GREEN) | this commit |
 | T7b | S12 | Screen loop for system test screens; no backup files | inline | done (guards RED→GREEN) | this commit |
 | T8 | S13 | Hard Rule 18: defined-option questions through the question form; one form per gate | inline | done (guards RED→GREEN) | this commit |
+| T9 | S14 | Design fixes vs product additions in every critique; additions asked in a multi-select form | inline | done (guards RED→GREEN) | this commit |
 | T2 | — | Critique lenses with node ID + screenshot evidence and a refuter | — | pending (next phase) | — |
 | T3 | — | Split the skill into trigger-first skills plus a registry | — | pending (next phase) | — |
 
@@ -74,4 +76,11 @@
   - The impeccable detector cannot run in Desktop; it falls back to self-critique and declares it.
 - **L7** (2026-11-02) "hazlo" (PR for S12). Chained branch fix/d2f-21-screen-loop-always on fix/d2f-20-keep-provided-look.
 - **L8** (2026-11-03) "podemos hacer que las preguntas las haga a travez del form que luego manda con opciones? forzar eso cada vez que pregunte algo definido?" This came during the point 2 trial on v0.4.4 (brief built from the PDFs, three open definitions asked in text). Chained branch feat/d2f-22-question-forms on fix/d2f-21-screen-loop-always.
+- (2026-11-03) Point 2 trial on v0.4.4, new chat and new folder:
+  - #18: the skill loaded.
+  - #19: palette, fonts and look were taken without asking; AA fixes were shown before and after; every reference had a source.
+  - #20: three directions inside the look. B dropped the avatars and the Emisión column, which the agent itself flagged as a look deviation.
+  - #17: a read-only question mid-chat wrote nothing and offered the change as a next step.
+  - The impeccable detector ran this time (56 warnings).
+  - The direction critique scored 25/40 and declared itself degraded. It then skipped questions and planned new product actions; that is S14.
 - Context: the direction and gap mapping are in Engram obs 6224; the scope decision is in obs 6235. The idea list (handoff/Code Connect, brownfield, prototypes/FigJam, a11y audit, variants, responsive, motion, Figma quota, fonts in screenshots, direct commands, plugin evals) comes after the base.
