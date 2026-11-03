@@ -320,6 +320,17 @@ setup_out="$(HOME="$tmp/no-figma-home" evals/setup.sh 2>&1)"
 grep -qF 'Install the Figma plugin first' <<<"$setup_out" || { echo "FAIL evals/setup.sh must print the install hint when the Figma plugin is missing"; status=1; }
 grep -qiE 'pairs that failed AA were resolved|failing pairs (are|were) resolved' "$r/proposals.md" || { echo "FAIL proposals.md must wait until a provided palette's failing AA pairs are resolved (S10)"; status=1; }
 
+# T6 in odd/tasks/design-harness.md: directions never leave a look the user provided (S11).
+lk="$(section "$r/proposals.md" "^## Provided look")"
+[[ -n "$lk" ]] || { echo "FAIL proposals.md must have a Provided look section (S11)"; status=1; }
+for trait in 'radius' 'elevation' 'color use' 'type'; do
+  grep -qiE "$trait" <<<"$lk" || { echo "FAIL proposals.md provided look must keep '$trait' (S11)"; status=1; }
+done
+grep -qiE 'structure, hierarchy and density' <<<"$lk" || { echo "FAIL proposals.md provided look must vary only structure, hierarchy and density (S11)"; status=1; }
+grep -qiE 'density variant' <<<"$lk" || { echo "FAIL proposals.md must keep the look in a density variant the brief asks for (S11)"; status=1; }
+grep -qiE 'only when the user asks' <<<"$lk" || { echo "FAIL proposals.md must explore another look only when the user asks (S11)"; status=1; }
+section "$sd" '^## 0\.' | grep -E '^- \*\*Look' | grep -qiE 'proposals\.md' || { echo "FAIL style-discovery.md section 0 Look must point to the provided look rule in proposals.md (S11)"; status=1; }
+
 # T7: README with install and usage for Claude Code and Claude Desktop.
 readme="README.md"  # relative to the repository root; the script cds there at the top
 if [[ -f "$readme" ]]; then
