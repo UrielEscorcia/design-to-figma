@@ -337,6 +337,15 @@ grep -E '^9\. \*\*Each screen' <<<"$gs" | grep -qiE 'system test' || { echo "FAI
 grep -E '^9\. \*\*Each screen' <<<"$gs" | grep -qiE 'before asking (for )?approval' || { echo "FAIL SKILL.md gate step 9 must run polish and elevate before asking approval (S12)"; status=1; }
 section "$r/sync-rules.md" '^## Write path' | grep -qiE 'never (leave|create) (backup|\.bak)' || { echo "FAIL sync-rules.md write path must forbid backup files in the user's folder (S12)"; status=1; }
 
+# T8 in odd/tasks/design-harness.md: questions with defined options go through the surface's question form (S13).
+hr18="$(section "$d/SKILL.md" '^## Hard Rules' | grep -E '^18\. ')"
+grep -qiE 'defined options' <<<"$hr18" || { echo "FAIL SKILL.md Hard Rule 18 must route questions with defined options to the form (S13)"; status=1; }
+grep -qF 'AskUserQuestion' <<<"$hr18" || { echo "FAIL SKILL.md Hard Rule 18 must name the Claude Code question tool (S13)"; status=1; }
+grep -qiE 'recommended option first' <<<"$hr18" || { echo "FAIL SKILL.md Hard Rule 18 must list the recommended option first (S13)"; status=1; }
+grep -qiE 'numbered' <<<"$hr18" || { echo "FAIL SKILL.md Hard Rule 18 must fall back to numbered options without a form tool (S13)"; status=1; }
+grep -qiE 'open questions' <<<"$hr18" || { echo "FAIL SKILL.md Hard Rule 18 must keep open questions in the chat (S13)"; status=1; }
+grep -qiE 'one form per gate|never two gates' <<<"$gs" || { echo "FAIL SKILL.md gate sequence must allow one form per gate, never two gates (S13)"; status=1; }
+
 # T7: README with install and usage for Claude Code and Claude Desktop.
 readme="README.md"  # relative to the repository root; the script cds there at the top
 if [[ -f "$readme" ]]; then

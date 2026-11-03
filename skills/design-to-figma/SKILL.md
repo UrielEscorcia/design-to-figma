@@ -3,7 +3,7 @@ name: design-to-figma
 description: "MANDATORY first step to design or change any app, module, flow or screen in Figma, in any language. Load BEFORE reading attachments, figma-use, figma-generate-design or any Figma tool."
 license: MIT
 metadata:
-  version: "0.4.4"
+  version: "0.4.5"
   author: "Uriel Escorcia"
 ---
 
@@ -42,6 +42,7 @@ Do not load it for code generation from Figma (a future companion skill), for Fi
 15. **Track the plan.** In project mode create `DESIGN-PLAN.md` ([DESIGN-PLAN.template.md](assets/DESIGN-PLAN.template.md)) once the screen list is agreed, update it after every state change, and read it first on resume to continue with the next unfinished item. Every screen runs [screen-loop.md](references/screen-loop.md); never start the next screen before the user approves the current one, unless the user says to batch.
 16. **Ask before spending the user's credits.** Before any generation that uses the user's plan credits (for example Figma AI images), say what it costs and ask; without a yes, use placeholders.
 17. **Route every request first** ([routing.md](references/routing.md)). A read-only request writes nothing. A small change to existing work runs inline through [iteration.md](references/iteration.md). New screens and projects take the full flow unchanged. A high-risk change (shared tokens, shared components, deletion, brand foundations, app-wide rules) is applied only after the user confirms its measured reach.
+18. **Ask questions with defined options through the surface's question form.** Whenever a question has a defined set of answers (a choice between options, approve or adjust, yes or no), use the surface's question tool (Claude Code: `AskUserQuestion`; Claude Desktop and web: the options form) instead of plain text, every time. Put the recommended option first and say why in its description; allow a free answer when the user may want something else. Open questions (the product name, the brief's free answers) stay in the chat; a suggested value, such as a file name, can be an option with a free answer allowed. Without a question tool, list the options numbered in the message.
 
 ## Decision Gates
 
@@ -79,7 +80,7 @@ Per-surface details and the capability-based write path: [preflight.md](referenc
 
 ## Gate sequence
 
-This sequence is the large route ([routing.md](references/routing.md)); the small route follows [iteration.md](references/iteration.md) and keeps the Hard Rules. One gate per turn: ask it, wait for the answer, record it, then move to the next. Never bundle two gates into one message or one multi-question form, even when the surface offers a form tool; the brief's own questions are one gate. Before each step, read the reference it names; this list is a checkpoint, not a replacement for the reference. Steps 7 and 8 are project mode; screen mode follows [workflow-screen.md](references/workflow-screen.md) and keeps the other steps.
+This sequence is the large route ([routing.md](references/routing.md)); the small route follows [iteration.md](references/iteration.md) and keeps the Hard Rules. One gate per turn: ask it, wait for the answer, record it, then move to the next. Never bundle two gates into one message or one multi-question form; one form per gate, never two gates in one form. The brief's own questions are one gate, so its defined-option questions can share one form (Hard Rule 18). Before each step, read the reference it names; this list is a checkpoint, not a replacement for the reference. Steps 7 and 8 are project mode; screen mode follows [workflow-screen.md](references/workflow-screen.md) and keeps the other steps.
 
 0. **Preflight report** ([preflight.md](references/preflight.md)) as its own message: confirm the write path. Then, only when impeccable is missing, ask install or continue as its own question.
 1. **Brief** ([workflow-project.md](references/workflow-project.md) or [workflow-screen.md](references/workflow-screen.md)): users, problem, essential screens, name, UI locale, dark mode → `PRODUCT.md`. Then, in both modes, the Design System artifact opt-in as its own question → `PRODUCT.md`.

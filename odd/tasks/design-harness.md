@@ -18,6 +18,7 @@
 - **S10** User-provided decisions: "ahi si ya le pasamos la typo y los colores deberia de tomarlos y seguir con lo que falte, ya no repetir esos pasos, pero si seria bueno que tome referencias para saber como se debe contruir el producto con referencias reales".
 - **S11** A provided UI reference bounds the directions: "si ajustemos eso, si le pasamos una referencia UI que no se salga de esa referencia".
 - **S12** Every screen in Screens, system test screens included, runs the full loop before approval, and no backup files are left in the user's folder (Desktop trial: Inicio was offered for approval without the review fields, and a DESIGN.md.bak was left behind). L7 "hazlo".
+- **S13** Questions with defined options use the surface's question form: "podemos hacer que las preguntas las haga a travez del form que luego manda con opciones? forzar eso cada vez que pregunte algo definido?".
 
 ## Tasks
 
@@ -29,6 +30,7 @@
 | T5 | S10 | Take the palette, typography and look the user provided (style-discovery section 0); category references still run | inline | done (guards RED→GREEN) | this commit |
 | T6 | S11 | Directions keep the provided look (radius, elevation, color use, type); only structure, hierarchy and density vary | inline | done (guards RED→GREEN) | this commit |
 | T7b | S12 | Screen loop for system test screens; no backup files | inline | done (guards RED→GREEN) | this commit |
+| T8 | S13 | Hard Rule 18: defined-option questions through the question form; one form per gate | inline | done (guards RED→GREEN) | this commit |
 | T2 | — | Critique lenses with node ID + screenshot evidence and a refuter | — | pending (next phase) | — |
 | T3 | — | Split the skill into trigger-first skills plus a registry | — | pending (next phase) | — |
 
@@ -71,4 +73,5 @@
   - A DESIGN.md.bak was left behind.
   - The impeccable detector cannot run in Desktop; it falls back to self-critique and declares it.
 - **L7** (2026-11-02) "hazlo" (PR for S12). Chained branch fix/d2f-21-screen-loop-always on fix/d2f-20-keep-provided-look.
+- **L8** (2026-11-03) "podemos hacer que las preguntas las haga a travez del form que luego manda con opciones? forzar eso cada vez que pregunte algo definido?" This came during the point 2 trial on v0.4.4 (brief built from the PDFs, three open definitions asked in text). Chained branch feat/d2f-22-question-forms on fix/d2f-21-screen-loop-always.
 - Context: the direction and gap mapping are in Engram obs 6224; the scope decision is in obs 6235. The idea list (handoff/Code Connect, brownfield, prototypes/FigJam, a11y audit, variants, responsive, motion, Figma quota, fonts in screenshots, direct commands, plugin evals) comes after the base.
