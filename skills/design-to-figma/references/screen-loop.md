@@ -1,6 +1,6 @@
 # Screen loop
 
-Every screen runs this loop: each screen of a project, and the single screen in screen mode. Problems are caught on the first screen, not after the whole project. Read Figma first ([sync-rules.md](sync-rules.md)).
+Every screen runs this loop: each screen of a project, the single screen in screen mode, and any screen built in `📱 Screens` as a system test (for example a home screen that proves the components). A screen is never shown for approval without the full loop: agent verify, self-fix, `polish`, elevate and the review fields in step 6. Problems are caught on the first screen, not after the whole project. Read Figma first ([sync-rules.md](sync-rules.md)).
 
 **Budget.** The loop has its own explicit budget, stated here once and replacing the per-run limit in [quality-bar.md](quality-bar.md) for screens: one build; one agent verify plus at most 2 re-verifies after self-fix; at most 2 self-fix batches; one polish pass; one elevate pass with one extra verify (step 5); the user-requested iterations; one final verify; one Dark verify when requested. An extra round after a failed gate runs only with the user's consent, as a new bounded run.
 

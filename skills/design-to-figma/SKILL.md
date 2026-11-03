@@ -3,7 +3,7 @@ name: design-to-figma
 description: "MANDATORY first step to design or change any app, module, flow or screen in Figma, in any language. Load BEFORE reading attachments, figma-use, figma-generate-design or any Figma tool."
 license: MIT
 metadata:
-  version: "0.4.3"
+  version: "0.4.4"
   author: "Uriel Escorcia"
 ---
 
@@ -90,7 +90,7 @@ This sequence is the large route ([routing.md](references/routing.md)); the smal
 6. **File name**: ask it alone, right before the file is created; only then the team or plan, when there are several.
 7. **Foundations and components**, with the Brief page filled; the user approves; write `DESIGN.md` now with the `Foundations: approved` line.
 8. **Screen list** → `DESIGN-PLAN.md`.
-9. **Each screen**: the user review message has every field in [screen-loop.md](references/screen-loop.md) step 6; one screen per review unless the user said to batch.
+9. **Each screen**, system test screens included: run agent verify, self-fix, `polish` and elevate before asking approval; the user review message has every field in [screen-loop.md](references/screen-loop.md) step 6; one screen per review unless the user said to batch.
 10. **Close**: build the snapshot from the read-only enumeration output ([sync-rules.md](references/sync-rules.md)) and check that every required page is not empty, the Brief page included, and that the Brief page text matches the current scope (screens and states added since it was written), before the report.
 
 ## Execution Steps

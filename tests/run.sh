@@ -331,6 +331,12 @@ grep -qiE 'density variant' <<<"$lk" || { echo "FAIL proposals.md must keep the 
 grep -qiE 'only when the user asks' <<<"$lk" || { echo "FAIL proposals.md must explore another look only when the user asks (S11)"; status=1; }
 section "$sd" '^## 0\.' | grep -E '^- \*\*Look' | grep -qiE 'proposals\.md' || { echo "FAIL style-discovery.md section 0 Look must point to the provided look rule in proposals.md (S11)"; status=1; }
 
+# T7b in odd/tasks/design-harness.md: every screen in Screens runs the full loop; no backup files (S12).
+sed -n '1,4p' "$sl" | grep -qiE 'system test' || { echo "FAIL screen-loop.md must run the loop for system test screens too (S12)"; status=1; }
+grep -E '^9\. \*\*Each screen' <<<"$gs" | grep -qiE 'system test' || { echo "FAIL SKILL.md gate step 9 must cover system test screens (S12)"; status=1; }
+grep -E '^9\. \*\*Each screen' <<<"$gs" | grep -qiE 'before asking (for )?approval' || { echo "FAIL SKILL.md gate step 9 must run polish and elevate before asking approval (S12)"; status=1; }
+section "$r/sync-rules.md" '^## Write path' | grep -qiE 'never (leave|create) (backup|\.bak)' || { echo "FAIL sync-rules.md write path must forbid backup files in the user's folder (S12)"; status=1; }
+
 # T7: README with install and usage for Claude Code and Claude Desktop.
 readme="README.md"  # relative to the repository root; the script cds there at the top
 if [[ -f "$readme" ]]; then
