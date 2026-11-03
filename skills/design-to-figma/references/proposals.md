@@ -4,7 +4,7 @@ Before building in Figma, show two or three distinct directions inside the confi
 
 ## What a direction is
 
-Gate: do not generate directions until the user has confirmed the palette as a swatch artifact ([style-discovery.md](style-discovery.md), section 5), or the palette was provided by the user and recorded (section 0). All directions share the confirmed palette. A direction differs from the others in structure and character (layout, hierarchy, density, type pairing, imagery), never in palette; it may change how much accent is used, not the palette itself. All directions use the confirmed style and its traits, real content in the product's UI locale from the brief, and no skeuomorphism or literal metaphors. Name each direction in two or three words and describe it in one line.
+Gate: do not generate directions until the user has confirmed the palette as a swatch artifact ([style-discovery.md](style-discovery.md), section 5), or the palette was provided by the user and recorded (section 0) and its pairs that failed AA were resolved with the user. All directions share the confirmed palette. A direction differs from the others in structure and character (layout, hierarchy, density, type pairing, imagery), never in palette; it may change how much accent is used, not the palette itself. All directions use the confirmed style and its traits, real content in the product's UI locale from the brief, and no skeuomorphism or literal metaphors. Name each direction in two or three words and describe it in one line.
 
 When impeccable is present, its direction step supplies the candidates (with the style passed as in [quality-bar.md](quality-bar.md)); otherwise derive them yourself.
 

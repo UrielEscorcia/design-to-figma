@@ -314,6 +314,12 @@ grep -qiE 'provided by the user' "$r/proposals.md" || { echo "FAIL proposals.md 
 grep -qiE 'provided by the user' "$d/assets/PRODUCT.template.md" || { echo "FAIL PRODUCT.template.md must record decisions provided by the user (S10)"; status=1; }
 grep -qE '^Typography:' "$d/assets/PRODUCT.template.md" || { echo "FAIL PRODUCT.template.md must have a Typography line (S10)"; status=1; }
 
+# evals/setup.sh must explain a missing Figma plugin instead of exiting silently (review advisory on PR #19).
+mkdir -p "$tmp/no-figma-home"
+setup_out="$(HOME="$tmp/no-figma-home" evals/setup.sh 2>&1)"
+grep -qF 'Install the Figma plugin first' <<<"$setup_out" || { echo "FAIL evals/setup.sh must print the install hint when the Figma plugin is missing"; status=1; }
+grep -qiE 'pairs that failed AA were resolved|failing pairs (are|were) resolved' "$r/proposals.md" || { echo "FAIL proposals.md must wait until a provided palette's failing AA pairs are resolved (S10)"; status=1; }
+
 # T7: README with install and usage for Claude Code and Claude Desktop.
 readme="README.md"  # relative to the repository root; the script cds there at the top
 if [[ -f "$readme" ]]; then

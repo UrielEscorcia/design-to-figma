@@ -5,7 +5,8 @@
 # bundle the copies.
 set -euo pipefail
 cd "$(dirname "$0")"
-src="$(ls -d "$HOME"/.claude/plugins/cache/claude-plugins-official/figma/*/ 2>/dev/null | sort -V | tail -1)"
+# `|| true`: with no install, ls fails and pipefail would end the script before the hint below.
+src="$( (ls -d "$HOME"/.claude/plugins/cache/claude-plugins-official/figma/*/ 2>/dev/null || true) | sort -V | tail -1)"
 [[ -n "$src" ]] || { echo "Install the Figma plugin first: claude plugin install figma@claude-plugins-official"; exit 1; }
 for case in */case.yaml; do
   dir="$(dirname "$case")"
