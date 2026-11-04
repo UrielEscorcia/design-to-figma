@@ -27,6 +27,7 @@
   4. Every form marks a recommended option, high-risk decisions included.
   5. Questions that depend on another answer come in a later turn.
 - **S16** Version tracking: "seria bueno manejar tags de las versiones y tambien meter los releases con un changelog de todo lo implementado y que en cada release tiene asi tenemos seguimiento de todo lo que vamos haciendo y mejorando". The user chose automatic releases through a GitHub Action.
+- **S17** Critique lenses (T2), confirmed by the user ("arrancamos T2"): four lenses (hierarchy/readability, accessibility, system consistency, copy/UX) with node ID + screenshot evidence and a refuter, without replacing the current critique and gate. They run in proportion to the change ("Según lo que cambió").
 
 ## Tasks
 
@@ -41,8 +42,8 @@
 | T8 | S13 | Hard Rule 18: defined-option questions through the question form; one form per gate | inline | done (guards RED→GREEN) | this commit |
 | T9 | S14 | Design fixes vs product additions in every critique; additions asked in a multi-select form | inline | done (guards RED→GREEN) | this commit |
 | T10 | S15 | Output Contract always complete; app-wide rules in both places; no faked states; recommended option always; dependent questions later | inline | done (guards RED→GREEN) | this commit |
-| T11 | S16 | CHANGELOG.md (0.1.0–0.4.7), scripts/release.sh + changelog-section.sh, release workflow, README section, guards; backfill of tags and releases after merge | inline | done (guards RED→GREEN; backfill pending merge) | this commit |
-| T2 | — | Critique lenses with node ID + screenshot evidence and a refuter | — | pending (next phase) | — |
+| T11 | S16 | CHANGELOG.md (0.1.0–0.4.7), scripts/release.sh + changelog-section.sh, release workflow, README section, guards; backfill of tags and releases after merge | inline | done (PR #25 merged; 15 releases v0.1.0–v0.4.7 published, v0.4.7 latest, tags verified, rerun skips) | 6a4fe70, 0896480 |
+| T2 | S17 | Critique lenses with node ID + screenshot evidence and a refuter, run proportionally; v0.5.0 | inline | done (guards RED→GREEN) | this commit |
 | T3 | — | Split the skill into trigger-first skills plus a registry | — | pending (next phase) | — |
 
 ## Log

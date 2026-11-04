@@ -265,6 +265,7 @@ The review message always has five fields, so you can decide without asking:
 | Field | Content |
 |---|---|
 | Verdict | Pass or fail against the quality gate |
+| Lenses | Hierarchy, accessibility, system consistency and copy checks: confirmed findings with node, measurement and fix |
 | Score | The blind reviewer's score |
 | Polish | What the polish pass checked and fixed |
 | Elevate | Kept or discarded and what it changed, or why it was skipped |

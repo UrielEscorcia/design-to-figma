@@ -2,6 +2,13 @@
 
 All notable changes to the design-to-figma plugin. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [Semantic Versioning](https://semver.org/). Every version has a tag (`vX.Y.Z`) and a GitHub release with the Desktop zip attached.
 
+## [0.5.0] - 2026-11-04
+
+### Added
+- Four critique lenses (`references/critique-lenses.md`): hierarchy and readability, accessibility, system consistency, and copy and UX. Each finding needs evidence (node ID, screenshot, rule, measured value, severity) or it is dropped.
+- A refuter re-measures every P0/P1 lens finding with a read-only Figma script. Only confirmed findings count for the quality gate and the fix batch; unverifiable ones stay at P2.
+- Lenses run in proportion to the change: all four on new screens and the final cross-screen review, and only the covering lenses on small changes. The screen review gets a **Lenses** field.
+
 ## [0.4.7] - 2026-11-03
 
 ### Fixed

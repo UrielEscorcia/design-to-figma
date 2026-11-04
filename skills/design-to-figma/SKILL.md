@@ -3,7 +3,7 @@ name: design-to-figma
 description: "MANDATORY first step to design or change any app, module, flow or screen in Figma, in any language. Load BEFORE reading attachments, figma-use, figma-generate-design or any Figma tool."
 license: MIT
 metadata:
-  version: "0.4.7"
+  version: "0.5.0"
   author: "Uriel Escorcia"
 ---
 
@@ -121,7 +121,7 @@ End every run with a short report containing every field below, in this order, s
 - **Style and references:** the confirmed category references, style, reference products, palette and whether the references were researched or unverified.
 - **Proposals:** the directions shown, where, and which one was chosen.
 - **Plan and screen states:** the `DESIGN-PLAN.md` location (or "delivered as downloads") and each screen's state (`pending`, `built`, `agent-verified`, `user-approved`, `final-verified`), plus whether dark mode was requested and built.
-- **Quality passes:** `critique` and `polish` done (impeccable, or the built-in checklist), with the fixes applied, the heuristics score, the specificity verdict and whether the critique was degraded. Never report a design as done without them or below the gate.
+- **Quality passes:** `critique` and `polish` done (impeccable, or the built-in checklist), with the fixes applied, the heuristics score, the specificity verdict and whether the critique was degraded. Never report a design as done without them or below the gate. Also the lenses that ran and their confirmed and refuted findings ([critique-lenses.md](references/critique-lenses.md)).
 - **What changed:** pages, variables, styles, components and screens created, updated or left untouched; manual Figma edits that were detected and kept.
 - **Sync status:** local files written (path, or "delivered as downloads"), the `.impeccable/` folder when impeccable created it (part of the shareable project folder), last-sync timestamp (local files only), and that the updated `DESIGN.md` is available as design-system context.
 - **Design System artifact:** its link and last sync, or "skipped: reason".
@@ -139,6 +139,7 @@ End every run with a short report containing every field below, in this order, s
 - [style-discovery.md](references/style-discovery.md): ask the style, research references, confirm traits
 - [proposals.md](references/proposals.md): 2 or 3 directions as Claude Design artifacts
 - [quality-bar.md](references/quality-bar.md): quality rules, impeccable wiring, built-in critique checklist
+- [critique-lenses.md](references/critique-lenses.md): four lenses with evidence per finding and a refuter, run proportionally to the change
 - [iteration.md](references/iteration.md): natural-language change requests applied in Figma
 - [sync-rules.md](references/sync-rules.md): source of truth, diffs, conflicts, snapshot
 - [design-system-artifact.md](references/design-system-artifact.md): one-way sync to a Claude Design System artifact

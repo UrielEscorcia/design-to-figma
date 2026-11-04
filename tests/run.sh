@@ -54,7 +54,7 @@ required=(
   references/minimal-system-checklist.md
   references/style-discovery.md references/proposals.md references/quality-bar.md
   references/iteration.md references/screen-loop.md references/design-system-artifact.md
-  references/routing.md
+  references/routing.md references/critique-lenses.md
   assets/PRODUCT.template.md assets/DESIGN.template.md assets/brief-page.template.md
   assets/DESIGN-PLAN.template.md
 )
@@ -397,6 +397,31 @@ grep -qiE 'tag exists without a release' scripts/release.sh 2>/dev/null || { ech
 grep -qF 'scripts/release.sh' "$wf" 2>/dev/null || { echo "FAIL $wf must publish through scripts/release.sh"; status=1; }
 grep -qF 'tests/run.sh' "$wf" 2>/dev/null || { echo "FAIL $wf must run tests/run.sh before releasing"; status=1; }
 grep -qiE 'Versions and changelog' README.md || { echo "FAIL README.md must have a Versions and changelog section"; status=1; }
+
+# T2 in odd/tasks/design-harness.md: critique lenses with evidence and a refuter (S17).
+cl="$r/critique-lenses.md"
+for lens in 'Hierarchy and readability' 'Accessibility' 'System consistency' 'Copy and UX'; do
+  grep -qE "^## [0-9]\. $lens" "$cl" 2>/dev/null || { echo "FAIL critique-lenses.md must define the lens '$lens' (S17)"; status=1; }
+done
+ev="$(section "$cl" '^## Evidence')"
+for field in 'node ID' 'screenshot' 'rule' 'measured' 'severity'; do
+  grep -qiF -- "$field" <<<"$ev" || { echo "FAIL critique-lenses.md evidence must require '$field' (S17)"; status=1; }
+done
+grep -qiE 'without evidence is dropped' <<<"$ev" || { echo "FAIL critique-lenses.md must drop findings without evidence (S17)"; status=1; }
+rf="$(section "$cl" '^## Refuter')"
+grep -qiE 'read-only' <<<"$rf" || { echo "FAIL critique-lenses.md refuter must re-measure with a read-only read (S17)"; status=1; }
+grep -qiE 'confirmed, refuted or unverifiable' <<<"$rf" || { echo "FAIL critique-lenses.md refuter must classify findings (S17)"; status=1; }
+sel="$(section "$cl" '^## Which lenses run')"
+grep -E '^\| A new screen' <<<"$sel" | grep -qiE 'cross-screen review \| all four \|' || { echo "FAIL critique-lenses.md must run all four lenses on new screens and the final review (S17)"; status=1; }
+grep -qiE 'only the finding' <<<"$rf" || { echo "FAIL critique-lenses.md refuter must receive only the finding, never the lens reasoning (S17)"; status=1; }
+grep -qiE 're-verify[^.]*lenses' "$cl" || { echo "FAIL critique-lenses.md must say which lenses a re-verify runs (S17)"; status=1; }
+section "$r/workflow-project.md" '^## 7\.' | grep -qF 'critique-lenses.md' || { echo "FAIL workflow-project.md final cross-screen critique must run the lenses (S17)"; status=1; }
+section "$d/SKILL.md" '^## Output Contract' | grep -qF 'critique-lenses.md' || { echo "FAIL SKILL.md Output Contract must report the lenses (S17)"; status=1; }
+grep -qiE 'unclear[^.]*all four' <<<"$sel" || { echo "FAIL critique-lenses.md must run all four when the change is unclear (S17)"; status=1; }
+section "$sl" '^## 3\.' | grep -qF 'critique-lenses.md' || { echo "FAIL screen-loop.md step 3 must run the critique lenses (S17)"; status=1; }
+grep -qE -- "^  - \*\*Lenses:\*\*" <<<"$rv" || { echo "FAIL screen-loop.md user review must have the field 'Lenses' (S17)"; status=1; }
+section "$r/quality-bar.md" '^## Quality gate' | grep -qiE 'confirmed lens findings' || { echo "FAIL quality-bar.md gate must count confirmed lens findings (S17)"; status=1; }
+grep -E '^7\. \*\*' "$r/iteration.md" | grep -qF 'critique-lenses.md' || { echo "FAIL iteration.md step 7 must run the lenses that cover the change (S17)"; status=1; }
 
 # T7: README with install and usage for Claude Code and Claude Desktop.
 readme="README.md"  # relative to the repository root; the script cds there at the top
