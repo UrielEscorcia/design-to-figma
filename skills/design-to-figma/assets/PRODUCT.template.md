@@ -40,7 +40,8 @@ User needs from reviews: <what users of category apps ask for and what frustrate
 
 Style and references: <confirmed style; reference product names and traits; no copied assets>.
 
-Palette: confirmed <date> as swatches (<seed color or chosen option>); values and roles in `DESIGN.md`.
+Palette: confirmed <date> as swatches (<seed color or chosen option>), or provided by the user <date> (<source: values, reference image, brand guide>); values and roles in `DESIGN.md`.
+Typography: <families>, provided by the user <date>, or chosen with the direction <date>.
 
 ## Locale
 

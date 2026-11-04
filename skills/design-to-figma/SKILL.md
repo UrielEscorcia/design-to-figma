@@ -3,7 +3,7 @@ name: design-to-figma
 description: "MANDATORY first step to design or change any app, module, flow or screen in Figma, in any language. Load BEFORE reading attachments, figma-use, figma-generate-design or any Figma tool."
 license: MIT
 metadata:
-  version: "0.4.1"
+  version: "0.4.7"
   author: "Uriel Escorcia"
 ---
 
@@ -42,6 +42,7 @@ Do not load it for code generation from Figma (a future companion skill), for Fi
 15. **Track the plan.** In project mode create `DESIGN-PLAN.md` ([DESIGN-PLAN.template.md](assets/DESIGN-PLAN.template.md)) once the screen list is agreed, update it after every state change, and read it first on resume to continue with the next unfinished item. Every screen runs [screen-loop.md](references/screen-loop.md); never start the next screen before the user approves the current one, unless the user says to batch.
 16. **Ask before spending the user's credits.** Before any generation that uses the user's plan credits (for example Figma AI images), say what it costs and ask; without a yes, use placeholders.
 17. **Route every request first** ([routing.md](references/routing.md)). A read-only request writes nothing. A small change to existing work runs inline through [iteration.md](references/iteration.md). New screens and projects take the full flow unchanged. A high-risk change (shared tokens, shared components, deletion, brand foundations, app-wide rules) is applied only after the user confirms its measured reach.
+18. **Ask questions with defined options through the surface's question form.** Whenever a question has a defined set of answers (a choice between options, approve or adjust, yes or no), use the surface's question tool (Claude Code: `AskUserQuestion`; Claude Desktop and web: the options form) instead of plain text, every time. Put the recommended option first and say why in its description; allow a free answer when the user may want something else. Open questions (the product name, the brief's free answers) stay in the chat; a suggested value, such as a file name, can be an option with a free answer allowed. Always mark one option as recommended, high-risk decisions included (there, recommend the safest option that still meets the request, such as the smaller option or cancel). A question whose options depend on another answer (for example which green to use, before the user agreed to change the color) goes in a later turn, never in the same form. Without a question tool, list the options numbered in the message.
 
 ## Decision Gates
 
@@ -55,6 +56,7 @@ Do not load it for code generation from Figma (a future companion skill), for Fi
 | Existing project | None found (screen mode) | Minimal bootstrap inside the screen flow |
 | Brief | No `PRODUCT.md` brief yet | Interview first (who, problem, essential screens, name, UI language and locale), before style discovery |
 | Locale | `PRODUCT.md` exists without a UI locale | Ask the UI language and locale once and record it before any UI copy is written |
+| Provided | The request or its attachments already fix the palette, typography or look (reference image, screenshots, brand guide) | Record them as provided by the user and never ask those gates again; the category references still run: [style-discovery.md](references/style-discovery.md) section 0 |
 | Category | No confirmed category references recorded | Research real products of the brief's category first (at least 3, with sources; with no research tool, an unverified list plus a request for the user's references), list them and wait for the user: [style-discovery.md](references/style-discovery.md) |
 | Style | No confirmed style recorded | Run style discovery after the category references, building on them: [style-discovery.md](references/style-discovery.md) |
 | Style | Style recorded in `DESIGN.md` / Brief page | Reuse it as a constraint; say so in one line |
@@ -78,19 +80,19 @@ Per-surface details and the capability-based write path: [preflight.md](referenc
 
 ## Gate sequence
 
-This sequence is the large route ([routing.md](references/routing.md)); the small route follows [iteration.md](references/iteration.md) and keeps the Hard Rules. One gate per turn: ask it, wait for the answer, record it, then move to the next. Never bundle two gates into one message or one multi-question form, even when the surface offers a form tool; the brief's own questions are one gate. Before each step, read the reference it names; this list is a checkpoint, not a replacement for the reference. Steps 7 and 8 are project mode; screen mode follows [workflow-screen.md](references/workflow-screen.md) and keeps the other steps.
+This sequence is the large route ([routing.md](references/routing.md)); the small route follows [iteration.md](references/iteration.md) and keeps the Hard Rules. One gate per turn: ask it, wait for the answer, record it, then move to the next. Never bundle two gates into one message or one multi-question form; one form per gate, never two gates in one form. The brief's own questions are one gate, so its defined-option questions can share one form (Hard Rule 18). Before each step, read the reference it names; this list is a checkpoint, not a replacement for the reference. Steps 7 and 8 are project mode; screen mode follows [workflow-screen.md](references/workflow-screen.md) and keeps the other steps.
 
 0. **Preflight report** ([preflight.md](references/preflight.md)) as its own message: confirm the write path. Then, only when impeccable is missing, ask install or continue as its own question.
 1. **Brief** ([workflow-project.md](references/workflow-project.md) or [workflow-screen.md](references/workflow-screen.md)): users, problem, essential screens, name, UI locale, dark mode → `PRODUCT.md`. Then, in both modes, the Design System artifact opt-in as its own question → `PRODUCT.md`.
 2. **Category references**: list them with sources and wait ([style-discovery.md](references/style-discovery.md)).
-3. **Style**: ask it; never propose one in place of asking. Wait.
-4. **Palette**: swatches only after the style is confirmed. Wait.
-5. **Direction**: 2 or 3 proposals; the user picks. Run the critique and show the critique and its fixes before building in Figma (an `🧪 Explorations` fallback page is not a build).
+3. **Style**: ask it; never propose one in place of asking. Wait. When the user provided the look (a reference image or screenshots), state the derived style in one line and continue (section 0 of [style-discovery.md](references/style-discovery.md)).
+4. **Palette**: swatches only after the style is confirmed. Wait. A palette provided by the user is shown once as the record, without waiting; ask only about pairs that fail AA.
+5. **Direction**: 2 or 3 proposals; the user picks. Run the critique and show the critique and its fixes before building in Figma (an `🧪 Explorations` fallback page is not a build). Design fixes are applied; product additions are asked in one form and only the accepted ones are built ([quality-bar.md](references/quality-bar.md)).
 6. **File name**: ask it alone, right before the file is created; only then the team or plan, when there are several.
 7. **Foundations and components**, with the Brief page filled; the user approves; write `DESIGN.md` now with the `Foundations: approved` line.
 8. **Screen list** → `DESIGN-PLAN.md`.
-9. **Each screen**: the user review message has every field in [screen-loop.md](references/screen-loop.md) step 6; one screen per review unless the user said to batch.
-10. **Close**: build the snapshot from the read-only enumeration output ([sync-rules.md](references/sync-rules.md)) and check that every required page is not empty, the Brief page included, and that the Brief page text matches the current scope (screens and states added since it was written), before the report.
+9. **Each screen**, system test screens included: run agent verify, self-fix, `polish` and elevate before asking approval; the user review message has every field in [screen-loop.md](references/screen-loop.md) step 6; one screen per review unless the user said to batch.
+10. **Close**: build the snapshot from the read-only enumeration output ([sync-rules.md](references/sync-rules.md)) and check that every required page is not empty, the Brief page included, and that the Brief page text matches the current scope (screens and states added since it was written), before the report. The report follows the Output Contract, every field, starting with the Route and risk line.
 
 ## Execution Steps
 
@@ -101,7 +103,7 @@ This sequence is the large route ([routing.md](references/routing.md)); the smal
    - If a Figma file exists, read it: enumerate pages with a read-only `use_figma` script, read each page with `get_metadata(nodeId=pageId)`, read variables and styles by script or `get_variable_defs`, take `get_screenshot` of key frames. Then compare with the sync frontmatter and snapshot ([sync-rules.md](references/sync-rules.md)). If `DESIGN-PLAN.md` exists, read it first and resume at the next unfinished item.
    - If none exists, continue with step 3. Templates: [PRODUCT.template.md](assets/PRODUCT.template.md), [DESIGN.template.md](assets/DESIGN.template.md), [DESIGN-PLAN.template.md](assets/DESIGN-PLAN.template.md).
 3. **Product brief.** Interview the user before any style work: who the users are, the problem, the essential screens, the product name, the UI language and locale (for example Spanish, Mexico: dates, currency, number formats) and whether dark mode is needed (ask; never assume) (impeccable `init`, or the questions in [minimal-system-checklist.md](references/minimal-system-checklist.md)). Wait for the answers; write `PRODUCT.md`.
-4. **Style discovery.** Using the brief, first research real products of the same category and get the user's confirmation of that list (category gate); then ask the style, research current references, present them with traits, get confirmation, and get the palette confirmed as swatches ([style-discovery.md](references/style-discovery.md)).
+4. **Style discovery.** Using the brief, first take the decisions the user already made (section 0), then research real products of the same category and get the user's confirmation of that list (category gate); then, for what was not provided, ask the style, research current references, present them with traits, get confirmation, and get the palette confirmed as swatches ([style-discovery.md](references/style-discovery.md)).
 5. **Direction and proposals.** In screen mode, define the screen first (step 1 of [screen-loop.md](references/screen-loop.md)), so the proposals show the agreed screen. Direction within the style (impeccable, or the checklist), then 2 or 3 directions that share the confirmed palette as Claude Design artifacts; the user picks ([proposals.md](references/proposals.md)). Critique the chosen direction ([quality-bar.md](references/quality-bar.md)).
 6. **Run the mode flow.** Project: [workflow-project.md](references/workflow-project.md). Screen: [workflow-screen.md](references/workflow-screen.md). Tool choice at each step: [tool-directory.md](references/tool-directory.md).
 7. **Write to Figma.** Ask the file name as its own question first (before the team or plan question), then check fonts ([figma-structure.md](references/figma-structure.md)). Follow the page structure in [figma-structure.md](references/figma-structure.md); place the Brief page from [brief-page.template.md](assets/brief-page.template.md). Use `figma-create-new-file` for a new file, then `figma-use` with `figma-generate-library` / `figma-generate-design`. Validate with `get_screenshot` and structural reads. Build only the chosen direction, with the builder guidance from [tool-directory.md](references/tool-directory.md).
@@ -112,9 +114,9 @@ This sequence is the large route ([routing.md](references/routing.md)); the smal
 
 ## Output Contract
 
-End every run with a short report containing:
+End every run with a short report containing every field below, in this order, small and read-only runs included. Never drop a field: write "none" or "not touched this run" instead. Route and risk comes first and Pending conflicts is always present.
 
-- **Route and risk:** the route taken (read-only, small, screen or project) and `Risk: none` or `Risk: item N (reason), confirmed by the user` ([routing.md](references/routing.md)). A read-only or small run reports only the fields it touched.
+- **Route and risk:** the route taken (read-only, small, screen or project) and `Risk: none` or `Risk: item N (reason), confirmed by the user` ([routing.md](references/routing.md)).
 - **Figma link:** the file URL (and frame links for screens touched) and the file name used.
 - **Style and references:** the confirmed category references, style, reference products, palette and whether the references were researched or unverified.
 - **Proposals:** the directions shown, where, and which one was chosen.

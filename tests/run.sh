@@ -298,6 +298,73 @@ for f in evals/spanish-module-prompt/case.yaml evals/design-to-code-no-fire/case
 done
 grep -q 'facturación mexicano' evals/spanish-module-prompt/case.yaml 2>/dev/null || { echo "FAIL the trigger eval must keep the real Desktop prompt verbatim (S9)"; status=1; }
 
+# T5 in odd/tasks/design-harness.md: decisions the user already made are taken, not asked again (S10).
+pd="$(section "$sd" '^## 0\.')"
+[[ -n "$pd" ]] || { echo "FAIL style-discovery.md must have section 0 for decisions the user already made (S10)"; status=1; }
+grep -qiE 'provided by the user' <<<"$pd" || { echo "FAIL style-discovery.md section 0 must record provided decisions as provided by the user (S10)"; status=1; }
+for item in 'Palette' 'Typography' 'Look'; do
+  grep -qE -- "^- \*\*$item" <<<"$pd" || { echo "FAIL style-discovery.md section 0 must cover '$item' (S10)"; status=1; }
+done
+grep -qiE 'never ask (it|them) again|do not ask (it|them) again' <<<"$pd" || { echo "FAIL style-discovery.md section 0 must not ask provided decisions again (S10)"; status=1; }
+grep -qiE 'category references[^.]*(always|still) run' <<<"$pd" || { echo "FAIL style-discovery.md section 0 must still run the category references (S10)"; status=1; }
+grep -qiE 'how (real|the) products? (are|is) built' <<<"$pd" || { echo "FAIL style-discovery.md section 0 must use category references to learn how the product is built (S10)"; status=1; }
+grep -qE '^\| Provided \|' "$d/SKILL.md" || { echo "FAIL SKILL.md Decision Gates must have a Provided row (S10)"; status=1; }
+grep -E '^[34]\. \*\*(Style|Palette)' <<<"$gs" | grep -qiE 'provided' || { echo "FAIL SKILL.md gate sequence must skip provided style or palette (S10)"; status=1; }
+grep -qiE 'provided by the user' "$r/proposals.md" || { echo "FAIL proposals.md palette gate must accept a palette provided by the user (S10)"; status=1; }
+grep -qiE 'provided by the user' "$d/assets/PRODUCT.template.md" || { echo "FAIL PRODUCT.template.md must record decisions provided by the user (S10)"; status=1; }
+grep -qE '^Typography:' "$d/assets/PRODUCT.template.md" || { echo "FAIL PRODUCT.template.md must have a Typography line (S10)"; status=1; }
+
+# evals/setup.sh must explain a missing Figma plugin instead of exiting silently (review advisory on PR #19).
+mkdir -p "$tmp/no-figma-home"
+setup_out="$(HOME="$tmp/no-figma-home" evals/setup.sh 2>&1)"
+grep -qF 'Install the Figma plugin first' <<<"$setup_out" || { echo "FAIL evals/setup.sh must print the install hint when the Figma plugin is missing"; status=1; }
+grep -qiE 'pairs that failed AA were resolved|failing pairs (are|were) resolved' "$r/proposals.md" || { echo "FAIL proposals.md must wait until a provided palette's failing AA pairs are resolved (S10)"; status=1; }
+
+# T6 in odd/tasks/design-harness.md: directions never leave a look the user provided (S11).
+lk="$(section "$r/proposals.md" "^## Provided look")"
+[[ -n "$lk" ]] || { echo "FAIL proposals.md must have a Provided look section (S11)"; status=1; }
+for trait in 'radius' 'elevation' 'color use' 'type'; do
+  grep -qiE "$trait" <<<"$lk" || { echo "FAIL proposals.md provided look must keep '$trait' (S11)"; status=1; }
+done
+grep -qiE 'structure, hierarchy and density' <<<"$lk" || { echo "FAIL proposals.md provided look must vary only structure, hierarchy and density (S11)"; status=1; }
+grep -qiE 'density variant' <<<"$lk" || { echo "FAIL proposals.md must keep the look in a density variant the brief asks for (S11)"; status=1; }
+grep -qiE 'only when the user asks' <<<"$lk" || { echo "FAIL proposals.md must explore another look only when the user asks (S11)"; status=1; }
+section "$sd" '^## 0\.' | grep -E '^- \*\*Look' | grep -qiE 'proposals\.md' || { echo "FAIL style-discovery.md section 0 Look must point to the provided look rule in proposals.md (S11)"; status=1; }
+
+# T7b in odd/tasks/design-harness.md: every screen in Screens runs the full loop; no backup files (S12).
+sed -n '1,4p' "$sl" | grep -qiE 'system test' || { echo "FAIL screen-loop.md must run the loop for system test screens too (S12)"; status=1; }
+grep -E '^9\. \*\*Each screen' <<<"$gs" | grep -qiE 'system test' || { echo "FAIL SKILL.md gate step 9 must cover system test screens (S12)"; status=1; }
+grep -E '^9\. \*\*Each screen' <<<"$gs" | grep -qiE 'before asking (for )?approval' || { echo "FAIL SKILL.md gate step 9 must run polish and elevate before asking approval (S12)"; status=1; }
+section "$r/sync-rules.md" '^## Write path' | grep -qiE 'never (leave|create) (backup|\.bak)' || { echo "FAIL sync-rules.md write path must forbid backup files in the user's folder (S12)"; status=1; }
+
+# T8 in odd/tasks/design-harness.md: questions with defined options go through the surface's question form (S13).
+hr18="$(section "$d/SKILL.md" '^## Hard Rules' | grep -E '^18\. ')"
+grep -qiE 'defined options' <<<"$hr18" || { echo "FAIL SKILL.md Hard Rule 18 must route questions with defined options to the form (S13)"; status=1; }
+grep -qF 'AskUserQuestion' <<<"$hr18" || { echo "FAIL SKILL.md Hard Rule 18 must name the Claude Code question tool (S13)"; status=1; }
+grep -qiE 'recommended option first' <<<"$hr18" || { echo "FAIL SKILL.md Hard Rule 18 must list the recommended option first (S13)"; status=1; }
+grep -qiE 'numbered' <<<"$hr18" || { echo "FAIL SKILL.md Hard Rule 18 must fall back to numbered options without a form tool (S13)"; status=1; }
+grep -qiE 'open questions' <<<"$hr18" || { echo "FAIL SKILL.md Hard Rule 18 must keep open questions in the chat (S13)"; status=1; }
+grep -qiE 'one form per gate|never two gates' <<<"$gs" || { echo "FAIL SKILL.md gate sequence must allow one form per gate, never two gates (S13)"; status=1; }
+
+# T9 in odd/tasks/design-harness.md: critique fixes never add product features without the user's yes (S14).
+qr="$(section "$r/quality-bar.md" '^## Rules')"
+grep -qiE 'design fixes' <<<"$qr" || { echo "FAIL quality-bar.md rules must name design fixes (S14)"; status=1; }
+grep -qiE 'product additions' <<<"$qr" || { echo "FAIL quality-bar.md rules must name product additions (S14)"; status=1; }
+grep -qiE 'every critique' <<<"$qr" || { echo "FAIL quality-bar.md rule must apply to every critique, the direction critique included (S14)"; status=1; }
+grep -qiE 'multi-select' <<<"$qr" || { echo "FAIL quality-bar.md must ask product additions in a multi-select form (S14)"; status=1; }
+grep -qiE 'only the accepted' <<<"$qr" || { echo "FAIL quality-bar.md must apply only the accepted additions (S14)"; status=1; }
+grep -E '^5\. \*\*Direction' <<<"$gs" | grep -qiE 'product additions' || { echo "FAIL SKILL.md gate step 5 must ask product additions before building (S14)"; status=1; }
+
+# T10 in odd/tasks/design-harness.md: point 3 trial findings (S15).
+oc="$(section "$d/SKILL.md" '^## Output Contract')"
+grep -qiE 'never drop a field' <<<"$oc" || { echo "FAIL SKILL.md Output Contract must never drop a field (S15)"; status=1; }
+grep -qiE 'reports only the fields it touched' <<<"$oc" && { echo "FAIL SKILL.md Output Contract must not let small runs drop fields (S15)"; status=1; }
+grep -E '^10\. \*\*Close' <<<"$gs" | grep -qiE 'Route and risk' || { echo "FAIL SKILL.md close step must end with the Route and risk line (S15)"; status=1; }
+grep -E '^9\. \*\*App-wide' "$r/iteration.md" | grep -qiE 'both, without asking' || { echo "FAIL iteration.md must write app-wide rules to DESIGN.md and the Brief page without asking (S15)"; status=1; }
+section "$r/quality-bar.md" '^## Rules' | grep -qiE 'never fake a component state' || { echo "FAIL quality-bar.md must forbid faking component states (S15)"; status=1; }
+grep -qiE 'high-risk decisions included' <<<"$hr18" || { echo "FAIL Hard Rule 18 must recommend an option in high-risk decisions too (S15)"; status=1; }
+grep -qiE 'depend on another answer' <<<"$hr18" || { echo "FAIL Hard Rule 18 must ask dependent questions in a later turn (S15)"; status=1; }
+
 # T7: README with install and usage for Claude Code and Claude Desktop.
 readme="README.md"  # relative to the repository root; the script cds there at the top
 if [[ -f "$readme" ]]; then

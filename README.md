@@ -190,7 +190,7 @@ The first reply is always a **preflight report**:
 | Web research | available, or references marked unverified |
 | Write path | the folder for `PRODUCT.md` / `DESIGN.md`; **confirm it here** |
 
-Then the brief starts, one question at a time.
+Then the brief starts, one question at a time. Questions with defined options (dark mode, approve or adjust, which team) come as a form with the recommended option first; open questions stay in the chat.
 
 ### Request routing
 
@@ -226,6 +226,8 @@ flowchart TD
     classDef project fill:#2A2D3A,stroke:#A259FF,color:#F4F4F6;
     class G7,G8 project;
 ```
+
+If your request already brings the palette, the fonts or a reference image of the app, steps 3 and 4 take them as given and are not asked again; the category references in step 2 still run, to learn how real products of the category are built.
 
 Steps 7 and 8 (purple) are project mode. In screen mode, the screen is defined before the directions, and only the tokens and components the screen needs are built.
 
