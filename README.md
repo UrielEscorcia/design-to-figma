@@ -190,7 +190,21 @@ The first reply is always a **preflight report**:
 | Web research | available, or references marked unverified |
 | Write path | the folder for `PRODUCT.md` / `DESIGN.md`; **confirm it here** |
 
-Then the brief starts, one question at a time.
+Then the brief starts, one question at a time. Questions with defined options (dark mode, approve or adjust, which team) come as a form with the recommended option first; open questions stay in the chat.
+
+### Request routing
+
+Every request is routed first, so the work gets only the process it needs:
+
+| Request | Route |
+|---|---|
+| Review, compare or explain | **Read-only**: nothing is written to Figma or to your files |
+| A clear tweak to something that exists ("make the cards denser") | **Small**: applied inline, critiqued, synced; style, palette and proposals are not asked again |
+| One new screen, or a new project | **Large**: the full design flow below, unchanged |
+
+Some changes are **high risk**: shared tokens or variables, components used on several screens, deletions, brand foundations, and app-wide rules. Before applying one ("change the primary color"), the skill measures its reach in Figma and shows what will change, what follows it, how to undo it and a smaller option. Nothing is applied without your yes. The final report states the route and the risk.
+
+In project mode, `DESIGN-PLAN.md` keeps your requests verbatim (L1, L2, …), and builders read them from the plan instead of a summary.
 
 ## The design flow
 
@@ -212,6 +226,8 @@ flowchart TD
     classDef project fill:#2A2D3A,stroke:#A259FF,color:#F4F4F6;
     class G7,G8 project;
 ```
+
+If your request already brings the palette, the fonts or a reference image of the app, steps 3 and 4 take them as given and are not asked again; the category references in step 2 still run, to learn how real products of the category are built.
 
 Steps 7 and 8 (purple) are project mode. In screen mode, the screen is defined before the directions, and only the tokens and components the screen needs are built.
 
@@ -307,6 +323,15 @@ tests/run.sh
 ```
 
 It validates the skill frontmatter and structure, checks the rules the trials depend on, and requires a version bump in `.claude-plugin/plugin.json` and the `SKILL.md` metadata for any change to the skill.
+
+Trigger evals check that the skill loads, and not the official Figma skills, for real prompts. They load a local copy of the official Figma plugin next to this one. Run them before you change the skill description:
+
+```sh
+evals/setup.sh   # stages this plugin and the installed Figma plugin in each case (gitignored); rerun after every skill change
+claude plugin eval . --no-publish --scaffold --ablation none
+```
+
+`evals/spanish-module-prompt` is a real Desktop prompt that must load the skill; `--scaffold` stages its attachments (two PDFs and a reference image). `evals/design-to-code-no-fire` must not load it. A case that lists `plugins:` loads only those plugins, so the baseline arm is turned off.
 
 ## License
 

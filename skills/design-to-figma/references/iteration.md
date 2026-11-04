@@ -1,6 +1,6 @@
 # Iteration in Figma
 
-After the first build, the user changes the design by asking in natural language: "change this screen's color to X", "remove the borders of these form fields and rearrange them". Apply these directly in Figma, then sync.
+After the first build, the user changes the design by asking in natural language: "change this screen's color to X", "remove the borders of these form fields and rearrange them". Apply these directly in Figma, then sync. This is the small route of [routing.md](routing.md): the settled gates (brief, style, palette, proposals) are not asked again.
 
 ## Steps
 
@@ -11,12 +11,12 @@ After the first build, the user changes the design by asking in natural language
    - A color, spacing or radius meant everywhere: edit the **variable** (token), so every bound node follows.
    - One component's look: edit the **component** (or the main component of a set), so all instances follow.
    - One place only: edit the **instance** or the node, and say it is a local override.
-   - If a request touches shared tokens or components, state which screens it will affect before applying.
+   - If a request touches shared tokens or components, deletes content or changes the brand foundations, it is high risk: measure its reach and get the user's yes as in step 4 of [routing.md](routing.md) before applying.
 5. **Apply with `use_figma`.** Load `figma-use` first. Keep values bound to variables, keep auto layout and text styles. Do not delete or replace content the user did not mention, and never hide or delete content to make a layout fit without asking.
 6. **Verify.** `get_screenshot` of the changed frames; compare with the request.
 7. **Quality check.** For visual changes, run the critique checklist in [quality-bar.md](quality-bar.md) on the changed area; apply fixes in one batch.
 8. **Sync.** Update `DESIGN.md` and the snapshot per [sync-rules.md](sync-rules.md) (Figma → local), and report what changed under the Output Contract.
-9. **App-wide requests become rules.** When a user change applies to the whole app rather than one screen (layout, copy, language, spacing, behavior), record it as an app-wide rule in `DESIGN.md` (behavior or usage rules) and in the Brief page's usage rules, apply it to every screen already built, and respect it in later screens without being asked again. Screens it changes that were already past `built` go back to `built` in the plan: run agent verify on them again and show them in the next user review, so no state claims approval of a version the user has not seen. Ask when it is unclear whether a request is screen-only or app-wide.
+9. **App-wide requests become rules.** When a user change applies to the whole app rather than one screen (layout, copy, language, spacing, behavior), record it as an app-wide rule in both, without asking: `DESIGN.md` (behavior or usage rules) and the Brief page's usage rules in Figma; apply it to every screen already built, and respect it in later screens without being asked again. Screens it changes that were already past `built` go back to `built` in the plan: run agent verify on them again and show them in the next user review, so no state claims approval of a version the user has not seen. Ask when it is unclear whether a request is screen-only or app-wide.
 
 ## Examples
 

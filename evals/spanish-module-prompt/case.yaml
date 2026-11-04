@@ -1,0 +1,13 @@
+schema_version: "1.1"
+name: spanish-module-prompt
+plugins:
+  - plugins/design-to-figma
+  - plugins/figma
+context:
+  scaffold_script: scaffold.sh
+execution:
+  max_turns: 8
+  allowed_tools: [Read, Glob, Grep, Skill]
+  prompt: |
+    Vamos a crear el diseño en figma de un sistema de facturación mexicano.  Vamos a ir iterando modulo tras modulo agregando flujos y pantallas según lo requerido. La idea es que juntos vayamos construyendo la mejor experiencia UI.  Puedes ver el pdf donde se explica a grandes rasgos el producto para que tengas contexto de lo que se busca lograr, también encuentras el otro pdf en el cual nos indica la tarea o lo que tenemos que construir ahorita como primero modulo.  Previamente elegimos la paleta de colores, la tipografía; Geist y Geist Mono, y te dejo la imagen de como se visualiza la aplicación para que vayamos por ese rumbo. 
+    Cualquier duda pregúntame

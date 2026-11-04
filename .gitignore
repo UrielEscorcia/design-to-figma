@@ -1,3 +1,5 @@
 .atl/
 .DS_Store
 *.zip
+evals/results/
+evals/*/plugins/
