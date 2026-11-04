@@ -365,6 +365,27 @@ section "$r/quality-bar.md" '^## Rules' | grep -qiE 'never fake a component stat
 grep -qiE 'high-risk decisions included' <<<"$hr18" || { echo "FAIL Hard Rule 18 must recommend an option in high-risk decisions too (S15)"; status=1; }
 grep -qiE 'depend on another answer' <<<"$hr18" || { echo "FAIL Hard Rule 18 must ask dependent questions in a later turn (S15)"; status=1; }
 
+# Releases (T11 in odd/tasks/design-harness.md): every version has a CHANGELOG entry, and the release script builds
+# the tag, notes and Desktop zip that the release workflow publishes.
+pv_now="$(grep -oE '"version": *"[^"]+"' .claude-plugin/plugin.json | grep -oE '[0-9][^"]*')"
+grep -qF "## [$pv_now]" CHANGELOG.md 2>/dev/null || { echo "FAIL CHANGELOG.md must have a '## [$pv_now]' entry for the plugin version"; status=1; }
+for f in scripts/release.sh scripts/changelog-section.sh; do
+  [[ -x "$f" ]] || { echo "FAIL $f must exist and be executable"; status=1; }
+done
+if [[ -x scripts/changelog-section.sh ]]; then
+  [[ -n "$(scripts/changelog-section.sh "$pv_now")" ]] || { echo "FAIL scripts/changelog-section.sh returned no notes for $pv_now"; status=1; }
+  [[ -z "$(scripts/changelog-section.sh 9.9.9)" ]] || { echo "FAIL scripts/changelog-section.sh must print nothing for an unknown version"; status=1; }
+fi
+if [[ -x scripts/release.sh ]]; then
+  dry="$(scripts/release.sh --dry-run "$pv_now" HEAD 2>&1)"
+  grep -qF "tag v$pv_now" <<<"$dry" || { echo "FAIL release.sh --dry-run must name the tag v$pv_now"; status=1; }
+  grep -qE 'zip design-to-figma-[0-9.]+\.zip: [1-9][0-9]* files, SKILL\.md at design-to-figma/SKILL\.md' <<<"$dry" || { echo "FAIL release.sh --dry-run must build a zip with design-to-figma/SKILL.md at its root"; echo "$dry"; status=1; }
+fi
+wf=.github/workflows/release.yml
+grep -qF 'scripts/release.sh' "$wf" 2>/dev/null || { echo "FAIL $wf must publish through scripts/release.sh"; status=1; }
+grep -qF 'tests/run.sh' "$wf" 2>/dev/null || { echo "FAIL $wf must run tests/run.sh before releasing"; status=1; }
+grep -qiE 'Versions and changelog' README.md || { echo "FAIL README.md must have a Versions and changelog section"; status=1; }
+
 # T7: README with install and usage for Claude Code and Claude Desktop.
 readme="README.md"  # relative to the repository root; the script cds there at the top
 if [[ -f "$readme" ]]; then

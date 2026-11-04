@@ -28,6 +28,7 @@ It designs; it does not write product code.
 - [Figma and your local files](#figma-and-your-local-files)
 - [Updating](#updating)
 - [Troubleshooting](#troubleshooting)
+- [Versions and changelog](#versions-and-changelog)
 - [Development](#development)
 - [License](#license)
 
@@ -122,7 +123,7 @@ Plugins in Desktop are saved to your claude.ai account, so they also work in cha
 
 Use this only when you cannot add a marketplace (for example, an organization that blocks it). Updates are then manual uploads.
 
-1. From a clone of this repository, build the zip. It must contain the `design-to-figma` folder itself:
+1. Download `design-to-figma-X.Y.Z.zip` from the [latest release](https://github.com/UrielEscorcia/design-to-figma/releases/latest). Or, from a clone of this repository, build it; it must contain the `design-to-figma` folder itself:
 
    ```sh
    cd skills && zip -r ../design-to-figma.zip design-to-figma
@@ -301,7 +302,7 @@ Where they are written depends on what the session can write:
 |---|---|
 | Claude Code | `claude plugin marketplace update design-to-figma`, then `claude plugin update design-to-figma@design-to-figma` |
 | Claude Desktop | **Customize → Plugins → Design to figma → Update**. The button is active only when a new version is available |
-| Zip upload | Build a new zip and upload it again |
+| Zip upload | Download the zip from the [latest release](https://github.com/UrielEscorcia/design-to-figma/releases/latest) (or build it) and upload it again |
 
 A new version reaches you only when its version number changes; every change to the skill bumps it.
 
@@ -315,6 +316,18 @@ A new version reaches you only when its version number changes; every change to 
 | impeccable is installed but not used | Start a new session or chat; on Desktop, check it is listed under Skills |
 | Two copies of the plugin in Claude Code | One comes from the command line and one synced from your account; keep one |
 | Desktop's **Update** button is grey | You already have the latest version |
+
+## Versions and changelog
+
+Every change to the skill bumps the version in `.claude-plugin/plugin.json`. [CHANGELOG.md](CHANGELOG.md) lists what each version added, changed or fixed, with links to its pull requests. Each version also has a tag (`vX.Y.Z`) and a [GitHub release](https://github.com/UrielEscorcia/design-to-figma/releases) with the Desktop zip attached.
+
+Releases are automatic. When a merge to `main` changes the version, the [release workflow](.github/workflows/release.yml) runs `tests/run.sh`, then publishes the tag, the release notes (the version's CHANGELOG entry) and the zip. To ship a change:
+
+1. Bump the version in `.claude-plugin/plugin.json` and the `SKILL.md` metadata.
+2. Add its `## [X.Y.Z] - YYYY-MM-DD` entry at the top of `CHANGELOG.md`. `tests/run.sh` fails without it.
+3. Merge to `main`.
+
+`scripts/release.sh --dry-run X.Y.Z` checks the tag, notes and zip locally without publishing.
 
 ## Development
 
