@@ -19,10 +19,25 @@ const out = {
   targets: opts.touch ? { min: opts.targetMin, failures: [] } : null,
   unbound: { fills: { count: 0, examples: [] }, strokes: { count: 0, examples: [] }, spacing: { count: 0, examples: [] }, radius: { count: 0, examples: [] }, text: { count: 0, examples: [] } },
   detachedCandidates: [],
+  // Exact totals per list. Example lists are capped per frame and per list (maxExamples); every cut
+  // list is named in `truncated` with its shown and total size, so a capped list is never complete.
+  counts: { contrastFailures: 0, contrastUnmeasured: 0, textFloorFailures: 0, targetFailures: 0, detachedCandidates: 0 },
+  truncated: [],
   limits: 'Backgrounds come from ancestor fills only (a shape drawn behind the text by a sibling is not seen); text with no opaque ancestor is measured over white.',
 };
-const push = (list, item) => { if (list.length < opts.maxExamples) list.push(item); };
-const addUnbound = (kind, item) => { out.unbound[kind].count++; push(out.unbound[kind].examples, item); };
+let frameId = null;
+const shownPerFrame = new Map();
+function record(list, name, countKey, item) {
+  if (countKey) out.counts[countKey]++;
+  const key = `${frameId}|${name}`;
+  const n = (shownPerFrame.get(key) || 0) + 1;
+  shownPerFrame.set(key, n);
+  if (n <= opts.maxExamples) { list.push({ ...item, frameId }); return; }
+  const cut = out.truncated.find((t) => t.frameId === frameId && t.list === name);
+  if (cut) cut.total = n; else out.truncated.push({ frameId, list: name, shown: opts.maxExamples, total: n });
+}
+const addUnbound = (kind, item) => { out.unbound[kind].count++; record(out.unbound[kind].examples, `unbound.${kind}`, null, item); };
+const unmeasured = (item) => record(out.contrast.unmeasured, 'contrast.unmeasured', 'contrastUnmeasured', item);
 
 const toHex = ({ r, g, b }) => '#' + [r, g, b].map((c) => Math.round(c * 255).toString(16).padStart(2, '0')).join('').toUpperCase();
 const lum = ({ r, g, b }) => {
@@ -49,14 +64,14 @@ async function topPaint(node) {
 }
 
 async function measureContrast(text, sizes) {
-  if (isMixed(text.fills)) { push(out.contrast.unmeasured, { nodeId: text.id, name: text.name, reason: 'mixed fills' }); return; }
+  if (isMixed(text.fills)) { unmeasured({ nodeId: text.id, name: text.name, reason: 'mixed fills' }); return; }
   const fg = await topPaint(text);
-  if (!fg || fg.kind !== 'solid') { push(out.contrast.unmeasured, { nodeId: text.id, name: text.name, reason: 'no solid text fill' }); return; }
+  if (!fg || fg.kind !== 'solid') { unmeasured({ nodeId: text.id, name: text.name, reason: 'no solid text fill' }); return; }
   const layers = []; let bgVariable = null;
   for (let n = text.parent; n; n = n.parent) {
     const p = await topPaint(n);
     if (!p) continue;
-    if (p.kind !== 'solid') { push(out.contrast.unmeasured, { nodeId: text.id, name: text.name, reason: `background on ${n.name} is not a solid color` }); return; }
+    if (p.kind !== 'solid') { unmeasured({ nodeId: text.id, name: text.name, reason: `background on ${n.name} is not a solid color` }); return; }
     if (bgVariable === null) bgVariable = p.variable;
     layers.push(p);
     if (p.alpha >= 1) break;
@@ -71,7 +86,7 @@ async function measureContrast(text, sizes) {
   const bold = typeof text.fontWeight === 'number' ? text.fontWeight >= 700 : /bold|black|heavy/i.test(style) && !/semi\s?bold|demi/i.test(style);
   const required = size >= 24 || (size >= 18.66 && bold) ? 3 : 4.5;
   out.contrast.checked++;
-  if (ratio < required) push(out.contrast.failures, { nodeId: text.id, name: text.name, text: String(text.characters || '').slice(0, 40), fontSize: size, fg: toHex(fgc), bg: toHex(bg), fgVariable: fg.variable, bgVariable, ratio, required });
+  if (ratio < required) record(out.contrast.failures, 'contrast.failures', 'contrastFailures', { nodeId: text.id, name: text.name, text: String(text.characters || '').slice(0, 40), fontSize: size, fg: toHex(fgc), bg: toHex(bg), fgVariable: fg.variable, bgVariable, ratio, required });
 }
 
 function fontSizes(text) {
@@ -103,7 +118,7 @@ async function checkTarget(node) {
   if (node.type === 'INSTANCE') { const main = await node.getMainComponentAsync(); if (main) label += ' ' + main.name + (main.parent ? ' ' + main.parent.name : ''); }
   const interactive = INTERACTIVE.test(label) || (Array.isArray(node.reactions) && node.reactions.length > 0);
   const box = node.absoluteBoundingBox;
-  if (interactive && box && (box.width < opts.targetMin || box.height < opts.targetMin)) push(out.targets.failures, { nodeId: node.id, name: node.name, width: Math.round(box.width), height: Math.round(box.height), min: opts.targetMin });
+  if (interactive && box && (box.width < opts.targetMin || box.height < opts.targetMin)) record(out.targets.failures, 'targets.failures', 'targetFailures', { nodeId: node.id, name: node.name, width: Math.round(box.width), height: Math.round(box.height), min: opts.targetMin });
 }
 
 async function walk(node, inInstance) {
@@ -112,13 +127,13 @@ async function walk(node, inInstance) {
     const sizes = fontSizes(node);
     await measureContrast(node, sizes);
     const min = Math.min(...sizes);
-    if (min < opts.textFloor) push(out.textFloor.failures, { nodeId: node.id, name: node.name, text: String(node.characters || '').slice(0, 40), fontSize: min, floor: opts.textFloor });
+    if (min < opts.textFloor) record(out.textFloor.failures, 'textFloor.failures', 'textFloorFailures', { nodeId: node.id, name: node.name, text: String(node.characters || '').slice(0, 40), fontSize: min, floor: opts.textFloor });
   }
   if (opts.touch && (node.type === 'INSTANCE' || (Array.isArray(node.reactions) && node.reactions.length))) await checkTarget(node);
   const insideInstance = inInstance || node.type === 'INSTANCE';
   if (!insideInstance) {
     checkUnbound(node);
-    if ((node.type === 'FRAME' || node.type === 'GROUP') && node.name.includes('/')) push(out.detachedCandidates, { nodeId: node.id, name: node.name });
+    if ((node.type === 'FRAME' || node.type === 'GROUP') && node.name.includes('/')) record(out.detachedCandidates, 'detachedCandidates', 'detachedCandidates', { nodeId: node.id, name: node.name });
   }
   for (const child of node.children || []) await walk(child, insideInstance);
 }
@@ -127,6 +142,7 @@ for (const id of NODE_IDS) {
   const node = await figma.getNodeByIdAsync(id);
   if (!node) { out.notFound.push(id); continue; }
   out.measured.push({ nodeId: node.id, name: node.name });
+  frameId = node.id;
   await walk(node, false);
 }
 return out;

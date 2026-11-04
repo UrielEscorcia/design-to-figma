@@ -27,6 +27,8 @@ Measure with [measure.js](../assets/scripts/measure.js), a tested read-only `use
 | `textFloor.failures`, `targets.failures` | Accessibility |
 | `unbound` (fills, strokes, spacing, radius, text), `detachedCandidates` | System consistency |
 
+Every example carries its `frameId`. `counts` holds the exact totals. The example lists are capped per frame and per list (`maxExamples`, 25 by default), and every cut list is named in `truncated` with its shown and total size. Never read a truncated list as complete: re-run measure.js on that frame alone with a higher `maxExamples` before judging it.
+
 Its measurements are the evidence for those findings. Hierarchy and Copy and UX findings are judgments: they cite the node and the screenshot, and stay unverifiable for the refuter. `contrast.unmeasured` and the script's `limits` (backgrounds come from ancestor fills only) are judged on the screenshot, never counted as a pass.
 
 ## 1. Hierarchy and readability

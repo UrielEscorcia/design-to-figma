@@ -163,6 +163,21 @@ test('frames named like components are detached candidates; unknown ids are repo
   assert.deepEqual(out.measured, [{ nodeId: '8:1', name: 'Screen' }]);
 });
 
+test('the example cap is per frame, totals stay exact, and a cut list is flagged, never read as complete', async () => {
+  const rows = (prefix, n) => Array.from({ length: n }, (_, i) => ({ id: `${prefix}:${i + 10}`, name: `Row ${i}`, type: 'TEXT', characters: 'RFC', fontSize: 12,
+    fontName: { family: 'Geist', style: 'Regular' }, fills: [solid('#8F959B')] }));
+  const a = { id: 'A:1', name: 'List · 1440', type: 'FRAME', fills: [solid('#FFFFFF')], children: rows('A', 30) };
+  const b = { id: 'B:1', name: 'List · 390', type: 'FRAME', fills: [solid('#FFFFFF')], children: rows('B', 2) };
+  const out = await measure(makeFigma([a, b]), ['A:1', 'B:1'], '{ maxExamples: 25 }');
+  assert.equal(out.counts.contrastFailures, 32, 'the total counts every failure');
+  const inB = out.contrast.failures.filter((f) => f.frameId === 'B:1');
+  assert.equal(inB.length, 2, 'a later frame keeps its own failures');
+  assert.equal(out.contrast.failures.filter((f) => f.frameId === 'A:1').length, 25);
+  assert.deepEqual(out.truncated.find((t) => t.list === 'contrast.failures'), { frameId: 'A:1', list: 'contrast.failures', shown: 25, total: 30 });
+  assert.ok(out.truncated.every((t) => t.frameId === 'A:1'), 'frame B, with 2 rows, is never cut');
+  assert.equal(out.unbound.text.count, 32, 'unbound totals stay exact too');
+});
+
 // ---------- snapshot.js ----------
 test('snapshot lists pages, frames, components, styles and variable values per mode, sorted', async () => {
   const pages = [
