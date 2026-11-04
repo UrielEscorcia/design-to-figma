@@ -52,8 +52,9 @@
 | T12 | S18 | measure.js + snapshot.js with Node tests against a fake Figma API; wired into lenses, refuter, sync, tool directory; v0.6.0 | inline | done (tests RED→GREEN, mutations caught) | this commit |
 | T3 | — | Split the skill into trigger-first skills plus a registry | — | dropped (L12) | — |
 | T13 | S19 | Brownfield adoption: references/brownfield.md (read-only adoption with snapshot.js + measure.js, page map, `scope: adopted`, opt-ins as high-risk item 6), wired into SKILL.md, routing, workflow-screen, figma-structure, iteration, DESIGN template, README; v0.7.0 | inline | done (guards RED 9 → GREEN) | this commit |
-| T14 | S20 | Description names review; trigger eval evals/spanish-review-prompt with the trial prompt; guard; v0.7.1 | inline | done (guards RED → GREEN; eval in this commit\1| T16 | S22 | Trial gaps #1–#11: HR18 step order and forms per step, read-only next-step question with record-adoption, brief before writing, opt-ins as high-risk forms, snapshot.js unchanged, estimated vs measured, lenses on position changes, no one-change rules; v0.7.3 | inline | done (guards RED 10 -> GREEN) | this commit |\n's Log) | this commit |
+| T14 | S20 | Description names review; trigger eval evals/spanish-review-prompt with the trial prompt; guard; v0.7.1 | inline | done (guards RED → GREEN; trigger evals: review 3/3, module 3/3, no-fire 3/3) | 2bebeca, a9c30c5 |
 | T15 | S21 | Read-only first request on an adopted file: adoption reads + summary, nothing recorded; recorded at the first change request; route label; lens counts in the Output Contract; v0.7.2 | inline | done (guards RED 4 -> GREEN) | this commit |
+| T16 | S22 | Trial gaps #1–#11: HR18 step order and forms per step, read-only next-step question with record-adoption, brief before writing, opt-ins as high-risk forms, snapshot.js unchanged, estimated vs measured, lenses on position changes, no one-change rules; v0.7.3 | inline | done (guards RED 10 -> GREEN) | this commit |\n's Log) | this commit |
 
 ## Log
 
