@@ -29,6 +29,7 @@
 - **S16** Version tracking: "seria bueno manejar tags de las versiones y tambien meter los releases con un changelog de todo lo implementado y que en cada release tiene asi tenemos seguimiento de todo lo que vamos haciendo y mejorando". The user chose automatic releases through a GitHub Action.
 - **S17** Critique lenses (T2), confirmed by the user ("arrancamos T2"): four lenses (hierarchy/readability, accessibility, system consistency, copy/UX) with node ID + screenshot evidence and a refuter, without replacing the current critique and gate. They run in proportion to the change ("Según lo que cambió").
 - **S19** Brownfield mode (L13): work on existing Figma files the plugin did not create. Adoption writes nothing to the file without asking: "Nada sin preguntar (Recomendado)". It reads the file with snapshot.js and measure.js, derives local PRODUCT.md/DESIGN.md, confirms the look with the user and keeps the file's own pages. Adding the Brief page or turning hardcoded values into variables is offered as an optional high-risk step.
+- **S20** Review prompts load the skill (L14). In the v0.7.0 Desktop trial, "Revisa la pantalla principal de este archivo de Figma y dime qué mejorarías: <URL>" loaded only the official Figma skill. The description named "design or change" but not review.
 - **S18** Tested measurement scripts, chosen over T3 ("Scripts de medición (Recomendado)"); the goal is to advance the work and test later, saving Figma calls. Read-only `use_figma` scripts: one call measures frames for the lenses and the refuter, and one builds the sync snapshot.
 
 ## Tasks
@@ -49,6 +50,7 @@
 | T12 | S18 | measure.js + snapshot.js with Node tests against a fake Figma API; wired into lenses, refuter, sync, tool directory; v0.6.0 | inline | done (tests RED→GREEN, mutations caught) | this commit |
 | T3 | — | Split the skill into trigger-first skills plus a registry | — | dropped (L12) | — |
 | T13 | S19 | Brownfield adoption: references/brownfield.md (read-only adoption with snapshot.js + measure.js, page map, `scope: adopted`, opt-ins as high-risk item 6), wired into SKILL.md, routing, workflow-screen, figma-structure, iteration, DESIGN template, README; v0.7.0 | inline | done (guards RED 9 → GREEN) | this commit |
+| T14 | S20 | Description names review; trigger eval evals/spanish-review-prompt with the trial prompt; guard; v0.7.1 | inline | done (guards RED → GREEN; eval in this commit\'s Log) | this commit |
 
 ## Log
 
@@ -109,4 +111,5 @@
 - (2026-11-04) T3 (skill split) was deferred on advice: it risks triggering against the Figma skills and complicates the Desktop zips, for little gain (SKILL.md has 148 lines and references load on demand). The user picked the measurement scripts instead.
 - **L12** (2026-11-04) "el T3 lo descartamos por ahora no es prioridad dividir".
 - **L13** (2026-11-04) Next task: "Modo brownfield (Recomendado)". Writes to an adopted file: "Nada sin preguntar (Recomendado)". Branch feat/d2f-30-brownfield from main at 90b0d54 (PR #28 merged, v0.6.0 auto-released).
+- **L14** (2026-11-04) v0.7.0 Desktop trial, step A. The prompt was "Revisa la pantalla principal de este archivo de Figma y dime qué mejorarías" with a Movie Ticket Booking App file. The plugin did not load ("Loaded Figma"; only get_screenshot, get_metadata and get_variable_defs ran). Fix chosen: "Sí, con la eval corrida (Recomendado)". Branch fix/d2f-31-review-trigger. First eval: the skill fired 3/3, but the copied grader required impeccable and PRODUCT.md. The traces showed the right behavior: a read-only Figma block with install steps and the seat note, and no write path. So the grader now checks the remote MCP URL and the Dev or Full note from preflight.md. It matches both review traces and not the no-fire trace. Rerun 3/3.
 - Context: the direction and gap mapping are in Engram obs 6224; the scope decision is in obs 6235. The idea list (handoff/Code Connect, brownfield, prototypes/FigJam, a11y audit, variants, responsive, motion, Figma quota, fonts in screenshots, direct commands, plugin evals) comes after the base.

@@ -1,9 +1,9 @@
 ---
 name: design-to-figma
-description: "MANDATORY first step to design or change any app, module, flow or screen in Figma, in any language. Load BEFORE reading attachments, figma-use, figma-generate-design or any Figma tool."
+description: "MANDATORY first step to design, change or review any app, module, flow or screen in Figma, in any language. Load BEFORE reading attachments, figma-use, figma-generate-design or any Figma tool."
 license: MIT
 metadata:
-  version: "0.7.0"
+  version: "0.7.1"
   author: "Uriel Escorcia"
 ---
 
