@@ -30,6 +30,7 @@
 - **S17** Critique lenses (T2), confirmed by the user ("arrancamos T2"): four lenses (hierarchy/readability, accessibility, system consistency, copy/UX) with node ID + screenshot evidence and a refuter, without replacing the current critique and gate. They run in proportion to the change ("Según lo que cambió").
 - **S19** Brownfield mode (L13): work on existing Figma files the plugin did not create. Adoption writes nothing to the file without asking: "Nada sin preguntar (Recomendado)". It reads the file with snapshot.js and measure.js, derives local PRODUCT.md/DESIGN.md, confirms the look with the user and keeps the file's own pages. Adding the Brief page or turning hardcoded values into variables is offered as an optional high-risk step.
 - **S20** Review prompts load the skill (L14). In the v0.7.0 Desktop trial, "Revisa la pantalla principal de este archivo de Figma y dime qué mejorarías: <URL>" loaded only the official Figma skill. The description named "design or change" but not review.
+- **S21** Read-only adoption (L15). On the first read-only request about a file the plugin did not create, the plugin reads the file and shows the adoption summary without writing anything; the adoption is recorded with the first change request. The user chose "Leer y mostrar; guardar al cambiar (Recomendado)". The report also gives the lens finding counts.
 - **S18** Tested measurement scripts, chosen over T3 ("Scripts de medición (Recomendado)"); the goal is to advance the work and test later, saving Figma calls. Read-only `use_figma` scripts: one call measures frames for the lenses and the refuter, and one builds the sync snapshot.
 
 ## Tasks
@@ -51,6 +52,7 @@
 | T3 | — | Split the skill into trigger-first skills plus a registry | — | dropped (L12) | — |
 | T13 | S19 | Brownfield adoption: references/brownfield.md (read-only adoption with snapshot.js + measure.js, page map, `scope: adopted`, opt-ins as high-risk item 6), wired into SKILL.md, routing, workflow-screen, figma-structure, iteration, DESIGN template, README; v0.7.0 | inline | done (guards RED 9 → GREEN) | this commit |
 | T14 | S20 | Description names review; trigger eval evals/spanish-review-prompt with the trial prompt; guard; v0.7.1 | inline | done (guards RED → GREEN; eval in this commit\'s Log) | this commit |
+| T15 | S21 | Read-only first request on an adopted file: adoption reads + summary, nothing recorded; recorded at the first change request; route label; lens counts in the Output Contract; v0.7.2 | inline | done (guards RED 4 -> GREEN) | this commit |
 
 ## Log
 
@@ -112,4 +114,11 @@
 - **L12** (2026-11-04) "el T3 lo descartamos por ahora no es prioridad dividir".
 - **L13** (2026-11-04) Next task: "Modo brownfield (Recomendado)". Writes to an adopted file: "Nada sin preguntar (Recomendado)". Branch feat/d2f-30-brownfield from main at 90b0d54 (PR #28 merged, v0.6.0 auto-released).
 - **L14** (2026-11-04) v0.7.0 Desktop trial, step A. The prompt was "Revisa la pantalla principal de este archivo de Figma y dime qué mejorarías" with a Movie Ticket Booking App file. The plugin did not load ("Loaded Figma"; only get_screenshot, get_metadata and get_variable_defs ran). Fix chosen: "Sí, con la eval corrida (Recomendado)". Branch fix/d2f-31-review-trigger. First eval: the skill fired 3/3, but the copied grader required impeccable and PRODUCT.md. The traces showed the right behavior: a read-only Figma block with install steps and the seat note, and no write path. So the grader now checks the remote MCP URL and the Dev or Full note from preflight.md. It matches both review traces and not the no-fire trace. Rerun 3/3.
+- **L15** (2026-11-04) Trial step A on v0.7.1, same prompt and file.
+  - The skill loaded. `measure.js` ran against the real API: 23 unbound fills, 19 unstyled texts, contrast unmeasured on 19 texts over gradient or image.
+  - The changes stayed read-only, and design fixes were kept apart from product additions (S14).
+  - The question form marked a recommended option, and the report carried Route and risk.
+  - Gap 1: no adoption summary and route "solo lectura". The read-only rule beat brownfield.md, as predicted by review advisory R2-read-only-adoption.
+  - Gap 2: the report said the four lenses ran, without confirmed or refuted counts.
+  - Decision: "Leer y mostrar; guardar al cambiar (Recomendado)". Branch fix/d2f-32-readonly-adoption.
 - Context: the direction and gap mapping are in Engram obs 6224; the scope decision is in obs 6235. The idea list (handoff/Code Connect, brownfield, prototypes/FigJam, a11y audit, variants, responsive, motion, Figma quota, fonts in screenshots, direct commands, plugin evals) comes after the base.

@@ -24,12 +24,16 @@ When the file is not accessible, stop as in [sync-rules.md](sync-rules.md) (Miss
 
 ## 3. Confirm and record
 
-Send one adoption summary: the page map, the system inventory, the look in one line, the inferred brief and the health counts. Ask the brief questions the file could not answer in the same gate (Hard Rule 18). After the user confirms or corrects it:
+Send one adoption summary: the page map, the system inventory, the look in one line, the inferred brief and the health counts.
+
+**A read-only request** (review, critique, compare, explain) runs steps 1 and 2 and records nothing, as [routing.md](routing.md) requires. Put the adoption summary at the top of the answer, use the step 1 reads as the review's evidence, and ask no brief questions. Offer recording the adoption (`PRODUCT.md`, `DESIGN.md`, the snapshot) as a next step; it happens with the first change request, never during the read-only run.
+
+**A change request** (the first one, or the first after a read-only run) asks the brief questions the file could not answer in the same gate as the summary (Hard Rule 18). After the user confirms or corrects it:
 
 - Write `PRODUCT.md` and `DESIGN.md` to the confirmed write path ([preflight.md](preflight.md)). `DESIGN.md` carries the Figma header with `scope: adopted`, the page map, the tokens as the file has them (variables, or the observed hardcoded values marked as such) and the existing components.
 - Store the snapshot from step 1 as the sync baseline ([sync-rules.md](sync-rules.md)), with `lastSync`.
 
-Then continue the user's request on its route. A read-only request ends here with the report.
+Then continue the user's request on its route.
 
 ## 4. Working in an adopted file
 
@@ -41,4 +45,4 @@ Then continue the user's request on its route. A read-only request ends here wit
 
 ## 5. Report
 
-The Output Contract adds the adoption: the page map, `scope: adopted`, the health counts and the opt-ins offered. The Route and risk line names the request's route, for example `Route: adopted, then small`.
+The Output Contract adds the adoption: the page map, `scope: adopted`, the health counts and the opt-ins offered. The Route and risk line names the request's route, for example `Route: adopted, then small`, or `Route: adopted (not recorded), then read-only` when the run was read-only.

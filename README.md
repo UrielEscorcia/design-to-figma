@@ -216,7 +216,7 @@ Share a Figma file the plugin did not create, and it adopts the file before doin
 - a brief inferred from the screens;
 - health counts: unbound values and contrast failures.
 
-Once you confirm it, it writes `PRODUCT.md` and `DESIGN.md` (`scope: adopted`) with the file as the sync baseline. New work then goes onto your pages and reuses your components and values. Adding a Brief page, turning hardcoded values into variables, or fixing the health findings across the file are offered as high-risk steps and never done without your yes.
+A review only shows this summary with its findings and records nothing. With your first change request, once you confirm the summary, it writes `PRODUCT.md` and `DESIGN.md` (`scope: adopted`) with the file as the sync baseline. New work then goes onto your pages and reuses your components and values. Adding a Brief page, turning hardcoded values into variables, or fixing the health findings across the file are offered as high-risk steps and never done without your yes.
 
 In project mode, `DESIGN-PLAN.md` keeps your requests verbatim (L1, L2, …), and builders read them from the plan instead of a summary.
 

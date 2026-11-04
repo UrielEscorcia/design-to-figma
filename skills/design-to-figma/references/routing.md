@@ -4,7 +4,7 @@ Every request is routed here first, before the Decision Gates. Routing decides h
 
 ## 1. Authorize
 
-- **Read-only:** the user asks to review, critique, compare, explain or audit, or asks how something looks. A read-only request writes nothing: no Figma writes, no local file writes, no plan change. Read Figma as in [sync-rules.md](sync-rules.md), answer, and offer the change as a next step. Apply it only when the user asks.
+- **Read-only:** the user asks to review, critique, compare, explain or audit, or asks how something looks. A read-only request writes nothing: no Figma writes, no local file writes, no plan change. Read Figma as in [sync-rules.md](sync-rules.md), answer, and offer the change as a next step. Apply it only when the user asks. A file this skill did not create still gets the adoption reads and summary of [brownfield.md](brownfield.md) (steps 1 and 2), with nothing recorded.
 - **Change:** the user asks to create or modify. Continue with step 2.
 - **Unclear** (for example "this card feels off"): ask once whether to change it or only review it, then wait.
 

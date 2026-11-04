@@ -468,6 +468,16 @@ desc="$(grep -m1 '^description:' "$d/SKILL.md")"
 grep -qiE 'design, change or review' <<<"$desc" || { echo "FAIL SKILL.md description must name review (S20)"; status=1; }
 [[ -f evals/spanish-review-prompt/case.yaml ]] || { echo "FAIL missing trigger eval evals/spanish-review-prompt (S20)"; status=1; }
 
+# T15 in odd/tasks/design-harness.md: a read-only first request on an adopted file shows the adoption
+# summary and records nothing; the files are written with the first change request (S21).
+if [[ -f "$bf" ]]; then
+  ro="$(section "$bf" '^## 3\.')"
+  grep -qiE 'read-only request' <<<"$ro" && grep -qiE 'records nothing' <<<"$ro" || { echo "FAIL brownfield.md must show the summary and record nothing on a read-only request (S21)"; status=1; }
+  grep -qiE 'first change request' <<<"$ro" || { echo "FAIL brownfield.md must record the adoption with the first change request (S21)"; status=1; }
+fi
+section "$r/routing.md" '^## 1\.' | grep -E '^- \*\*Read-only' | grep -qF 'brownfield.md' || { echo "FAIL routing.md read-only must run the brownfield.md reads for a file the skill did not create (S21)"; status=1; }
+section "$d/SKILL.md" '^## Output Contract' | grep -E 'Quality passes' | grep -qiE 'counts of confirmed, refuted and unverifiable' || { echo "FAIL SKILL.md Output Contract must report lens finding counts (S21)"; status=1; }
+
 # T7: README with install and usage for Claude Code and Claude Desktop.
 readme="README.md"  # relative to the repository root; the script cds there at the top
 if [[ -f "$readme" ]]; then
