@@ -190,7 +190,7 @@ The first reply is always a **preflight report**:
 | Web research | available, or references marked unverified |
 | Write path | the folder for `PRODUCT.md` / `DESIGN.md`; **confirm it here** |
 
-Then the brief starts, one question at a time.
+Then the brief starts, one question at a time. Questions with defined options (dark mode, approve or adjust, which team) come as a form with the recommended option first; open questions stay in the chat.
 
 ### Request routing
 
