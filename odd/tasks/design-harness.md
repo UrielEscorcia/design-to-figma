@@ -28,6 +28,7 @@
   5. Questions that depend on another answer come in a later turn.
 - **S16** Version tracking: "seria bueno manejar tags de las versiones y tambien meter los releases con un changelog de todo lo implementado y que en cada release tiene asi tenemos seguimiento de todo lo que vamos haciendo y mejorando". The user chose automatic releases through a GitHub Action.
 - **S17** Critique lenses (T2), confirmed by the user ("arrancamos T2"): four lenses (hierarchy/readability, accessibility, system consistency, copy/UX) with node ID + screenshot evidence and a refuter, without replacing the current critique and gate. They run in proportion to the change ("Según lo que cambió").
+- **S19** Brownfield mode (L13): work on existing Figma files the plugin did not create. Adoption writes nothing to the file without asking: "Nada sin preguntar (Recomendado)". It reads the file with snapshot.js and measure.js, derives local PRODUCT.md/DESIGN.md, confirms the look with the user and keeps the file's own pages. Adding the Brief page or turning hardcoded values into variables is offered as an optional high-risk step.
 - **S18** Tested measurement scripts, chosen over T3 ("Scripts de medición (Recomendado)"); the goal is to advance the work and test later, saving Figma calls. Read-only `use_figma` scripts: one call measures frames for the lenses and the refuter, and one builds the sync snapshot.
 
 ## Tasks
@@ -46,7 +47,8 @@
 | T11 | S16 | CHANGELOG.md (0.1.0–0.4.7), scripts/release.sh + changelog-section.sh, release workflow, README section, guards; backfill of tags and releases after merge | inline | done (PR #25 merged; 15 releases v0.1.0–v0.4.7 published, v0.4.7 latest, tags verified, rerun skips) | 6a4fe70, 0896480 |
 | T2 | S17 | Critique lenses with node ID + screenshot evidence and a refuter, run proportionally; v0.5.0 | inline | done (guards RED→GREEN) | this commit |
 | T12 | S18 | measure.js + snapshot.js with Node tests against a fake Figma API; wired into lenses, refuter, sync, tool directory; v0.6.0 | inline | done (tests RED→GREEN, mutations caught) | this commit |
-| T3 | — | Split the skill into trigger-first skills plus a registry | — | pending (next phase) | — |
+| T3 | — | Split the skill into trigger-first skills plus a registry | — | dropped (L12) | — |
+| T13 | S19 | Brownfield adoption: references/brownfield.md (read-only adoption with snapshot.js + measure.js, page map, `scope: adopted`, opt-ins as high-risk item 6), wired into SKILL.md, routing, workflow-screen, figma-structure, iteration, DESIGN template, README; v0.7.0 | inline | done (guards RED 9 → GREEN) | this commit |
 
 ## Log
 
@@ -105,4 +107,6 @@
   - Gaps, now S15: no Route and risk line in the final report (seen again after point 1); app-wide rules written only to DESIGN.md; a full timbres bar faked by painting the background; no recommended option in the high-risk form; a dependent "which green" question in the same form.
 - (2026-11-03) L11, release decision: automatic GitHub Action. Backfill tag targets: the main merge that shipped each version; for 0.4.0–0.4.6, which reached main only as one chain, the reviewed PR head. All were checked with release.sh --dry-run: 0.1.0 1fb7416; 0.2.0 1018479; 0.3.0 d242c81; 0.3.1 984e1c2; 0.3.2 ddbd273; 0.3.3 47993eb; 0.3.4 ece450c; 0.4.0 3beb9b0; 0.4.1 fc8f83e; 0.4.2 43587d0; 0.4.3 e0dfa40; 0.4.4 6372f91; 0.4.5 f5c228a; 0.4.6 ba6d563; 0.4.7 16d7414.
 - (2026-11-04) T3 (skill split) was deferred on advice: it risks triggering against the Figma skills and complicates the Desktop zips, for little gain (SKILL.md has 148 lines and references load on demand). The user picked the measurement scripts instead.
+- **L12** (2026-11-04) "el T3 lo descartamos por ahora no es prioridad dividir".
+- **L13** (2026-11-04) Next task: "Modo brownfield (Recomendado)". Writes to an adopted file: "Nada sin preguntar (Recomendado)". Branch feat/d2f-30-brownfield from main at 90b0d54 (PR #28 merged, v0.6.0 auto-released).
 - Context: the direction and gap mapping are in Engram obs 6224; the scope decision is in obs 6235. The idea list (handoff/Code Connect, brownfield, prototypes/FigJam, a11y audit, variants, responsive, motion, Figma quota, fonts in screenshots, direct commands, plugin evals) comes after the base.
