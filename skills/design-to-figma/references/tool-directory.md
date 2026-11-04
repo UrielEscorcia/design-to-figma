@@ -22,7 +22,8 @@ Which tool to use for which job. Reference the named skills and tools; do not co
 | Variables, styles, components (foundations) | `figma-generate-library` + `figma-use` → `use_figma` | Build in the order that skill defines |
 | Screens and composed views | `figma-generate-design` + `figma-use` → `use_figma` | Reuse library components and variables |
 | Change requests after the build | `use_figma` with `figma-use` | [iteration.md](iteration.md) |
-| Enumerate pages, variables, styles | Read-only `use_figma` script (`figma.root.children`, `figma.variables.*`, `getLocalTextStylesAsync`, `getLocalEffectStylesAsync`) | `get_metadata` without a `nodeId` lists only the first page; see [sync-rules.md](sync-rules.md) |
+| Enumerate pages, variables, styles | [snapshot.js](../assets/scripts/snapshot.js), a read-only `use_figma` script: one call returns the sync snapshot fields | `get_metadata` without a `nodeId` lists only the first page; see [sync-rules.md](sync-rules.md) |
+| Measure frames for the critique lenses | [measure.js](../assets/scripts/measure.js), read-only: contrast, text floor, targets, unbound values, detached candidates for several frames in one call | [critique-lenses.md](critique-lenses.md) |
 | Read one page or frame | `get_metadata(nodeId=...)`, `get_screenshot`; `get_variable_defs` for a node; `search_design_system` for components | Read-only. Do not use `get_design_context` here |
 
 ## Handoff order

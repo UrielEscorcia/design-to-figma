@@ -423,6 +423,17 @@ grep -qE -- "^  - \*\*Lenses:\*\*" <<<"$rv" || { echo "FAIL screen-loop.md user 
 section "$r/quality-bar.md" '^## Quality gate' | grep -qiE 'confirmed lens findings' || { echo "FAIL quality-bar.md gate must count confirmed lens findings (S17)"; status=1; }
 grep -E '^7\. \*\*' "$r/iteration.md" | grep -qF 'critique-lenses.md' || { echo "FAIL iteration.md step 7 must run the lenses that cover the change (S17)"; status=1; }
 
+# T12 in odd/tasks/design-harness.md: tested read-only measurement scripts (S18).
+if command -v node >/dev/null; then
+  node tests/figma-scripts.test.mjs || { echo "FAIL tests/figma-scripts.test.mjs (the use_figma measurement scripts)"; status=1; }
+else
+  echo "SKIP tests/figma-scripts.test.mjs (node not found)"
+fi
+grep -qF 'assets/scripts/measure.js' "$cl" || { echo "FAIL critique-lenses.md must measure with assets/scripts/measure.js (S18)"; status=1; }
+grep -qF 'measure.js' <<<"$rf" || { echo "FAIL critique-lenses.md refuter must re-run measure.js on the finding's node (S18)"; status=1; }
+grep -qF 'assets/scripts/snapshot.js' <<<"$snap" || { echo "FAIL sync-rules.md snapshot must come from assets/scripts/snapshot.js (S18)"; status=1; }
+grep -qiE 'replace the (two )?parameter lines' "$cl" || { echo "FAIL critique-lenses.md must say how to pass parameters to measure.js (S18)"; status=1; }
+
 # T7: README with install and usage for Claude Code and Claude Desktop.
 readme="README.md"  # relative to the repository root; the script cds there at the top
 if [[ -f "$readme" ]]; then
@@ -442,8 +453,8 @@ else
 fi
 
 if [[ -f "$d/SKILL.md" ]]; then
-  for f in "$d"/references/*.md "$d"/assets/*; do
-    [[ -e "$f" ]] || continue
+  for f in "$d"/references/*.md "$d"/assets/* "$d"/assets/scripts/*; do
+    [[ -f "$f" ]] || continue
     rel="${f#"$d"/}"
     grep -qF "]($rel)" "$d/SKILL.md" || { echo "FAIL SKILL.md does not link $rel"; status=1; }
   done

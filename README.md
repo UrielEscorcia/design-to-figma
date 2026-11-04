@@ -336,7 +336,7 @@ Releases are automatic. When a merge to `main` changes the version, the [release
 tests/run.sh
 ```
 
-It validates the skill frontmatter and structure, checks the rules the trials depend on, and requires a version bump in `.claude-plugin/plugin.json` and the `SKILL.md` metadata for any change to the skill.
+It validates the skill frontmatter and structure, runs `tests/figma-scripts.test.mjs` (the read-only `use_figma` measurement and snapshot scripts against a fake Figma API, with Node), checks the rules the trials depend on, and requires a version bump in `.claude-plugin/plugin.json` and the `SKILL.md` metadata for any change to the skill.
 
 Trigger evals check that the skill loads, and not the official Figma skills, for real prompts. They load a local copy of the official Figma plugin next to this one. Run them before you change the skill description:
 

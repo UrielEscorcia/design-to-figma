@@ -3,7 +3,7 @@ name: design-to-figma
 description: "MANDATORY first step to design or change any app, module, flow or screen in Figma, in any language. Load BEFORE reading attachments, figma-use, figma-generate-design or any Figma tool."
 license: MIT
 metadata:
-  version: "0.5.0"
+  version: "0.6.0"
   author: "Uriel Escorcia"
 ---
 
@@ -140,6 +140,7 @@ End every run with a short report containing every field below, in this order, s
 - [proposals.md](references/proposals.md): 2 or 3 directions as Claude Design artifacts
 - [quality-bar.md](references/quality-bar.md): quality rules, impeccable wiring, built-in critique checklist
 - [critique-lenses.md](references/critique-lenses.md): four lenses with evidence per finding and a refuter, run proportionally to the change
+- [measure.js](assets/scripts/measure.js), [snapshot.js](assets/scripts/snapshot.js): tested read-only `use_figma` scripts for the lens measurements and the sync snapshot
 - [iteration.md](references/iteration.md): natural-language change requests applied in Figma
 - [sync-rules.md](references/sync-rules.md): source of truth, diffs, conflicts, snapshot
 - [design-system-artifact.md](references/design-system-artifact.md): one-way sync to a Claude Design System artifact
