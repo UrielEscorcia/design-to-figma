@@ -71,4 +71,4 @@ Show a short diff (what the `.md` says versus what Figma has), then ask once: "P
 
 Never write absolute local paths, usernames or machine details into Figma (Brief page, layer names, descriptions). Refer to local files by name, relative to the project folder.
 
-Write files only to the path confirmed in preflight. On the downloads rung, deliver the updated files in the reply and say which ones changed.
+Write files only to the path confirmed in preflight. Never leave backup or temporary copies there (`.bak`, `.orig`, `.tmp`): edit the file in place, or keep any working copy outside the user's folder. The user may not be able to delete what you leave. On the downloads rung, deliver the updated files in the reply and say which ones changed.

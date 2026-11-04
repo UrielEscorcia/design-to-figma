@@ -8,7 +8,7 @@ Read the request and its attachments (brief, PDFs, screenshots, a reference imag
 
 - **Palette:** colors given as values, a named seed or visible in a reference image or brand guide. Record the values and their roles; mark values read from an image as "(from image)". Show the swatch artifact once as the record without waiting for an answer. Check contrast (section 5) and ask only about the pairs that fail AA, with a fix for each.
 - **Typography:** the families the user named (for example Geist and Geist Mono). Use them for every text style; check availability in Figma ([figma-structure.md](figma-structure.md)) and ask only when a family is missing.
-- **Look:** a reference image, screenshots of the app or an existing design the user wants to follow. Derive the style and its traits from it (sections 2 to 4 are not asked), state them in one line and continue. The user can correct them at any time.
+- **Look:** a reference image, screenshots of the app or an existing design the user wants to follow. Derive the style and its traits from it (sections 2 to 4 are not asked), state them in one line and continue. The user can correct them at any time. The directions stay inside this look ([proposals.md](proposals.md), Provided look).
 
 The category references always run (section 1), even when everything above was provided. They show how real products are built in this category: their flows, screens, patterns and what their users ask for. They feed the screen list and each screen's definition, not the look. Present them and wait, as section 1 says.
 

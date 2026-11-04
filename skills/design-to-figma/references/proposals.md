@@ -4,9 +4,13 @@ Before building in Figma, show two or three distinct directions inside the confi
 
 ## What a direction is
 
-Gate: do not generate directions until the user has confirmed the palette as a swatch artifact ([style-discovery.md](style-discovery.md), section 5), or the palette was provided by the user and recorded (section 0) and its pairs that failed AA were resolved with the user. All directions share the confirmed palette. A direction differs from the others in structure and character (layout, hierarchy, density, type pairing, imagery), never in palette; it may change how much accent is used, not the palette itself. All directions use the confirmed style and its traits, real content in the product's UI locale from the brief, and no skeuomorphism or literal metaphors. Name each direction in two or three words and describe it in one line.
+Gate: do not generate directions until the user has confirmed the palette as a swatch artifact ([style-discovery.md](style-discovery.md), section 5), or the palette was provided by the user and recorded (section 0) and its pairs that failed AA were resolved with the user. All directions share the confirmed palette. A direction differs from the others in structure and character (layout, hierarchy, density, type pairing, imagery), never in palette; with a look provided by the user, only in structure, hierarchy and density (Provided look, below); it may change how much accent is used, not the palette itself. All directions use the confirmed style and its traits, real content in the product's UI locale from the brief, and no skeuomorphism or literal metaphors. Name each direction in two or three words and describe it in one line.
 
 When impeccable is present, its direction step supplies the candidates (with the style passed as in [quality-bar.md](quality-bar.md)); otherwise derive them yourself.
+
+## Provided look
+
+When the user provided the look (a UI reference image, screenshots or an existing design: section 0 of [style-discovery.md](style-discovery.md)), every direction stays inside it. Directions vary only structure, hierarchy and density: layout, navigation placement, what leads the screen, how much is shown at once. They keep the reference's radius, elevation (shadows or borders), color use (which roles carry color, accents, gradients), type (families, scale, weights) and imagery. A density variant the brief asks for (for example a compact mode for accountants) may tighten spacing and type size, but it keeps the same radius, elevation and color use. Name in each direction's line what it keeps from the reference. Explore another look only when the user asks for it.
 
 ## Where to show them
 
