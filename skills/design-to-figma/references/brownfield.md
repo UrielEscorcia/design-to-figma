@@ -8,7 +8,7 @@ The file already is the design. Adoption learns it and records it locally; it ne
 
 Adoption writes nothing to Figma. Load `figma-use` first, then:
 
-1. Run [snapshot.js](../assets/scripts/snapshot.js) as the `use_figma` code, one call. It returns the pages with their top-level frames, components, text and effect styles, and the variables with their values per mode.
+1. Run [snapshot.js](../assets/scripts/snapshot.js) unchanged as the `use_figma` code, one call; never a rewritten or summarizing script, and keep its output shape (`styles` stays `{ text, effect }`). It returns the pages with their top-level frames, components, text and effect styles, and the variables with their values per mode.
 2. Pick the representative frames: the screens the request concerns, plus up to 10 more that cover the main flows (ask for links when the file is large and the request names no area). Run [measure.js](../assets/scripts/measure.js) on them in one call. It reports contrast, the text-size floor, touch targets, values not bound to a variable or style, and detached-component candidates.
 3. Take `get_screenshot` of 2 or 3 of those frames to read the look.
 
@@ -26,9 +26,9 @@ When the file is not accessible, stop as in [sync-rules.md](sync-rules.md) (Miss
 
 Send one adoption summary: the page map, the system inventory, the look in one line, the inferred brief and the health counts.
 
-**A read-only request** (review, critique, compare, explain) runs steps 1 and 2 and records nothing, as [routing.md](routing.md) requires. Put the adoption summary at the top of the answer, use the step 1 reads as the review's evidence, and ask no brief questions. Offer recording the adoption (`PRODUCT.md`, `DESIGN.md`, the snapshot) as a next step; it happens with the first change request, never during the read-only run.
+**A read-only request** (review, critique, compare, explain) runs steps 1 and 2 and records nothing, as [routing.md](routing.md) requires. Put the adoption summary at the top of the answer, use the step 1 reads as the review's evidence, and ask no brief questions. End with one next-step question (Hard Rule 18): apply the top findings, record the adoption (`PRODUCT.md`, `DESIGN.md`, the snapshot; recording happens with that answer or the first change request, never silently during the read-only run), or keep only the review. Opt-ins from step 4 appear there only marked high risk.
 
-**A change request** (the first one, or the first after a read-only run) asks the brief questions the file could not answer in the same gate as the summary (Hard Rule 18). After the user confirms or corrects it:
+**A change request** (the first one, or the first after a read-only run) shows the adoption summary and asks the brief questions the file could not answer (users, problem, UI language and locale) as the adoption step, after the preflight write path and before any question about the change itself (Hard Rule 18). Never write inferred answers in place of asking: an answer the user skipped is recorded as "not confirmed". After the user confirms or corrects the summary:
 
 - Write `PRODUCT.md` and `DESIGN.md` to the confirmed write path ([preflight.md](preflight.md)). `DESIGN.md` carries the Figma header with `scope: adopted`, the page map, the tokens as the file has them (variables, or the observed hardcoded values marked as such) and the existing components.
 - Store the snapshot from step 1 as the sync baseline ([sync-rules.md](sync-rules.md)), with `lastSync`.
@@ -39,7 +39,7 @@ Then continue the user's request on its route.
 
 - **Keep the file's structure.** New screens go to the page the map names as Screens, next to the related flow, following the file's frame naming. New components go to the mapped Components page; when there is none, ask where. Never rename, move, restyle or rebind existing nodes the request did not name.
 - **Reuse before creating.** Use the file's components, variables and styles. In a file without variables, new work uses the observed values recorded in `DESIGN.md`; no token system is invented without the user's yes.
-- **Opt-ins, each high risk.** Adding a `📋 Brief & Rules` page, creating variables or styles for hardcoded values and rebinding nodes to them, adding the other default pages, or fixing the health findings across the file are offered as next steps, never done during adoption. Each is applied only after the confirmation in step 4 of [routing.md](routing.md) (item 6).
+- **Opt-ins, each high risk.** Adding a `📋 Brief & Rules` page, creating variables or styles for hardcoded values and rebinding nodes to them, adding the other default pages, or fixing the health findings across the file (turning chips into a component included) are offered as next steps, never done during adoption, and always in a question form, each option marked high risk in its description. Each is applied only after the confirmation in step 4 of [routing.md](routing.md) (item 6).
 - **No Brief page.** Until the user opts in to one, the rules that write to the Brief page write to `DESIGN.md` only, and the report says the Brief page is not present. The close check covers the mapped pages only.
 - **Quality bar.** New and changed work meets the quality gate and runs the lenses as usual ([quality-bar.md](quality-bar.md), [critique-lenses.md](critique-lenses.md)). Existing screens outside the request keep their findings in the health record until the user asks to fix them.
 

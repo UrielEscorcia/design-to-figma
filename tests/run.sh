@@ -478,6 +478,22 @@ fi
 section "$r/routing.md" '^## 1\.' | grep -E '^- \*\*Read-only' | grep -qF 'brownfield.md' || { echo "FAIL routing.md read-only must run the brownfield.md reads for a file the skill did not create (S21)"; status=1; }
 section "$d/SKILL.md" '^## Output Contract' | grep -E 'Quality passes' | grep -qiE 'counts of confirmed, refuted and unverifiable' || { echo "FAIL SKILL.md Output Contract must report lens finding counts (S21)"; status=1; }
 
+# T16 in odd/tasks/design-harness.md: v0.7.2 Desktop trial gaps, steps A and B (S22).
+hr18="$(grep -E '^18\. ' "$d/SKILL.md")"
+grep -qiE 'questions from different steps' <<<"$hr18" || { echo "FAIL SKILL.md Hard Rule 18 must keep questions from different steps in separate forms (S22 #1, #6)"; status=1; }
+grep -qiE 'preflight[^.]*adoption[^.]*change[^.]*next step' <<<"$hr18" || { echo "FAIL SKILL.md Hard Rule 18 must give the step order preflight, adoption, change, next step (S22 #6)"; status=1; }
+if [[ -f "$bf" ]]; then
+  ro="$(section "$bf" '^## 3\.')"
+  grep -qiE 'one next-step question' <<<"$ro" && grep -qiE 'record the adoption' <<<"$ro" || { echo "FAIL brownfield.md read-only must end with one next-step question that offers to record the adoption (S22 #1, #2)"; status=1; }
+  grep -qiE 'never write inferred' <<<"$ro" || { echo "FAIL brownfield.md must ask the brief before writing, never write inferred answers instead (S22 #7)"; status=1; }
+  grep -qiE 'unchanged' <<<"$(section "$bf" '^## 1\.')" || { echo "FAIL brownfield.md must run snapshot.js unchanged (S22 #4, #11)"; status=1; }
+  grep -qiE 'marked high risk' <<<"$(section "$bf" '^## 4\.')" || { echo "FAIL brownfield.md opt-ins must be marked high risk when offered (S22 #3, #9)"; status=1; }
+fi
+grep -qiE 'unchanged' <<<"$(section "$r/sync-rules.md" '^## Snapshot')" || { echo "FAIL sync-rules.md must run snapshot.js unchanged (S22 #4)"; status=1; }
+grep -qiE 'estimated[^.]*never[^.]*measured' <<<"$(section "$cl" '^## Evidence')" || { echo "FAIL critique-lenses.md must call screenshot values estimated, never measured (S22 #5)"; status=1; }
+grep -E '^7\. \*\*' "$r/iteration.md" | grep -qiE 'position' || { echo "FAIL iteration.md step 7 must count position and spacing changes as visual (S22 #8)"; status=1; }
+grep -E '^9\. \*\*' "$r/iteration.md" | grep -qiE 'one change is not a rule' || { echo "FAIL iteration.md step 9 must not turn a one-change choice into a rule (S22 #10)"; status=1; }
+
 # T7: README with install and usage for Claude Code and Claude Desktop.
 readme="README.md"  # relative to the repository root; the script cds there at the top
 if [[ -f "$readme" ]]; then

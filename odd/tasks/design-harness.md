@@ -31,6 +31,7 @@
 - **S19** Brownfield mode (L13): work on existing Figma files the plugin did not create. Adoption writes nothing to the file without asking: "Nada sin preguntar (Recomendado)". It reads the file with snapshot.js and measure.js, derives local PRODUCT.md/DESIGN.md, confirms the look with the user and keeps the file's own pages. Adding the Brief page or turning hardcoded values into variables is offered as an optional high-risk step.
 - **S20** Review prompts load the skill (L14). In the v0.7.0 Desktop trial, "Revisa la pantalla principal de este archivo de Figma y dime qué mejorarías: <URL>" loaded only the official Figma skill. The description named "design or change" but not review.
 - **S21** Read-only adoption (L15). On the first read-only request about a file the plugin did not create, the plugin reads the file and shows the adoption summary without writing anything; the adoption is recorded with the first change request. The user chose "Leer y mostrar; guardar al cambiar (Recomendado)". The report also gives the lens finding counts.
+- **S22** v0.7.2 trial gaps (L16). The user chose "Huecos de la prueba (Recomendado)"; the native review advisories go in a separate PR. Step A gaps: #1 two dependent questions in one form; #2 recording the adoption was not offered; #3 tokenizing was mixed in as a normal option; #4 snapshot.js was not run unchanged; #5 a screenshot value was called measured. Step B gaps: #6 the write path and the change question were in one form; #7 inferred brief answers were written instead of asked; #8 the lenses were skipped for a position change; #9 componentizing was offered as an open question; #10 a one-change choice was written as a Don't rule; #11 the snapshot shape changed.
 - **S18** Tested measurement scripts, chosen over T3 ("Scripts de medición (Recomendado)"); the goal is to advance the work and test later, saving Figma calls. Read-only `use_figma` scripts: one call measures frames for the lenses and the refuter, and one builds the sync snapshot.
 
 ## Tasks
@@ -51,7 +52,7 @@
 | T12 | S18 | measure.js + snapshot.js with Node tests against a fake Figma API; wired into lenses, refuter, sync, tool directory; v0.6.0 | inline | done (tests RED→GREEN, mutations caught) | this commit |
 | T3 | — | Split the skill into trigger-first skills plus a registry | — | dropped (L12) | — |
 | T13 | S19 | Brownfield adoption: references/brownfield.md (read-only adoption with snapshot.js + measure.js, page map, `scope: adopted`, opt-ins as high-risk item 6), wired into SKILL.md, routing, workflow-screen, figma-structure, iteration, DESIGN template, README; v0.7.0 | inline | done (guards RED 9 → GREEN) | this commit |
-| T14 | S20 | Description names review; trigger eval evals/spanish-review-prompt with the trial prompt; guard; v0.7.1 | inline | done (guards RED → GREEN; eval in this commit\'s Log) | this commit |
+| T14 | S20 | Description names review; trigger eval evals/spanish-review-prompt with the trial prompt; guard; v0.7.1 | inline | done (guards RED → GREEN; eval in this commit\1| T16 | S22 | Trial gaps #1–#11: HR18 step order and forms per step, read-only next-step question with record-adoption, brief before writing, opt-ins as high-risk forms, snapshot.js unchanged, estimated vs measured, lenses on position changes, no one-change rules; v0.7.3 | inline | done (guards RED 10 -> GREEN) | this commit |\n's Log) | this commit |
 | T15 | S21 | Read-only first request on an adopted file: adoption reads + summary, nothing recorded; recorded at the first change request; route label; lens counts in the Output Contract; v0.7.2 | inline | done (guards RED 4 -> GREEN) | this commit |
 
 ## Log
@@ -121,4 +122,11 @@
   - Gap 1: no adoption summary and route "solo lectura". The read-only rule beat brownfield.md, as predicted by review advisory R2-read-only-adoption.
   - Gap 2: the report said the four lenses ran, without confirmed or refuted counts.
   - Decision: "Leer y mostrar; guardar al cambiar (Recomendado)". Branch fix/d2f-32-readonly-adoption.
+- **L16** (2026-11-04) Desktop trial on v0.7.2.
+  - Step A (review, Movie Ticket file): the adoption summary was at the top; route "archivo adoptado sin registrar, solo lectura"; 3 findings were measured; nothing was written to the folder (it stayed empty).
+  - Step B (a copy, "Aumenta el espacio entre los chips de hora"):
+    - Only 3 layers moved, and snapshot.js ran.
+    - PRODUCT.md and DESIGN.md were written with scope: adopted, page_map and the snapshot; inferred fields were marked "not confirmed".
+    - Route "archivo adoptado, cambio pequeño".
+  - Gaps #1–#11 (S22).
 - Context: the direction and gap mapping are in Engram obs 6224; the scope decision is in obs 6235. The idea list (handoff/Code Connect, brownfield, prototypes/FigJam, a11y audit, variants, responsive, motion, Figma quota, fonts in screenshots, direct commands, plugin evals) comes after the base.

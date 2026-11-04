@@ -70,7 +70,7 @@ Every finding carries all of these, or it is not reported:
 - **Node ID:** the node, with its Figma link.
 - **Screenshot:** the frame render where it shows.
 - **Rule:** the lens rule it breaks, quoted short.
-- **Measured:** the value found against the value required (for example "contrast 3.2:1, required 4.5:1: `text/tertiary` #8F959B on `bg/canvas` #F4F6F9"), or, for a rule without a number, the exact text or element.
+- **Measured:** the value found against the value required (for example "contrast 3.2:1, required 4.5:1: `text/tertiary` #8F959B on `bg/canvas` #F4F6F9"), or, for a rule without a number, the exact text or element. A value read from a screenshot (text over an image or a gradient, which measure.js reports as unmeasured) is estimated, never called measured: write "estimated 3.8:1 from the screenshot".
 
 A finding without evidence is dropped, not softened. Example:
 
