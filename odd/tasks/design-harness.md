@@ -14,6 +14,18 @@
 - **S6** High-risk changes ask for confirmation. User's words: "un cambio de riesgo que pida confirmacion para validar lo que puede pasar". Before applying, show the measured reach, whether the change can be undone and a smaller alternative; apply nothing without a yes.
 - **S7** Verbatim requests: the user's original request is stored verbatim in `DESIGN-PLAN.md` and passed to builders by reference, never paraphrased.
 - **S8** The final report states the route taken and a risk line.
+- **S9** The skill loads for real prompts like L4: "tratemos que se cargue el plugin con este tipo de prompts". In the L4 trial, the agent "no detecto que debia usar el plugin y se fu directo a usar solo figma".
+- **S10** User-provided decisions: "ahi si ya le pasamos la typo y los colores deberia de tomarlos y seguir con lo que falte, ya no repetir esos pasos, pero si seria bueno que tome referencias para saber como se debe contruir el producto con referencias reales".
+- **S11** A provided UI reference bounds the directions: "si ajustemos eso, si le pasamos una referencia UI que no se salga de esa referencia".
+- **S12** Every screen in Screens, system test screens included, runs the full loop before approval, and no backup files are left in the user's folder (Desktop trial: Inicio was offered for approval without the review fields, and a DESIGN.md.bak was left behind). L7 "hazlo".
+- **S13** Questions with defined options use the surface's question form: "podemos hacer que las preguntas las haga a travez del form que luego manda con opciones? forzar eso cada vez que pregunte algo definido?".
+- **S14** Critique fixes never add product features without the user's yes. In the point 2 trial, the direction critique said "Questions skipped: las correcciones se aplican directo en la construcción en Figma" and included new actions ("Corregir" inline, a "¿Qué es esto?" help pattern, "Registrar pago" on the mobile card). L9 "hazlo ahora y asi probamos el punto 3 con todo esto".
+- **S15** Point 3 trial findings. L10: "listo ya cancele podemos generar el pr 24, con esto cerramos la ronda y reviso los prs".
+  1. Every report carries the full Output Contract, with Route and risk and Pending conflicts.
+  2. App-wide rules go to DESIGN.md and the Brief page without asking.
+  3. No visual workarounds to fake component states.
+  4. Every form marks a recommended option, high-risk decisions included.
+  5. Questions that depend on another answer come in a later turn.
 
 ## Tasks
 
@@ -21,6 +33,13 @@
 |---|---|---|---|---|---|
 | T1 | S1–S8 | Base: routing reference, SKILL.md wiring, plan template, report, README, guards, v0.4.0 | inline | done (tests pass; review approved and acknowledged, lineage review-38e6fe8ff763b2a1) | `5a91d75` |
 | T1a | S6, S7 | Review advisories (non-blocking; only the locations were returned): R3-001 `SKILL.md:95` (step 0 Route), R3-002 `routing.md:57` (Requests log; older plans without a Requests section), R3-003 `routing.md:42` (measured high-risk wording), R3-004/R3-005 `tests/run.sh:279,283` (file-wide guards) | inline | done (inferred from the locations; see Log); review lineage review-aa3e44b1f98ebbb0 approved and acknowledged | `c745b38` |
+| T4 | S9 | Skill trigger: directive description loaded before the Figma skills, plus a plugin eval with the real prompt and a should-not-fire case | inline | done (eval 2/2 cases, 3/3 runs each) | this commit |
+| T5 | S10 | Take the palette, typography and look the user provided (style-discovery section 0); category references still run | inline | done (guards RED→GREEN) | this commit |
+| T6 | S11 | Directions keep the provided look (radius, elevation, color use, type); only structure, hierarchy and density vary | inline | done (guards RED→GREEN) | this commit |
+| T7b | S12 | Screen loop for system test screens; no backup files | inline | done (guards RED→GREEN) | this commit |
+| T8 | S13 | Hard Rule 18: defined-option questions through the question form; one form per gate | inline | done (guards RED→GREEN) | this commit |
+| T9 | S14 | Design fixes vs product additions in every critique; additions asked in a multi-select form | inline | done (guards RED→GREEN) | this commit |
+| T10 | S15 | Output Contract always complete; app-wide rules in both places; no faked states; recommended option always; dependent questions later | inline | done (guards RED→GREEN) | this commit |
 | T2 | — | Critique lenses with node ID + screenshot evidence and a refuter | — | pending (next phase) | — |
 | T3 | — | Split the skill into trigger-first skills plus a registry | — | pending (next phase) | — |
 
@@ -35,4 +54,48 @@
   - R3-002: small requests are logged too, and older plans get a Requests section without reconstructing earlier requests.
   - R3-004/005: the guards are scoped to their sections; mutation probes fail as expected.
 - (2026-10-30) The T1a review (reliability lens) was approved. It again listed non-blocking advisories, still with locations only and no detail, at the same spots: SKILL.md:95, routing.md:42 and :57, and tests/run.sh:282-286. Since there is no detail to act on, the next step is a real Figma trial, not another blind fix.
+- **L4** (2026-10-31) "ok mientras pruebo eso genera un pr nuevo encadenado para solucionar esto que ya es un caso practico y real. Se mando el siguiente prompt y se cargaron archivos de referencia, al darle enter no cargo el plugin, no detecto que debia usar el plugin y se fu directo a usar solo figma, el prompt es el siguiente: \"Vamos a crear el diseño en figma de un sistema de facturación mexicano.  Vamos a ir iterando modulo tras modulo agregando flujos y pantallas según lo requerido. La idea es que juntos vayamos construyendo la mejor experiencia UI.  Puedes ver el pdf donde se explica a grandes rasgos el producto para que tengas contexto de lo que se busca lograr, también encuentras el otro pdf en el cual nos indica la tarea o lo que tenemos que construir ahorita como primero modulo.  Previamente elegimos la paleta de colores, la tipografía; Geist y Geist Mono, y te dejo la imagen de como se visualiza la aplicación para que vayamos por ese rumbo. Cualquier duda pregúntame\" tratemos que se cargue el plugin con este tipo de prompts"
+- (2026-10-31) T4 diagnosis: the official Figma skills have directive, trigger-rich descriptions. figma-generate-design fires on 'create a screen' and 'build ... in Figma', and figma-use is marked MANDATORY. Ours was passive ("Design a full project or one screen in Figma...") and never said to load before them. The chained branch is fix/d2f-18-skill-trigger, based on feat/d2f-17-harness-base.
+- (2026-10-31) The user confirmed the failing run was Claude Desktop with v0.3.4 from main. Eval findings:
+  1. With design-to-figma alone, the main description fires 3/3, so the bare suite cannot reproduce the failure.
+  2. A case that lists `plugins:` loads only those plugins and drops the eval target. Both plugins are therefore staged in each case by `evals/setup.sh`: a snapshot of this plugin plus a copy of the official Figma plugin, gitignored. The baseline arm is off.
+  3. Without attachments the model stops to ask for the files, so `--scaffold` stages two small PDFs and a reference image.
+
+  Valid RED with the main SKILL.md: the skill fired 0/3. The model read the attachments and answered without loading any skill. GREEN with the description "MANDATORY first step ... Load BEFORE reading attachments, figma-use, figma-generate-design or any Figma tool": fired 3/3 with the design-to-figma preflight. The design-to-code control case never fired. Its LLM grader was flaky in both versions, so it became a regex not_contains check.
+- **L5** (2026-11-02) "ahi si ya le pasamos la typo y los colores deberia de tomarlos y seguir con lo que falte, ya no repetir esos pasos, pero si seria bueno que tome referencias para saber como se debe contruir el producto con referencias reales". Chained branch fix/d2f-19-provided-decisions on fix/d2f-18-skill-trigger.
+- (2026-11-02) Desktop trial with v0.4.2 and the real invoicing prompt:
+  - The skill loaded and the brief was built from the PDFs.
+  - The palette, Geist/Geist Mono and the look were taken without asking; the palette was shown as a record, with only 4 AA pairs asked about.
+  - 6 real category references were researched for flows, not look.
+  - Three directions were proposed. B and C left the mockup's radius and elevation. That issue is S11 / T6.
+
+  Minor notes:
+  - Alegra and CONTPAQi had no per-product source link.
+  - Swatch labels were unreadable on the 50/100 tones.
+  - The style was stated in a paragraph, not one line.
+- **L6** (2026-11-02) "si ajustemos eso, si le pasamos una referencia UI que no se salga de esa referencia". Chained branch fix/d2f-20-keep-provided-look on fix/d2f-19-provided-decisions.
+- (2026-11-02) Desktop trial, continued on v0.4.2:
+  - The file name and the team were asked separately.
+  - The foundations were built with Light/Dark and density modes. The compact mode changed the card radius from 20 to 10, which S11 now forbids.
+  - Components and Inicio (1440/390) were built from instances. The Requests log in DESIGN-PLAN worked.
+  - Inicio was first offered for approval without the Verdict/Score/Polish/Elevate fields. When asked, the full loop ran correctly (29/36, polish bound 48 values, elevate kept).
+  - A DESIGN.md.bak was left behind.
+  - The impeccable detector cannot run in Desktop; it falls back to self-critique and declares it.
+- **L7** (2026-11-02) "hazlo" (PR for S12). Chained branch fix/d2f-21-screen-loop-always on fix/d2f-20-keep-provided-look.
+- **L8** (2026-11-03) "podemos hacer que las preguntas las haga a travez del form que luego manda con opciones? forzar eso cada vez que pregunte algo definido?" This came during the point 2 trial on v0.4.4 (brief built from the PDFs, three open definitions asked in text). Chained branch feat/d2f-22-question-forms on fix/d2f-21-screen-loop-always.
+- (2026-11-03) Point 2 trial on v0.4.4, new chat and new folder:
+  - #18: the skill loaded.
+  - #19: palette, fonts and look were taken without asking; AA fixes were shown before and after; every reference had a source.
+  - #20: three directions inside the look. B dropped the avatars and the Emisión column, which the agent itself flagged as a look deviation.
+  - #17: a read-only question mid-chat wrote nothing and offered the change as a next step.
+  - The impeccable detector ran this time (56 warnings).
+  - The direction critique scored 25/40 and declared itself degraded. It then skipped questions and planned new product actions; that is S14.
+- (2026-11-03) Point 3 trial on v0.4.6, new chat on the original folder, Inicio states from the plan's pending item:
+  - The chat resumed from the plan, with no manual edits detected; the requests were logged as L14 and L15.
+  - #22: forms carried the recommended option.
+  - #23: product changes were asked in a multi-select form, and only the selected ones were applied.
+  - #21: the review had all five fields, unprompted.
+  - Deleting the old screens was asked first; they were moved to a Graveyard page.
+  - #17: the high-risk color change was measured read-only, reported with Change/Reach/Undo/Smaller option, and cancelled.
+  - Gaps, now S15: no Route and risk line in the final report (seen again after point 1); app-wide rules written only to DESIGN.md; a full timbres bar faked by painting the background; no recommended option in the high-risk form; a dependent "which green" question in the same form.
 - Context: the direction and gap mapping are in Engram obs 6224; the scope decision is in obs 6235. The idea list (handoff/Code Connect, brownfield, prototypes/FigJam, a11y audit, variants, responsive, motion, Figma quota, fonts in screenshots, direct commands, plugin evals) comes after the base.

@@ -1,6 +1,6 @@
 # Screen loop
 
-Every screen runs this loop: each screen of a project, and the single screen in screen mode. Problems are caught on the first screen, not after the whole project. Read Figma first ([sync-rules.md](sync-rules.md)).
+Every screen runs this loop: each screen of a project, the single screen in screen mode, and any screen built in `📱 Screens` as a system test (for example a home screen that proves the components). A screen is never shown for approval without the full loop: agent verify, self-fix, `polish`, elevate and the review fields in step 6. Problems are caught on the first screen, not after the whole project. Read Figma first ([sync-rules.md](sync-rules.md)).
 
 **Budget.** The loop has its own explicit budget, stated here once and replacing the per-run limit in [quality-bar.md](quality-bar.md) for screens: one build; one agent verify plus at most 2 re-verifies after self-fix; at most 2 self-fix batches; one polish pass; one elevate pass with one extra verify (step 5); the user-requested iterations; one final verify; one Dark verify when requested. An extra round after a failed gate runs only with the user's consent, as a new bounded run.
 
@@ -66,7 +66,7 @@ Take the reviewer's named biggest opportunity and apply one pass with the matchi
 - Do not ask for approval while a field is missing: run the missing step first.
 - The user approves or requests changes. Apply each change in Figma per [iteration.md](iteration.md) and show it again until the user approves. A change for the whole app rather than this screen is an app-wide rule ([iteration.md](iteration.md), step 9).
 - When a change alters the agreed behavior, whether it came from a self-fix, the polish or elevate pass or a user-review change, name it in the review as a change to what was agreed. Update the screen's definition in `DESIGN-PLAN.md` in the same step (with the new agreement date once the user approves), so the plan never contradicts `DESIGN.md` or Figma.
-- Never add a new product feature (an action, a label, content or a behavior the agreed definition does not have) on your own, whether it comes up in a fix, the polish or elevate pass or a user-review change. Recommend it, say why, and add it only after the user agrees.
+- Never add a new product feature (an action, a label, content or a behavior the agreed definition does not have) on your own, whether it comes up in a fix, the polish or elevate pass or a user-review change. Recommend it, say why, and add it only after the user agrees (product additions in [quality-bar.md](quality-bar.md)).
 - State becomes `user-approved`. Do not start the next screen before approval unless the user explicitly says to batch.
 
 ## 7. Final verify
