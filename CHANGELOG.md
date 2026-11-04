@@ -2,6 +2,19 @@
 
 All notable changes to the design-to-figma plugin. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [Semantic Versioning](https://semver.org/). Every version has a tag (`vX.Y.Z`) and a GitHub release with the Desktop zip attached.
 
+## [0.7.3] - 2026-11-04
+
+### Fixed
+Gaps found in the v0.7.2 Desktop trial on a file the plugin did not create (a review, then a small change on a copy):
+- Questions from different steps are never put in one form. The order is preflight (write path), adoption (summary and brief), the change itself, then the next step, each in its own form and turn (Hard Rule 18). The trial bundled the write path with the change question, and two dependent scope questions after a review.
+- A read-only review of an adopted file ends with one next-step question that offers to record the adoption. Opt-ins appear there only marked high risk.
+- A change request on an adopted file shows the adoption summary and asks the brief before writing `PRODUCT.md`/`DESIGN.md`. Inferred answers are never written in place of asking.
+- Opt-ins in an adopted file (turning chips into a component, tokenizing) are offered in a question form, each marked high risk, never as an open question.
+- `snapshot.js` runs unchanged, never as a rewritten script, and its output shape is kept.
+- A value read from a screenshot is called estimated, never measured.
+- Position, spacing and size changes run the covering lenses. The trial skipped them as "a position change".
+- A choice made for one change is not written as a Do or Don't rule.
+
 ## [0.7.2] - 2026-11-04
 
 ### Fixed
