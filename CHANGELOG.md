@@ -2,6 +2,13 @@
 
 All notable changes to the design-to-figma plugin. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [Semantic Versioning](https://semver.org/). Every version has a tag (`vX.Y.Z`) and a GitHub release with the Desktop zip attached.
 
+## [0.6.0] - 2026-11-04
+
+### Added
+- `assets/scripts/measure.js` is a read-only `use_figma` script that measures several frames in one call. It reports text contrast from resolved variables (mode, opacity and translucent text composited over its background), the text-size floor, touch targets, values not bound to a variable or style, and frames that look like detached components. The critique lenses and the refuter use it as their evidence.
+- `assets/scripts/snapshot.js` is a read-only `use_figma` script that returns the sync snapshot (pages, frames, components, styles and variable values per mode, sorted) in one call.
+- `tests/figma-scripts.test.mjs` runs both scripts against a fake Figma API, so they are tested without a Figma file or any MCP call. `tests/run.sh` runs it when Node is available.
+
 ## [0.5.0] - 2026-11-04
 
 ### Added

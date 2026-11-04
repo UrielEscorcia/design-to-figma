@@ -17,7 +17,19 @@ Proportional, like [routing.md](routing.md): run the lenses that cover what chan
 
 When it is unclear which lenses cover a change, run all four. A re-verify after a self-fix batch runs the lenses whose findings the batch fixed, plus the lenses that cover what the fixes changed. Say in one line which lenses ran and why.
 
-All lenses share the same `get_screenshot` renders of the frames under review. Take one render per frame per verify; the measurements come from read-only `use_figma` scripts (load `figma-use` first), not from new screenshots.
+All lenses share the same `get_screenshot` renders of the frames under review. Take one render per frame per verify; the measurements come from new screenshots never.
+
+Measure with [measure.js](../assets/scripts/measure.js), a tested read-only `use_figma` script (load `figma-use` first). Read the file, replace the two parameter lines (`NODE_IDS` with the frame IDs under review, all of them in one call; `OPTIONS` with `textFloor` from `DESIGN.md` and `touch: false` for desktop-only frames), and send the whole file as the `use_figma` code. One call returns, for every frame:
+
+| Output | Feeds |
+|---|---|
+| `contrast.failures` (fg and bg hex and variable names, ratio, required), `contrast.unmeasured` | Accessibility |
+| `textFloor.failures`, `targets.failures` | Accessibility |
+| `unbound` (fills, strokes, spacing, radius, text), `detachedCandidates` | System consistency |
+
+Every example carries its `frameId`. `counts` holds the exact totals. The example lists are capped per frame and per list (`maxExamples`, 25 by default), and every cut list is named in `truncated` with its shown and total size. Never read a truncated list as complete: re-run measure.js on that frame alone with a higher `maxExamples` before judging it.
+
+Its measurements are the evidence for those findings. Hierarchy and Copy and UX findings are judgments: they cite the node and the screenshot, and stay unverifiable for the refuter. `contrast.unmeasured` and the script's `limits` (backgrounds come from ancestor fills only) are judged on the screenshot, never counted as a pass.
 
 ## 1. Hierarchy and readability
 
@@ -66,7 +78,7 @@ A finding without evidence is dropped, not softened. Example:
 
 ## Refuter
 
-Before any P0 or P1 finding drives a fix or the gate, try to disprove it with a fresh measurement: a read-only `use_figma` script that resolves the bound variables in the current mode, reads font sizes and bounds, and checks instance and variant state. The refuter receives only the finding (node ID, rule, measured value claimed), never the lens's reasoning, and does not look at the screenshot again; its independence comes from measuring the file.
+Before any P0 or P1 finding drives a fix or the gate, try to disprove it with a fresh measurement: re-run the read-only [measure.js](../assets/scripts/measure.js) with `NODE_IDS` set to the finding's node only. It resolves the bound variables in the node's mode, reads font sizes and bounds, and checks instance state. The refuter receives only the finding (node ID, rule, measured value claimed), never the lens's reasoning, and does not look at the screenshot again; its independence comes from measuring the file.
 
 Each finding ends as confirmed, refuted or unverifiable:
 
