@@ -1,0 +1,36 @@
+name: Release
+
+# On every push to main that changes the plugin version: run the checks, then publish the tag,
+# the GitHub release (notes from CHANGELOG.md) and the Desktop zip. Existing releases are skipped,
+# so a rerun (or a manual run from main) is safe.
+on:
+  push:
+    branches: [main]
+    paths: ['.claude-plugin/plugin.json']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# One run per commit: a second version bump never cancels or drops the release of the first.
+concurrency:
+  group: release-${{ github.sha }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    # Manual runs can target any branch; only main publishes.
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+      - name: Checks
+        run: tests/run.sh
+      - name: Publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version="$(grep -oE '"version": *"[^"]+"' .claude-plugin/plugin.json | grep -oE '[0-9][^"]*')"
+          scripts/release.sh "$version" "$GITHUB_SHA"
