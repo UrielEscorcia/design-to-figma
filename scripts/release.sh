@@ -31,8 +31,16 @@ if $dry; then
   exit 0
 fi
 
-if git ls-remote --exit-code --tags origin "refs/tags/$tag" >/dev/null 2>&1 || gh release view "$tag" >/dev/null 2>&1; then
-  echo "Skip $tag: it already exists."; exit 0
+if gh release view "$tag" >/dev/null 2>&1; then
+  echo "Skip $tag: the release already exists."; exit 0
+fi
+# A tag exists without a release when an earlier run failed after tagging: finish that release,
+# but only when the tag points at the same commit.
+remote_tag="$(git ls-remote --tags origin "refs/tags/$tag^{}" "refs/tags/$tag" | awk 'NR==1 {print $1}')"
+if [[ -n "$remote_tag" ]]; then
+  peeled="$(git ls-remote --tags origin "refs/tags/$tag^{}" | awk '{print $1}')"
+  [[ "${peeled:-$remote_tag}" == "$c" ]] || { echo "Tag $tag exists on ${peeled:-$remote_tag}, not $c; fix it by hand." >&2; exit 1; }
+  echo "Tag $tag exists without a release; creating the release for it."
 fi
 gh release create "$tag" "$zip" --target "$c" --title "$tag" --notes-file "$tmp/notes.md" --latest="${RELEASE_LATEST:-true}"
 echo "Released $tag at $c."

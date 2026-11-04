@@ -1,7 +1,8 @@
 name: Release
 
 # On every push to main that changes the plugin version: run the checks, then publish the tag,
-# the GitHub release (notes from CHANGELOG.md) and the Desktop zip. Existing releases are skipped.
+# the GitHub release (notes from CHANGELOG.md) and the Desktop zip. Existing releases are skipped,
+# so a rerun (or a manual run from main) is safe.
 on:
   push:
     branches: [main]
@@ -11,15 +12,18 @@ on:
 permissions:
   contents: write
 
+# One run per commit: a second version bump never cancels or drops the release of the first.
 concurrency:
-  group: release
+  group: release-${{ github.sha }}
   cancel-in-progress: false
 
 jobs:
   release:
+    # Manual runs can target any branch; only main publishes.
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           fetch-depth: 0
       - name: Checks

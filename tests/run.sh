@@ -376,12 +376,24 @@ if [[ -x scripts/changelog-section.sh ]]; then
   [[ -n "$(scripts/changelog-section.sh "$pv_now")" ]] || { echo "FAIL scripts/changelog-section.sh returned no notes for $pv_now"; status=1; }
   [[ -z "$(scripts/changelog-section.sh 9.9.9)" ]] || { echo "FAIL scripts/changelog-section.sh must print nothing for an unknown version"; status=1; }
 fi
-if [[ -x scripts/release.sh ]]; then
+if [[ -x scripts/changelog-section.sh ]]; then
+  second="$(grep -m2 -oE '^## \[[0-9]+\.[0-9]+\.[0-9]+\]' CHANGELOG.md | tail -1 | tr -d '#[] ')"
+  grep -q '^## \[' <<<"$(scripts/changelog-section.sh "$pv_now")" && { echo "FAIL scripts/changelog-section.sh must stop before the next entry"; status=1; }
+  [[ -n "$second" && -n "$(scripts/changelog-section.sh "$second")" ]] || { echo "FAIL scripts/changelog-section.sh must read entries below the first one"; status=1; }
+fi
+head_v="$(git show HEAD:.claude-plugin/plugin.json 2>/dev/null | grep -oE '"version": *"[^"]+"' | grep -oE '[0-9][^"]*')"
+if [[ -x scripts/release.sh && "$head_v" != "$pv_now" ]]; then
+  echo "SKIP release dry-run (version $pv_now is not committed yet; HEAD has $head_v)"
+elif [[ -x scripts/release.sh ]]; then
   dry="$(scripts/release.sh --dry-run "$pv_now" HEAD 2>&1)"
   grep -qF "tag v$pv_now" <<<"$dry" || { echo "FAIL release.sh --dry-run must name the tag v$pv_now"; status=1; }
   grep -qE 'zip design-to-figma-[0-9.]+\.zip: [1-9][0-9]* files, SKILL\.md at design-to-figma/SKILL\.md' <<<"$dry" || { echo "FAIL release.sh --dry-run must build a zip with design-to-figma/SKILL.md at its root"; echo "$dry"; status=1; }
 fi
 wf=.github/workflows/release.yml
+grep -qF "github.ref == 'refs/heads/main'" "$wf" 2>/dev/null || { echo "FAIL $wf must only publish from main, manual runs included"; status=1; }
+grep -qE 'uses: actions/checkout@[0-9a-f]{40}' "$wf" 2>/dev/null || { echo "FAIL $wf must pin actions/checkout to a commit SHA"; status=1; }
+grep -qF 'cancel-in-progress' "$wf" 2>/dev/null && ! grep -qF 'github.sha' "$wf" && { echo "FAIL $wf must not share one concurrency group that drops pending version releases"; status=1; }
+grep -qiE 'tag exists without a release' scripts/release.sh 2>/dev/null || { echo "FAIL scripts/release.sh must finish a release whose tag already exists"; status=1; }
 grep -qF 'scripts/release.sh' "$wf" 2>/dev/null || { echo "FAIL $wf must publish through scripts/release.sh"; status=1; }
 grep -qF 'tests/run.sh' "$wf" 2>/dev/null || { echo "FAIL $wf must run tests/run.sh before releasing"; status=1; }
 grep -qiE 'Versions and changelog' README.md || { echo "FAIL README.md must have a Versions and changelog section"; status=1; }
