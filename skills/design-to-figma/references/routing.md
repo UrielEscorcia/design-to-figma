@@ -38,6 +38,7 @@ A change is high risk when a mistake reaches beyond its target or is hard to und
 3. **Deletion.** Deleting or replacing pages, frames, components or variables, or anything the user did not name.
 4. **Brand foundations.** The palette, type families, logo, or the confirmed style or direction.
 5. **App-wide rules.** A change that applies to every built screen and sends approved screens back to `built` ([iteration.md](iteration.md) step 9).
+6. **Adopted file structure.** In a file this skill did not create: adding pages (the Brief page included), creating variables or styles for hardcoded values and rebinding nodes to them, or renaming, moving or restyling content the request did not name ([brownfield.md](brownfield.md)).
 
 Decide from the request and the Figma read whether an item applies. When it is unclear (for example, whether a component has instances on other screens), measure it as in step 4 before choosing the route. A local override of one instance is not a shared component change.
 
@@ -58,4 +59,4 @@ When `DESIGN-PLAN.md` exists or is created, its `## Requests` section holds the 
 
 ## 6. Close with the route and risk
 
-The report adds the **Route and risk** line to the Output Contract: the route taken (read-only, small, screen or project), then `Risk: none` or `Risk: item N (reason), confirmed by the user`.
+The report adds the **Route and risk** line to the Output Contract: the route taken (read-only, small, screen or project, prefixed with `adopted` when [brownfield.md](brownfield.md) ran first), then `Risk: none` or `Risk: item N (reason), confirmed by the user`.

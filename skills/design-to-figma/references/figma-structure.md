@@ -9,7 +9,7 @@
 | `🧩 Components` | The component library: component sets with variants, one section per family. |
 | `📱 Screens` | Screens as top-level frames, grouped by flow. |
 
-The page set is a default. Adjust only on user request, and record changes in the Brief page and `DESIGN.md`.
+The page set is a default. Adjust only on user request, and record changes in the Brief page and `DESIGN.md`. A file this skill did not create keeps its own pages, mapped to these roles; the default pages are added only when the user opts in ([brownfield.md](brownfield.md)).
 
 ## Naming
 

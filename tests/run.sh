@@ -54,7 +54,7 @@ required=(
   references/minimal-system-checklist.md
   references/style-discovery.md references/proposals.md references/quality-bar.md
   references/iteration.md references/screen-loop.md references/design-system-artifact.md
-  references/routing.md references/critique-lenses.md
+  references/routing.md references/critique-lenses.md references/brownfield.md
   assets/PRODUCT.template.md assets/DESIGN.template.md assets/brief-page.template.md
   assets/DESIGN-PLAN.template.md
 )
@@ -435,6 +435,32 @@ grep -qF 'assets/scripts/measure.js' "$cl" || { echo "FAIL critique-lenses.md mu
 grep -qF 'measure.js' <<<"$rf" || { echo "FAIL critique-lenses.md refuter must re-run measure.js on the finding's node (S18)"; status=1; }
 grep -qF 'assets/scripts/snapshot.js' <<<"$snap" || { echo "FAIL sync-rules.md snapshot must come from assets/scripts/snapshot.js (S18)"; status=1; }
 grep -qiE 'replace the (two )?parameter lines' "$cl" || { echo "FAIL critique-lenses.md must say how to pass parameters to measure.js (S18)"; status=1; }
+
+# T13 in odd/tasks/design-harness.md: brownfield adoption of a Figma file the plugin did not create (S19).
+bf="$r/brownfield.md"
+if [[ -f "$bf" ]]; then
+  adopt="$(section "$bf" '^## 1\.')"
+  grep -qiE 'writes nothing to Figma' <<<"$adopt" || { echo "FAIL brownfield.md adoption must write nothing to Figma (S19)"; status=1; }
+  for s in snapshot.js measure.js; do
+    grep -qF "assets/scripts/$s" <<<"$adopt" || { echo "FAIL brownfield.md adoption must read the file with $s (S19)"; status=1; }
+  done
+  grep -qiE 'page map' "$bf" || { echo "FAIL brownfield.md must map the file's own pages to roles (S19)"; status=1; }
+  grep -qF 'scope: adopted' "$bf" || { echo "FAIL brownfield.md must record scope: adopted (S19)"; status=1; }
+  grep -qiE 'never (run|ask) style discovery|style discovery is not (run|asked)' "$bf" || { echo "FAIL brownfield.md must take the look from the file instead of style discovery (S19)"; status=1; }
+  opt="$(section "$bf" '^## 4\.')"
+  for item in 'Brief page' 'variables'; do
+    grep -qiF "$item" <<<"$opt" || { echo "FAIL brownfield.md must offer '$item' as an opt-in (S19)"; status=1; }
+  done
+  grep -qiF 'routing.md' <<<"$opt" || { echo "FAIL brownfield.md opt-ins must go through the high-risk confirmation (S19)"; status=1; }
+fi
+section "$d/SKILL.md" '^## Decision Gates' | grep -qF 'brownfield.md' || { echo "FAIL SKILL.md Decision Gates must route a file the skill did not create to brownfield.md (S19)"; status=1; }
+section "$d/SKILL.md" '^## Activation Contract' | grep -qiE 'did not create' || { echo "FAIL SKILL.md activation must cover files the skill did not create (S19)"; status=1; }
+section "$r/routing.md" '^## 3\.' | grep -qE '^6\. \*\*Adopted file' || { echo "FAIL routing.md must list adopted-file structure as high-risk item 6 (S19)"; status=1; }
+section "$r/workflow-screen.md" '^## A\.' | grep -qF 'brownfield.md' || { echo "FAIL workflow-screen.md part A must take an adopted file's look from brownfield.md (S19)"; status=1; }
+section "$r/figma-structure.md" '^## Pages' | grep -qF 'brownfield.md' || { echo "FAIL figma-structure.md must keep an adopted file's own pages (S19)"; status=1; }
+grep -E '^9\. \*\*' "$r/iteration.md" | grep -qF 'brownfield.md' || { echo "FAIL iteration.md step 9 must handle an adopted file without a Brief page (S19)"; status=1; }
+grep -qE '^scope: <full \| minimal \| adopted>' "$d/assets/DESIGN.template.md" || { echo "FAIL DESIGN.template.md scope must allow adopted (S19)"; status=1; }
+grep -qiE 'did not create' README.md || { echo "FAIL README.md must explain adopting a file the plugin did not create (S19)"; status=1; }
 
 # T7: README with install and usage for Claude Code and Claude Desktop.
 readme="README.md"  # relative to the repository root; the script cds there at the top

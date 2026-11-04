@@ -3,7 +3,7 @@ name: design-to-figma
 description: "MANDATORY first step to design or change any app, module, flow or screen in Figma, in any language. Load BEFORE reading attachments, figma-use, figma-generate-design or any Figma tool."
 license: MIT
 metadata:
-  version: "0.6.0"
+  version: "0.7.0"
   author: "Uriel Escorcia"
 ---
 
@@ -17,7 +17,7 @@ Load this skill first: before reading attachments, and before `figma-use`, `figm
 
 - design a full project (brief, design system, screens) and have it live in Figma, including a product built module by module or flow by flow;
 - design a single screen or view that must live in Figma;
-- iterate on, extend or review an existing Figma design, including after someone edited it by hand.
+- iterate on, extend or review an existing Figma design, including after someone edited it by hand, or a file this skill did not create ([brownfield.md](references/brownfield.md)).
 
 The request may be in any language and may come with attachments (product PDFs, a brief, a reference image) or with decisions already made (palette, typography). Those do not replace this skill; they feed its brief and style gates. Example: "Vamos a crear el diseño en figma de un sistema de facturación mexicano… módulo tras módulo… ya elegimos la paleta y la tipografía".
 
@@ -41,7 +41,7 @@ Do not load it for code generation from Figma (a future companion skill), for Fi
 14. **Builders follow the craft guides.** Every Figma builder, including delegated subagents, receives impeccable's craft guidance or the fallback checklist ([tool-directory.md](references/tool-directory.md)).
 15. **Track the plan.** In project mode create `DESIGN-PLAN.md` ([DESIGN-PLAN.template.md](assets/DESIGN-PLAN.template.md)) once the screen list is agreed, update it after every state change, and read it first on resume to continue with the next unfinished item. Every screen runs [screen-loop.md](references/screen-loop.md); never start the next screen before the user approves the current one, unless the user says to batch.
 16. **Ask before spending the user's credits.** Before any generation that uses the user's plan credits (for example Figma AI images), say what it costs and ask; without a yes, use placeholders.
-17. **Route every request first** ([routing.md](references/routing.md)). A read-only request writes nothing. A small change to existing work runs inline through [iteration.md](references/iteration.md). New screens and projects take the full flow unchanged. A high-risk change (shared tokens, shared components, deletion, brand foundations, app-wide rules) is applied only after the user confirms its measured reach.
+17. **Route every request first** ([routing.md](references/routing.md)). A read-only request writes nothing. A small change to existing work runs inline through [iteration.md](references/iteration.md). New screens and projects take the full flow unchanged. A high-risk change (shared tokens, shared components, deletion, brand foundations, app-wide rules, reshaping an adopted file) is applied only after the user confirms its measured reach.
 18. **Ask questions with defined options through the surface's question form.** Whenever a question has a defined set of answers (a choice between options, approve or adjust, yes or no), use the surface's question tool (Claude Code: `AskUserQuestion`; Claude Desktop and web: the options form) instead of plain text, every time. Put the recommended option first and say why in its description; allow a free answer when the user may want something else. Open questions (the product name, the brief's free answers) stay in the chat; a suggested value, such as a file name, can be an option with a free answer allowed. Always mark one option as recommended, high-risk decisions included (there, recommend the safest option that still meets the request, such as the smaller option or cancel). A question whose options depend on another answer (for example which green to use, before the user agreed to change the color) goes in a later turn, never in the same form. Without a question tool, list the options numbered in the message.
 
 ## Decision Gates
@@ -53,6 +53,7 @@ Do not load it for code generation from Figma (a future companion skill), for Fi
 | Mode | One screen or view | Screen mode: [workflow-screen.md](references/workflow-screen.md) |
 | Mode | Unclear | Ask one question: full project or one screen? |
 | Existing project | Figma file URL or `PRODUCT.md`/`DESIGN.md` with a Figma header found | Read it; reuse the system; this is an iteration |
+| Existing project | A Figma file with no `DESIGN.md` for its file key (this skill did not create it) | Adopt it first, writing nothing to Figma, then continue the request's route: [brownfield.md](references/brownfield.md) |
 | Existing project | None found (screen mode) | Minimal bootstrap inside the screen flow |
 | Brief | No `PRODUCT.md` brief yet | Interview first (who, problem, essential screens, name, UI language and locale), before style discovery |
 | Locale | `PRODUCT.md` exists without a UI locale | Ask the UI language and locale once and record it before any UI copy is written |
@@ -92,7 +93,7 @@ This sequence is the large route ([routing.md](references/routing.md)); the smal
 7. **Foundations and components**, with the Brief page filled; the user approves; write `DESIGN.md` now with the `Foundations: approved` line.
 8. **Screen list** → `DESIGN-PLAN.md`.
 9. **Each screen**, system test screens included: run agent verify, self-fix, `polish` and elevate before asking approval; the user review message has every field in [screen-loop.md](references/screen-loop.md) step 6; one screen per review unless the user said to batch.
-10. **Close**: build the snapshot from the read-only enumeration output ([sync-rules.md](references/sync-rules.md)) and check that every required page is not empty, the Brief page included, and that the Brief page text matches the current scope (screens and states added since it was written), before the report. The report follows the Output Contract, every field, starting with the Route and risk line.
+10. **Close**: build the snapshot from the read-only enumeration output ([sync-rules.md](references/sync-rules.md)) and check that every required page is not empty, the Brief page included (an adopted file checks its mapped pages: [brownfield.md](references/brownfield.md)), and that the Brief page text matches the current scope (screens and states added since it was written), before the report. The report follows the Output Contract, every field, starting with the Route and risk line.
 
 ## Execution Steps
 
@@ -100,6 +101,7 @@ This sequence is the large route ([routing.md](references/routing.md)); the smal
 1. **Preflight.** Follow [preflight.md](references/preflight.md): Figma MCP tools, seat requirement, impeccable, design-capable surface, local write path. BLOCK on missing Figma tools.
 2. **Load or create the project context.**
    - Look for `PRODUCT.md` / `DESIGN.md` / `DESIGN-PLAN.md` in the confirmed folder, and for a Figma URL in the user's message.
+   - If a Figma file exists with no `DESIGN.md` for its file key, adopt it first ([brownfield.md](references/brownfield.md)).
    - If a Figma file exists, read it: enumerate pages with a read-only `use_figma` script, read each page with `get_metadata(nodeId=pageId)`, read variables and styles by script or `get_variable_defs`, take `get_screenshot` of key frames. Then compare with the sync frontmatter and snapshot ([sync-rules.md](references/sync-rules.md)). If `DESIGN-PLAN.md` exists, read it first and resume at the next unfinished item.
    - If none exists, continue with step 3. Templates: [PRODUCT.template.md](assets/PRODUCT.template.md), [DESIGN.template.md](assets/DESIGN.template.md), [DESIGN-PLAN.template.md](assets/DESIGN-PLAN.template.md).
 3. **Product brief.** Interview the user before any style work: who the users are, the problem, the essential screens, the product name, the UI language and locale (for example Spanish, Mexico: dates, currency, number formats) and whether dark mode is needed (ask; never assume) (impeccable `init`, or the questions in [minimal-system-checklist.md](references/minimal-system-checklist.md)). Wait for the answers; write `PRODUCT.md`.
@@ -116,7 +118,7 @@ This sequence is the large route ([routing.md](references/routing.md)); the smal
 
 End every run with a short report containing every field below, in this order, small and read-only runs included. Never drop a field: write "none" or "not touched this run" instead. Route and risk comes first and Pending conflicts is always present.
 
-- **Route and risk:** the route taken (read-only, small, screen or project) and `Risk: none` or `Risk: item N (reason), confirmed by the user` ([routing.md](references/routing.md)).
+- **Route and risk:** the route taken (read-only, small, screen or project; prefixed with `adopted` when the file was adopted this run) and `Risk: none` or `Risk: item N (reason), confirmed by the user` ([routing.md](references/routing.md)).
 - **Figma link:** the file URL (and frame links for screens touched) and the file name used.
 - **Style and references:** the confirmed category references, style, reference products, palette and whether the references were researched or unverified.
 - **Proposals:** the directions shown, where, and which one was chosen.
@@ -141,6 +143,7 @@ End every run with a short report containing every field below, in this order, s
 - [quality-bar.md](references/quality-bar.md): quality rules, impeccable wiring, built-in critique checklist
 - [critique-lenses.md](references/critique-lenses.md): four lenses with evidence per finding and a refuter, run proportionally to the change
 - [measure.js](assets/scripts/measure.js), [snapshot.js](assets/scripts/snapshot.js): tested read-only `use_figma` scripts for the lens measurements and the sync snapshot
+- [brownfield.md](references/brownfield.md): read-only adoption of a Figma file this skill did not create, and working inside it
 - [iteration.md](references/iteration.md): natural-language change requests applied in Figma
 - [sync-rules.md](references/sync-rules.md): source of truth, diffs, conflicts, snapshot
 - [design-system-artifact.md](references/design-system-artifact.md): one-way sync to a Claude Design System artifact

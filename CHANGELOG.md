@@ -2,6 +2,13 @@
 
 All notable changes to the design-to-figma plugin. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [Semantic Versioning](https://semver.org/). Every version has a tag (`vX.Y.Z`) and a GitHub release with the Desktop zip attached.
 
+## [0.7.0] - 2026-11-04
+
+### Added
+- Brownfield adoption (`references/brownfield.md`). A Figma file the plugin did not create is adopted read-only before the request runs. It is read with `snapshot.js` and `measure.js` and a few screenshots. The user confirms a summary: the page map, the system inventory, the look, an inferred brief and health counts. Then `PRODUCT.md` and `DESIGN.md` are written with `scope: adopted`, and the snapshot becomes the sync baseline.
+- Work in an adopted file keeps the file's own pages and reuses its components and values. Its look counts as provided, so style discovery is not asked. Without a Brief page, app-wide rules go to `DESIGN.md` only.
+- High-risk item 6 (adopted file structure): adding pages, tokenizing hardcoded values or reshaping content the request did not name in an adopted file needs the measured-reach confirmation.
+
 ## [0.6.0] - 2026-11-04
 
 ### Added

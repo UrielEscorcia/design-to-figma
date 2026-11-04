@@ -202,8 +202,21 @@ Every request is routed first, so the work gets only the process it needs:
 | Review, compare or explain | **Read-only**: nothing is written to Figma or to your files |
 | A clear tweak to something that exists ("make the cards denser") | **Small**: applied inline, critiqued, synced; style, palette and proposals are not asked again |
 | One new screen, or a new project | **Large**: the full design flow below, unchanged |
+| A Figma file the plugin did not create | **Adopted first**: read-only, then the request takes its route |
 
-Some changes are **high risk**: shared tokens or variables, components used on several screens, deletions, brand foundations, and app-wide rules. Before applying one ("change the primary color"), the skill measures its reach in Figma and shows what will change, what follows it, how to undo it and a smaller option. Nothing is applied without your yes. The final report states the route and the risk.
+Some changes are **high risk**: shared tokens or variables, components used on several screens, deletions, brand foundations, app-wide rules, and reshaping a file the plugin did not create. Before applying one ("change the primary color"), the skill measures its reach in Figma and shows what will change, what follows it, how to undo it and a smaller option. Nothing is applied without your yes. The final report states the route and the risk.
+
+### Files the plugin did not create
+
+Share a Figma file the plugin did not create, and it adopts the file before doing anything else. It writes nothing to Figma. It reads the file with its snapshot and measurement scripts, then shows you a summary:
+
+- which of your pages hold the screens and the components;
+- the variables, styles and components it found;
+- the look;
+- a brief inferred from the screens;
+- health counts: unbound values and contrast failures.
+
+Once you confirm it, it writes `PRODUCT.md` and `DESIGN.md` (`scope: adopted`) with the file as the sync baseline. New work then goes onto your pages and reuses your components and values. Adding a Brief page, turning hardcoded values into variables, or fixing the health findings across the file are offered as high-risk steps and never done without your yes.
 
 In project mode, `DESIGN-PLAN.md` keeps your requests verbatim (L1, L2, …), and builders read them from the plan instead of a summary.
 

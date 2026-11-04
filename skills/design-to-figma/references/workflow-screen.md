@@ -5,7 +5,7 @@ Use when the user wants one screen or view. The quality bar is the same as for a
 ## A. Project exists (Figma file or `DESIGN.md` with a Figma header)
 
 1. Read Figma: enumerate pages, read them, read variables and styles, and `search_design_system` for components. Diff against the snapshot ([sync-rules.md](sync-rules.md)).
-2. Reuse the system: tokens, components and the recorded style ([style-discovery.md](style-discovery.md)). Do not create new tokens when an existing one fits. If no style is recorded, run style discovery.
+2. Reuse the system: tokens, components and the recorded style ([style-discovery.md](style-discovery.md)). Do not create new tokens when an existing one fits. If no style is recorded, run style discovery, except in an adopted file, whose look is taken from the file ([brownfield.md](brownfield.md)). In an adopted file, steps 5 and 7 below use its page map instead of the default pages.
 3. Define the screen (step 1 of [screen-loop.md](screen-loop.md)). impeccable present: `shape` for the screen brief, then its new-work flow within the existing direction and style. Absent: short brief (2 questions) from the checklist.
 4. Show 2 or 3 directions for the screen within the style as Claude Design artifacts ([proposals.md](proposals.md)); the user picks one.
 5. Brief each builder, including delegated subagents, with the builder guidance in [tool-directory.md](tool-directory.md). Missing components: add only those the screen needs to `🧩 Components` (`figma-generate-library`), then build the chosen direction in `📱 Screens` (`figma-generate-design`, with `figma-use`).
