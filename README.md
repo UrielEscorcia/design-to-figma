@@ -358,7 +358,7 @@ evals/setup.sh   # stages this plugin and the installed Figma plugin in each cas
 claude plugin eval . --no-publish --scaffold --ablation none
 ```
 
-`evals/spanish-module-prompt` is a real Desktop prompt that must load the skill; `--scaffold` stages its attachments (two PDFs and a reference image). `evals/design-to-code-no-fire` must not load it. A case that lists `plugins:` loads only those plugins, so the baseline arm is turned off.
+`evals/spanish-module-prompt` is a real Desktop prompt that must load the skill; `--scaffold` stages its attachments (two PDFs and a reference image). `evals/spanish-review-prompt`, a read-only review of an existing file, must load it too. `evals/design-to-code-no-fire` must not load it. A case that lists `plugins:` loads only those plugins, so the baseline arm is turned off.
 
 ## License
 

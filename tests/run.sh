@@ -462,6 +462,12 @@ grep -E '^9\. \*\*' "$r/iteration.md" | grep -qF 'brownfield.md' || { echo "FAIL
 grep -qE '^scope: <full \| minimal \| adopted>' "$d/assets/DESIGN.template.md" || { echo "FAIL DESIGN.template.md scope must allow adopted (S19)"; status=1; }
 grep -qiE 'did not create' README.md || { echo "FAIL README.md must explain adopting a file the plugin did not create (S19)"; status=1; }
 
+# T14 in odd/tasks/design-harness.md: review prompts must load the skill (S20); the description is all
+# Claude reads before deciding, so it must name review next to design and change.
+desc="$(grep -m1 '^description:' "$d/SKILL.md")"
+grep -qiE 'design, change or review' <<<"$desc" || { echo "FAIL SKILL.md description must name review (S20)"; status=1; }
+[[ -f evals/spanish-review-prompt/case.yaml ]] || { echo "FAIL missing trigger eval evals/spanish-review-prompt (S20)"; status=1; }
+
 # T7: README with install and usage for Claude Code and Claude Desktop.
 readme="README.md"  # relative to the repository root; the script cds there at the top
 if [[ -f "$readme" ]]; then

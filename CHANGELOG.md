@@ -2,6 +2,11 @@
 
 All notable changes to the design-to-figma plugin. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [Semantic Versioning](https://semver.org/). Every version has a tag (`vX.Y.Z`) and a GitHub release with the Desktop zip attached.
 
+## [0.7.1] - 2026-11-04
+
+### Fixed
+- Review prompts load the skill. In the v0.7.0 Desktop trial, "Revisa la pantalla principal de este archivo de Figma…" loaded only the official Figma skill, so the adoption, the measurement scripts, the lenses and the report never ran. The description named design and change but not review; it now says "design, change or review". A new trigger eval, `evals/spanish-review-prompt`, uses that prompt verbatim.
+
 ## [0.7.0] - 2026-11-04
 
 ### Added
