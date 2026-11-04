@@ -2,7 +2,7 @@
 
 Every screen runs this loop: each screen of a project, the single screen in screen mode, and any screen built in `📱 Screens` as a system test (for example a home screen that proves the components). A screen is never shown for approval without the full loop: agent verify, self-fix, `polish`, elevate and the review fields in step 6. Problems are caught on the first screen, not after the whole project. Read Figma first ([sync-rules.md](sync-rules.md)).
 
-**Budget.** The loop has its own explicit budget, stated here once and replacing the per-run limit in [quality-bar.md](quality-bar.md) for screens: one build; one agent verify plus at most 2 re-verifies after self-fix; at most 2 self-fix batches; one polish pass; one elevate pass with one extra verify (step 5); the user-requested iterations; one final verify; one Dark verify when requested. An extra round after a failed gate runs only with the user's consent, as a new bounded run.
+**Budget.** The loop has its own explicit budget, stated here once and replacing the per-run limit in [quality-bar.md](quality-bar.md) for screens: one build; one agent verify (the critique plus one lens run with its refuter) plus at most 2 re-verifies after self-fix; at most 2 self-fix batches; one polish pass; one elevate pass with one extra verify (step 5); the user-requested iterations; one final verify; one Dark verify when requested. An extra round after a failed gate runs only with the user's consent, as a new bounded run.
 
 Cost: each loop spends Figma MCP calls (per Figma's rate-limit documentation, checked 2026-10-15: 200 per day on Dev and Full seats on Starter and Professional plans, 600 on Enterprise). Batch screenshots and take one render per verify.
 
@@ -26,6 +26,7 @@ Build the screen in Light (or the single mode) with the builder guidance in [too
 
 - A fresh, isolated reviewer (a subagent when available) runs impeccable's `critique` Assessment A on `get_screenshot` renders of this screen. Scoring is blind, with the inputs and outputs set in [quality-bar.md](quality-bar.md) (Quality gate), including the single biggest opportunity to move the screen from correct to excellent. The parent applies the quality gate in [quality-bar.md](quality-bar.md) to that report: P0/P1, specificity and heuristics conditions. Declare the run degraded (no Assessment B on Figma).
 - Without impeccable, the reviewer applies the built-in checklist in [quality-bar.md](quality-bar.md).
+- Then run all four critique lenses on the same renders, with evidence per finding and the refuter on P0/P1 findings ([critique-lenses.md](critique-lenses.md)). Confirmed lens findings count for the gate and join the self-fix batch.
 - A re-verify is a fresh blind reviewer that does not see the earlier report; the parent checks separately whether the earlier P0/P1 items are resolved.
 - State becomes `agent-verified` when the gate passes.
 
@@ -62,6 +63,7 @@ Take the reviewer's named biggest opportunity and apply one pass with the matchi
   - **Score:** the blind reviewer's heuristics score and the specificity verdict.
   - **Polish:** what the `polish` pass checked and fixed.
   - **Elevate:** kept or discarded and what it changed, or why it was skipped.
+  - **Lenses:** which lenses ran and the confirmed findings per lens, with their fix or Open gaps entry; refuted findings counted ([critique-lenses.md](critique-lenses.md)).
   - **Open gaps:** P0/P1 left open and product decisions for the user, or "none".
 - Do not ask for approval while a field is missing: run the missing step first.
 - The user approves or requests changes. Apply each change in Figma per [iteration.md](iteration.md) and show it again until the user approves. A change for the whole app rather than this screen is an app-wide rule ([iteration.md](iteration.md), step 9).

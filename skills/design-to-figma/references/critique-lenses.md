@@ -1,0 +1,83 @@
+# Critique lenses
+
+Four focused lenses check a Figma build after the holistic critique ([quality-bar.md](quality-bar.md)). They add evidence; they never replace impeccable's critique, its score or the quality gate. Each lens looks at one concern, measures what can be measured, and reports only findings it can prove. A refuter then tries to disprove the serious ones before anything is fixed.
+
+## Which lenses run
+
+Proportional, like [routing.md](routing.md): run the lenses that cover what changed.
+
+| What changed | Lenses |
+|---|---|
+| A new screen or state, the screen loop's agent verify, the final cross-screen review | all four |
+| Color, a token or a variable value | Accessibility, System consistency |
+| Spacing, layout or sizes | Hierarchy and readability, System consistency (and Accessibility when text size or touch targets change) |
+| Copy, labels or the UI locale | Copy and UX (and Hierarchy and readability when the length changes the layout) |
+| A component or variant | System consistency, Accessibility |
+| A behavior or a flow | Copy and UX, Hierarchy and readability |
+
+When it is unclear which lenses cover a change, run all four. Say in one line which lenses ran and why.
+
+All lenses share the same `get_screenshot` renders of the frames under review. Take one render per frame per verify; the measurements come from read-only `use_figma` scripts (load `figma-use` first), not from new screenshots.
+
+## 1. Hierarchy and readability
+
+- One focal point per screen, found within two seconds; the primary action is the most prominent control.
+- At most three type sizes compete in one view; headings, body and metadata follow the type scale in `DESIGN.md`.
+- Related items sit closer than unrelated ones; sections read as groups, not a flat list.
+- Density fits the user in the brief (for example compact tables for accountants, larger targets on mobile).
+- Repeated information (the same amount or status shown several times) has a reason in each place.
+
+## 2. Accessibility
+
+- Text contrast: at least 4.5:1 for body text, 3:1 for large text, UI boundaries and focus indicators. Compute it from the resolved variable colors in the current mode, opacity included, never from the screenshot.
+- Text size: no functional text below the floor in `DESIGN.md` (11 px when none is set).
+- Touch targets: at least 44 × 44 pt on touch platforms, from the node bounds.
+- Focus states exist for every interactive component; color is never the only carrier of meaning (badges have text or an icon).
+
+## 3. System consistency
+
+- Every fill, stroke, spacing, radius and text value is bound to a variable or style; list the unbound ones.
+- Components are instances of the library, not detached copies or one-off frames that look like a component.
+- States and variants are real component variants, never faked (painted backgrounds, overlays) ([quality-bar.md](quality-bar.md)).
+- Values sit on the scales in `DESIGN.md` (spacing, radius, type); a value off the scale is a finding.
+- With a provided look, the reference's radius, elevation and color use are kept ([proposals.md](proposals.md)).
+
+## 4. Copy and UX
+
+- All copy is in the UI language and locale from the brief: dates, currency, number formats, tone.
+- Labels say what happens; buttons start with a verb; no placeholder text or lorem ipsum.
+- Empty, loading and error states exist where the screen needs them, and an error says how to fix it.
+- The screen follows the app-wide rules in `DESIGN.md` and the agreed definition in `DESIGN-PLAN.md` (its L# requests).
+- A missing action, label or behavior is a product addition: recommend it, never add it ([quality-bar.md](quality-bar.md)).
+
+## Evidence
+
+Every finding carries all of these, or it is not reported:
+
+- **Severity:** P0 to P3, as in impeccable's critique.
+- **Node ID:** the node, with its Figma link.
+- **Screenshot:** the frame render where it shows.
+- **Rule:** the lens rule it breaks, quoted short.
+- **Measured:** the value found against the value required (for example "contrast 3.2:1, required 4.5:1: `text/tertiary` #8F959B on `bg/canvas` #F4F6F9"), or, for a rule without a number, the exact text or element.
+
+A finding without evidence is dropped, not softened. Example:
+
+`[P1] Accessibility · node 123:456 (link) · frame Inicio · 390 · rule: body text ≥ 4.5:1 · measured: 3.2:1 (text/tertiary on bg/canvas) · fix: text/secondary`
+
+## Refuter
+
+Before any P0 or P1 finding drives a fix or the gate, try to disprove it with a fresh measurement: a read-only `use_figma` script that resolves the bound variables in the current mode, reads font sizes and bounds, and checks instance and variant state. Do not reuse the lens's reasoning or look at the same screenshot again; measure from the file.
+
+Each finding ends as confirmed, refuted or unverifiable:
+
+- **Confirmed:** the measurement reproduces it. It counts for the gate and goes into the fix batch.
+- **Refuted:** the measurement contradicts it (for example the text is 14 px, not 10 px, or the variable resolves to a passing color). Drop it and say why in one line.
+- **Unverifiable:** no script can measure it (a judgment about hierarchy or tone). Keep it at P2 at most and list it in Open gaps; it never blocks the gate on its own.
+
+P2 and P3 findings skip the refuter and go to the polish pass or Open gaps.
+
+Where the surface has subagents (Claude Code), run each lens and the refuter as fresh, isolated reviewers given the renders, `PRODUCT.md`, `DESIGN.md`, the plan section and this file, never the gate thresholds or earlier reports. Without subagents (Claude Desktop), run them in sequence in one context and declare the run degraded (single-context), as [quality-bar.md](quality-bar.md) says for the critique.
+
+## Report
+
+The user review gets a **Lenses** field ([screen-loop.md](screen-loop.md) step 6): which lenses ran, and the confirmed findings per lens with their fix or Open gaps entry. Refuted findings are counted, not listed. For example: "Ran all four. Accessibility: 1 confirmed, fixed (P1 contrast on node 123:456); System consistency: 2 unbound values, bound; 1 refuted."

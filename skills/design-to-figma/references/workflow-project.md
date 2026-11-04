@@ -42,7 +42,7 @@ Run [screen-loop.md](screen-loop.md) for each screen in turn, in `📱 Screens`:
 
 ## 7. Final cross-screen critique
 
-After the last screen is `final-verified`, run one critique across all screens for consistency (type, spacing, components, tone), with `critique` on screenshots (and `audit` for accessibility) or the built-in checklist. Apply accepted fixes in one batch and show the result to the user.
+After the last screen is `final-verified`, run one critique across all screens for consistency (type, spacing, components, tone), with `critique` on screenshots (and `audit` for accessibility) or the built-in checklist, then all four critique lenses across the screens, with evidence and the refuter ([critique-lenses.md](critique-lenses.md)). Apply accepted fixes in one batch and show the result to the user.
 
 ## 8. Iterate
 
