@@ -355,6 +355,16 @@ grep -qiE 'multi-select' <<<"$qr" || { echo "FAIL quality-bar.md must ask produc
 grep -qiE 'only the accepted' <<<"$qr" || { echo "FAIL quality-bar.md must apply only the accepted additions (S14)"; status=1; }
 grep -E '^5\. \*\*Direction' <<<"$gs" | grep -qiE 'product additions' || { echo "FAIL SKILL.md gate step 5 must ask product additions before building (S14)"; status=1; }
 
+# T10 in odd/tasks/design-harness.md: point 3 trial findings (S15).
+oc="$(section "$d/SKILL.md" '^## Output Contract')"
+grep -qiE 'never drop a field' <<<"$oc" || { echo "FAIL SKILL.md Output Contract must never drop a field (S15)"; status=1; }
+grep -qiE 'reports only the fields it touched' <<<"$oc" && { echo "FAIL SKILL.md Output Contract must not let small runs drop fields (S15)"; status=1; }
+grep -E '^10\. \*\*Close' <<<"$gs" | grep -qiE 'Route and risk' || { echo "FAIL SKILL.md close step must end with the Route and risk line (S15)"; status=1; }
+grep -E '^9\. \*\*App-wide' "$r/iteration.md" | grep -qiE 'both, without asking' || { echo "FAIL iteration.md must write app-wide rules to DESIGN.md and the Brief page without asking (S15)"; status=1; }
+section "$r/quality-bar.md" '^## Rules' | grep -qiE 'never fake a component state' || { echo "FAIL quality-bar.md must forbid faking component states (S15)"; status=1; }
+grep -qiE 'high-risk decisions included' <<<"$hr18" || { echo "FAIL Hard Rule 18 must recommend an option in high-risk decisions too (S15)"; status=1; }
+grep -qiE 'depend on another answer' <<<"$hr18" || { echo "FAIL Hard Rule 18 must ask dependent questions in a later turn (S15)"; status=1; }
+
 # T7: README with install and usage for Claude Code and Claude Desktop.
 readme="README.md"  # relative to the repository root; the script cds there at the top
 if [[ -f "$readme" ]]; then

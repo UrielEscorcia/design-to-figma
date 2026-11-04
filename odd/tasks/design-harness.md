@@ -20,6 +20,12 @@
 - **S12** Every screen in Screens, system test screens included, runs the full loop before approval, and no backup files are left in the user's folder (Desktop trial: Inicio was offered for approval without the review fields, and a DESIGN.md.bak was left behind). L7 "hazlo".
 - **S13** Questions with defined options use the surface's question form: "podemos hacer que las preguntas las haga a travez del form que luego manda con opciones? forzar eso cada vez que pregunte algo definido?".
 - **S14** Critique fixes never add product features without the user's yes. In the point 2 trial, the direction critique said "Questions skipped: las correcciones se aplican directo en la construcción en Figma" and included new actions ("Corregir" inline, a "¿Qué es esto?" help pattern, "Registrar pago" on the mobile card). L9 "hazlo ahora y asi probamos el punto 3 con todo esto".
+- **S15** Point 3 trial findings. L10: "listo ya cancele podemos generar el pr 24, con esto cerramos la ronda y reviso los prs".
+  1. Every report carries the full Output Contract, with Route and risk and Pending conflicts.
+  2. App-wide rules go to DESIGN.md and the Brief page without asking.
+  3. No visual workarounds to fake component states.
+  4. Every form marks a recommended option, high-risk decisions included.
+  5. Questions that depend on another answer come in a later turn.
 
 ## Tasks
 
@@ -33,6 +39,7 @@
 | T7b | S12 | Screen loop for system test screens; no backup files | inline | done (guards RED→GREEN) | this commit |
 | T8 | S13 | Hard Rule 18: defined-option questions through the question form; one form per gate | inline | done (guards RED→GREEN) | this commit |
 | T9 | S14 | Design fixes vs product additions in every critique; additions asked in a multi-select form | inline | done (guards RED→GREEN) | this commit |
+| T10 | S15 | Output Contract always complete; app-wide rules in both places; no faked states; recommended option always; dependent questions later | inline | done (guards RED→GREEN) | this commit |
 | T2 | — | Critique lenses with node ID + screenshot evidence and a refuter | — | pending (next phase) | — |
 | T3 | — | Split the skill into trigger-first skills plus a registry | — | pending (next phase) | — |
 
@@ -83,4 +90,12 @@
   - #17: a read-only question mid-chat wrote nothing and offered the change as a next step.
   - The impeccable detector ran this time (56 warnings).
   - The direction critique scored 25/40 and declared itself degraded. It then skipped questions and planned new product actions; that is S14.
+- (2026-11-03) Point 3 trial on v0.4.6, new chat on the original folder, Inicio states from the plan's pending item:
+  - The chat resumed from the plan, with no manual edits detected; the requests were logged as L14 and L15.
+  - #22: forms carried the recommended option.
+  - #23: product changes were asked in a multi-select form, and only the selected ones were applied.
+  - #21: the review had all five fields, unprompted.
+  - Deleting the old screens was asked first; they were moved to a Graveyard page.
+  - #17: the high-risk color change was measured read-only, reported with Change/Reach/Undo/Smaller option, and cancelled.
+  - Gaps, now S15: no Route and risk line in the final report (seen again after point 1); app-wide rules written only to DESIGN.md; a full timbres bar faked by painting the background; no recommended option in the high-risk form; a dependent "which green" question in the same form.
 - Context: the direction and gap mapping are in Engram obs 6224; the scope decision is in obs 6235. The idea list (handoff/Code Connect, brownfield, prototypes/FigJam, a11y audit, variants, responsive, motion, Figma quota, fonts in screenshots, direct commands, plugin evals) comes after the base.
