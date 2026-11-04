@@ -392,6 +392,8 @@ fi
 wf=.github/workflows/release.yml
 grep -qF "github.ref == 'refs/heads/main'" "$wf" 2>/dev/null || { echo "FAIL $wf must only publish from main, manual runs included"; status=1; }
 grep -qE 'uses: actions/checkout@[0-9a-f]{40}' "$wf" 2>/dev/null || { echo "FAIL $wf must pin actions/checkout to a commit SHA"; status=1; }
+grep -qE 'uses: actions/checkout@[0-9a-f]{40} # v[5-9]' "$wf" 2>/dev/null || { echo "FAIL $wf must use a Node 24 actions/checkout (v5 or later)"; status=1; }
+grep -qE 'persist-credentials: false' "$wf" 2>/dev/null || { echo "FAIL $wf must not persist the checkout credentials"; status=1; }
 grep -qF 'cancel-in-progress' "$wf" 2>/dev/null && ! grep -qF 'github.sha' "$wf" && { echo "FAIL $wf must not share one concurrency group that drops pending version releases"; status=1; }
 grep -qiE 'tag exists without a release' scripts/release.sh 2>/dev/null || { echo "FAIL scripts/release.sh must finish a release whose tag already exists"; status=1; }
 grep -qF 'scripts/release.sh' "$wf" 2>/dev/null || { echo "FAIL $wf must publish through scripts/release.sh"; status=1; }
