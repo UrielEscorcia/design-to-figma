@@ -66,7 +66,7 @@ Take the reviewer's named biggest opportunity and apply one pass with the matchi
 - Do not ask for approval while a field is missing: run the missing step first.
 - The user approves or requests changes. Apply each change in Figma per [iteration.md](iteration.md) and show it again until the user approves. A change for the whole app rather than this screen is an app-wide rule ([iteration.md](iteration.md), step 9).
 - When a change alters the agreed behavior, whether it came from a self-fix, the polish or elevate pass or a user-review change, name it in the review as a change to what was agreed. Update the screen's definition in `DESIGN-PLAN.md` in the same step (with the new agreement date once the user approves), so the plan never contradicts `DESIGN.md` or Figma.
-- Never add a new product feature (an action, a label, content or a behavior the agreed definition does not have) on your own, whether it comes up in a fix, the polish or elevate pass or a user-review change. Recommend it, say why, and add it only after the user agrees.
+- Never add a new product feature (an action, a label, content or a behavior the agreed definition does not have) on your own, whether it comes up in a fix, the polish or elevate pass or a user-review change. Recommend it, say why, and add it only after the user agrees (product additions in [quality-bar.md](quality-bar.md)).
 - State becomes `user-approved`. Do not start the next screen before approval unless the user explicitly says to batch.
 
 ## 7. Final verify

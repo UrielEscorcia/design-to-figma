@@ -3,7 +3,7 @@ name: design-to-figma
 description: "MANDATORY first step to design or change any app, module, flow or screen in Figma, in any language. Load BEFORE reading attachments, figma-use, figma-generate-design or any Figma tool."
 license: MIT
 metadata:
-  version: "0.4.5"
+  version: "0.4.7"
   author: "Uriel Escorcia"
 ---
 
@@ -42,7 +42,7 @@ Do not load it for code generation from Figma (a future companion skill), for Fi
 15. **Track the plan.** In project mode create `DESIGN-PLAN.md` ([DESIGN-PLAN.template.md](assets/DESIGN-PLAN.template.md)) once the screen list is agreed, update it after every state change, and read it first on resume to continue with the next unfinished item. Every screen runs [screen-loop.md](references/screen-loop.md); never start the next screen before the user approves the current one, unless the user says to batch.
 16. **Ask before spending the user's credits.** Before any generation that uses the user's plan credits (for example Figma AI images), say what it costs and ask; without a yes, use placeholders.
 17. **Route every request first** ([routing.md](references/routing.md)). A read-only request writes nothing. A small change to existing work runs inline through [iteration.md](references/iteration.md). New screens and projects take the full flow unchanged. A high-risk change (shared tokens, shared components, deletion, brand foundations, app-wide rules) is applied only after the user confirms its measured reach.
-18. **Ask questions with defined options through the surface's question form.** Whenever a question has a defined set of answers (a choice between options, approve or adjust, yes or no), use the surface's question tool (Claude Code: `AskUserQuestion`; Claude Desktop and web: the options form) instead of plain text, every time. Put the recommended option first and say why in its description; allow a free answer when the user may want something else. Open questions (the product name, the brief's free answers) stay in the chat; a suggested value, such as a file name, can be an option with a free answer allowed. Without a question tool, list the options numbered in the message.
+18. **Ask questions with defined options through the surface's question form.** Whenever a question has a defined set of answers (a choice between options, approve or adjust, yes or no), use the surface's question tool (Claude Code: `AskUserQuestion`; Claude Desktop and web: the options form) instead of plain text, every time. Put the recommended option first and say why in its description; allow a free answer when the user may want something else. Open questions (the product name, the brief's free answers) stay in the chat; a suggested value, such as a file name, can be an option with a free answer allowed. Always mark one option as recommended, high-risk decisions included (there, recommend the safest option that still meets the request, such as the smaller option or cancel). A question whose options depend on another answer (for example which green to use, before the user agreed to change the color) goes in a later turn, never in the same form. Without a question tool, list the options numbered in the message.
 
 ## Decision Gates
 
@@ -87,12 +87,12 @@ This sequence is the large route ([routing.md](references/routing.md)); the smal
 2. **Category references**: list them with sources and wait ([style-discovery.md](references/style-discovery.md)).
 3. **Style**: ask it; never propose one in place of asking. Wait. When the user provided the look (a reference image or screenshots), state the derived style in one line and continue (section 0 of [style-discovery.md](references/style-discovery.md)).
 4. **Palette**: swatches only after the style is confirmed. Wait. A palette provided by the user is shown once as the record, without waiting; ask only about pairs that fail AA.
-5. **Direction**: 2 or 3 proposals; the user picks. Run the critique and show the critique and its fixes before building in Figma (an `🧪 Explorations` fallback page is not a build).
+5. **Direction**: 2 or 3 proposals; the user picks. Run the critique and show the critique and its fixes before building in Figma (an `🧪 Explorations` fallback page is not a build). Design fixes are applied; product additions are asked in one form and only the accepted ones are built ([quality-bar.md](references/quality-bar.md)).
 6. **File name**: ask it alone, right before the file is created; only then the team or plan, when there are several.
 7. **Foundations and components**, with the Brief page filled; the user approves; write `DESIGN.md` now with the `Foundations: approved` line.
 8. **Screen list** → `DESIGN-PLAN.md`.
 9. **Each screen**, system test screens included: run agent verify, self-fix, `polish` and elevate before asking approval; the user review message has every field in [screen-loop.md](references/screen-loop.md) step 6; one screen per review unless the user said to batch.
-10. **Close**: build the snapshot from the read-only enumeration output ([sync-rules.md](references/sync-rules.md)) and check that every required page is not empty, the Brief page included, and that the Brief page text matches the current scope (screens and states added since it was written), before the report.
+10. **Close**: build the snapshot from the read-only enumeration output ([sync-rules.md](references/sync-rules.md)) and check that every required page is not empty, the Brief page included, and that the Brief page text matches the current scope (screens and states added since it was written), before the report. The report follows the Output Contract, every field, starting with the Route and risk line.
 
 ## Execution Steps
 
@@ -114,9 +114,9 @@ This sequence is the large route ([routing.md](references/routing.md)); the smal
 
 ## Output Contract
 
-End every run with a short report containing:
+End every run with a short report containing every field below, in this order, small and read-only runs included. Never drop a field: write "none" or "not touched this run" instead. Route and risk comes first and Pending conflicts is always present.
 
-- **Route and risk:** the route taken (read-only, small, screen or project) and `Risk: none` or `Risk: item N (reason), confirmed by the user` ([routing.md](references/routing.md)). A read-only or small run reports only the fields it touched.
+- **Route and risk:** the route taken (read-only, small, screen or project) and `Risk: none` or `Risk: item N (reason), confirmed by the user` ([routing.md](references/routing.md)).
 - **Figma link:** the file URL (and frame links for screens touched) and the file name used.
 - **Style and references:** the confirmed category references, style, reference products, palette and whether the references were researched or unverified.
 - **Proposals:** the directions shown, where, and which one was chosen.
