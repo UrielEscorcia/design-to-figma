@@ -2,6 +2,12 @@
 
 All notable changes to the design-to-figma plugin. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [Semantic Versioning](https://semver.org/). Every version has a tag (`vX.Y.Z`) and a GitHub release with the Desktop zip attached.
 
+## [0.7.2] - 2026-11-04
+
+### Fixed
+- A read-only first request on a file the plugin did not create now runs the adoption reads (`snapshot.js`, `measure.js`) and puts the adoption summary in the answer, recording nothing. In the v0.7.1 Desktop trial, a review skipped the adoption entirely: the read-only rule (no local writes) overrode the adoption, which ended with writing `PRODUCT.md`/`DESIGN.md`. The files are now written with the first change request, and the route reads `adopted (not recorded), then read-only`.
+- The report's quality passes give the lens finding counts after the refuter (confirmed, refuted, unverifiable), or say that the refuter did not run and why.
+
 ## [0.7.1] - 2026-11-04
 
 ### Fixed
