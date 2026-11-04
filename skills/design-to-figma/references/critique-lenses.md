@@ -15,7 +15,7 @@ Proportional, like [routing.md](routing.md): run the lenses that cover what chan
 | A component or variant | System consistency, Accessibility |
 | A behavior or a flow | Copy and UX, Hierarchy and readability |
 
-When it is unclear which lenses cover a change, run all four. Say in one line which lenses ran and why.
+When it is unclear which lenses cover a change, run all four. A re-verify after a self-fix batch runs the lenses whose findings the batch fixed, plus the lenses that cover what the fixes changed. Say in one line which lenses ran and why.
 
 All lenses share the same `get_screenshot` renders of the frames under review. Take one render per frame per verify; the measurements come from read-only `use_figma` scripts (load `figma-use` first), not from new screenshots.
 
@@ -66,7 +66,7 @@ A finding without evidence is dropped, not softened. Example:
 
 ## Refuter
 
-Before any P0 or P1 finding drives a fix or the gate, try to disprove it with a fresh measurement: a read-only `use_figma` script that resolves the bound variables in the current mode, reads font sizes and bounds, and checks instance and variant state. Do not reuse the lens's reasoning or look at the same screenshot again; measure from the file.
+Before any P0 or P1 finding drives a fix or the gate, try to disprove it with a fresh measurement: a read-only `use_figma` script that resolves the bound variables in the current mode, reads font sizes and bounds, and checks instance and variant state. The refuter receives only the finding (node ID, rule, measured value claimed), never the lens's reasoning, and does not look at the screenshot again; its independence comes from measuring the file.
 
 Each finding ends as confirmed, refuted or unverifiable:
 
@@ -76,7 +76,7 @@ Each finding ends as confirmed, refuted or unverifiable:
 
 P2 and P3 findings skip the refuter and go to the polish pass or Open gaps.
 
-Where the surface has subagents (Claude Code), run each lens and the refuter as fresh, isolated reviewers given the renders, `PRODUCT.md`, `DESIGN.md`, the plan section and this file, never the gate thresholds or earlier reports. Without subagents (Claude Desktop), run them in sequence in one context and declare the run degraded (single-context), as [quality-bar.md](quality-bar.md) says for the critique.
+Where the surface has subagents (Claude Code), run each lens as a fresh, isolated reviewer given the renders, `PRODUCT.md`, `DESIGN.md`, the plan section and this file, never the gate thresholds or earlier reports; run the refuter as another subagent given only the findings to check. Without subagents (Claude Desktop), run them in sequence in one context, keep the refuter to the finding and the script, and declare the run degraded (single-context), as [quality-bar.md](quality-bar.md) says for the critique.
 
 ## Report
 
