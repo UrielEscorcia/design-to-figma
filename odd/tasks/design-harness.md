@@ -41,7 +41,7 @@
 | T8 | S13 | Hard Rule 18: defined-option questions through the question form; one form per gate | inline | done (guards RED→GREEN) | this commit |
 | T9 | S14 | Design fixes vs product additions in every critique; additions asked in a multi-select form | inline | done (guards RED→GREEN) | this commit |
 | T10 | S15 | Output Contract always complete; app-wide rules in both places; no faked states; recommended option always; dependent questions later | inline | done (guards RED→GREEN) | this commit |
-| T11 | S16 | CHANGELOG.md (0.1.0–0.4.7), scripts/release.sh + changelog-section.sh, release workflow, README section, guards; backfill of tags and releases after merge | inline | done (guards RED→GREEN; backfill pending merge) | this commit |
+| T11 | S16 | CHANGELOG.md (0.1.0–0.4.7), scripts/release.sh + changelog-section.sh, release workflow, README section, guards; backfill of tags and releases after merge | inline | done (PR #25 merged; 15 releases v0.1.0–v0.4.7 published, v0.4.7 latest, tags verified, rerun skips) | 6a4fe70, 0896480 |
 | T2 | — | Critique lenses with node ID + screenshot evidence and a refuter | — | pending (next phase) | — |
 | T3 | — | Split the skill into trigger-first skills plus a registry | — | pending (next phase) | — |
 
