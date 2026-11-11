@@ -494,6 +494,22 @@ grep -qiE 'estimated[^.]*never[^.]*measured' <<<"$(section "$cl" '^## Evidence')
 grep -E '^7\. \*\*' "$r/iteration.md" | grep -qiE 'position' || { echo "FAIL iteration.md step 7 must count position and spacing changes as visual (S22 #8)"; status=1; }
 grep -E '^9\. \*\*' "$r/iteration.md" | grep -qiE 'one change is not a rule' || { echo "FAIL iteration.md step 9 must not turn a one-change choice into a rule (S22 #10)"; status=1; }
 
+# T17 in odd/tasks/design-harness.md: v0.7.3 Desktop retrial gaps (S23).
+if [[ -f "$bf" ]]; then
+  grep -qiE 'change run[^.]*ends with one next-step question[^.]*opt-ins' <<<"$(section "$bf" '^## 5\.')" || { echo "FAIL brownfield.md report: a change run on an adopted file must end with one next-step question form offering the opt-ins (S23 #1)"; status=1; }
+  grep -qiE 'never left as warnings' <<<"$(section "$bf" '^## 5\.')" || { echo "FAIL brownfield.md report: opt-ins are never left as warnings or prose (S23 #1)"; status=1; }
+  look="$(grep -E '^- \*\*Look:' "$bf")"
+  grep -qiE 'observed in the (adopted )?file' <<<"$look" || { echo "FAIL brownfield.md look must be recorded as observed in the file (S23 #4)"; status=1; }
+  if grep -qiE 'provided by the user' <<<"$look" && ! grep -qiE 'never[^.]*provided by the user' <<<"$look"; then
+    echo "FAIL brownfield.md look must not call the observed look provided by the user (S23 #4)"; status=1
+  fi
+fi
+grep -E '^Palette:' "$d/assets/PRODUCT.template.md" | grep -qiE 'observed in the adopted Figma file' || { echo "FAIL PRODUCT.template.md Palette must allow 'observed in the adopted Figma file' (S23 #4)"; status=1; }
+grep -E '^Typography:' "$d/assets/PRODUCT.template.md" | grep -qiE 'observed in the adopted Figma file' || { echo "FAIL PRODUCT.template.md Typography must allow 'observed in the adopted Figma file' (S23 #4)"; status=1; }
+section "$d/SKILL.md" '^## Output Contract' | grep -E 'Quality passes' | grep -qiE 'as numbers, zeros included' || { echo "FAIL SKILL.md Output Contract must give lens counts as numbers, zeros included (S23 #2)"; status=1; }
+section "$d/SKILL.md" '^## Output Contract' | grep -E 'Warnings' | grep -qiE 'opt-ins' || { echo "FAIL SKILL.md Output Contract Warnings must send adopted-file opt-ins to the next-step form (S23 #1)"; status=1; }
+grep -E '^When it is unclear' "$cl" | grep -qiE 'tappable[^.]*touch target' || { echo "FAIL critique-lenses.md must say resizing a tappable element changes its touch target and runs Accessibility (S23 #3)"; status=1; }
+
 # T7: README with install and usage for Claude Code and Claude Desktop.
 readme="README.md"  # relative to the repository root; the script cds there at the top
 if [[ -f "$readme" ]]; then

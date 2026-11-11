@@ -2,6 +2,15 @@
 
 All notable changes to the design-to-figma plugin. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [Semantic Versioning](https://semver.org/). Every version has a tag (`vX.Y.Z`) and a GitHub release with the Desktop zip attached.
 
+## [0.7.4] - 2026-11-10
+
+### Fixed
+Gaps found in the v0.7.3 Desktop retrial (a small change on a copy of a file the plugin did not create):
+- A change run on an adopted file ends with one next-step question form that offers the opt-ins (tokenizing, components, health fixes such as 44 px touch targets), each marked high risk. The trial left them as warnings and a prose suggestion.
+- The report gives the lens counts as numbers, zeros included.
+- Resizing a tappable element counts as a touch-target change, so the Accessibility lens runs. The trial narrowed chips from 70 to 50 px without it.
+- The palette, type and look of an adopted file are recorded as observed in the file, never as provided by the user.
+
 ## [0.7.3] - 2026-11-04
 
 ### Fixed

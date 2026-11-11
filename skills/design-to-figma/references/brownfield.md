@@ -18,7 +18,7 @@ When the file is not accessible, stop as in [sync-rules.md](sync-rules.md) (Miss
 
 - **Page map:** the role of each existing page, using this skill's roles (Brief, Foundations, Components, Screens) where a page fits one, for example `Screens → "App v2"`, `Components → "Library"`, `Brief → none`. Pages with no role (archive, playground) stay out of the map and are never touched. Ask when the screens page is unclear.
 - **System inventory:** the variables, styles and components found, with counts, or "none" for each that is missing. A file with no variables is recorded as using hardcoded values, with the most frequent ones read from the measured frames.
-- **Look:** the style, palette, type, radius, elevation and density as the file shows them. This is a look provided by the user ([style-discovery.md](style-discovery.md) section 0; [proposals.md](proposals.md), Provided look): style discovery is not asked, and the palette and type are recorded, not proposed.
+- **Look:** the style, palette, type, radius, elevation and density as the file shows them. It is treated like a provided look ([style-discovery.md](style-discovery.md) section 0; [proposals.md](proposals.md), Provided look): style discovery is not asked, and the palette and type are recorded, not proposed. Record it as observed in the adopted file, with the date, never as provided by the user: the user did not choose it, the file shows it.
 - **Brief:** inferred from the screens (product, main flows, UI language and locale from the copy). Only what the file cannot show is asked: users, problem, dark mode when there is no Dark mode or frames.
 - **Health:** the measure.js counts (unbound values, contrast and text-floor failures, detached candidates). It is information for the user, never a fix list applied during adoption.
 
@@ -45,4 +45,6 @@ Then continue the user's request on its route.
 
 ## 5. Report
 
-The Output Contract adds the adoption: the page map, `scope: adopted`, the health counts and the opt-ins offered. The Route and risk line names the request's route, for example `Route: adopted, then small`, or `Route: adopted (not recorded), then read-only` when the run was read-only.
+The Output Contract adds the adoption: the page map, `scope: adopted`, the health counts and the opt-ins offered.
+
+A change run on an adopted file ends with one next-step question form (Hard Rule 18) that offers the opt-ins from step 4 that apply (for example tokenizing the hardcoded values, turning repeated groups into components, or fixing a health finding such as touch targets below 44 px), each marked high risk in its description, plus a "nothing for now" option. Opt-ins are never left as warnings or as a prose suggestion; a warning may name the finding, and the form offers the fix. The Route and risk line names the request's route, for example `Route: adopted, then small`, or `Route: adopted (not recorded), then read-only` when the run was read-only.
