@@ -2,6 +2,14 @@
 
 All notable changes to the design-to-figma plugin. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [Semantic Versioning](https://semver.org/). Every version has a tag (`vX.Y.Z`) and a GitHub release with the Desktop zip attached.
 
+## [0.7.5] - 2026-11-10
+
+### Fixed
+Gaps found in the v0.7.4 Desktop trial (spacing and touch-target changes on a copy of a file the plugin did not create):
+- The System consistency lens compares every value a change introduces with the scale recorded before the change, and reports an off-scale value at P2 even when the user chose it. The trial reported 0 findings for 28, 26 and 16 px on a 10/20 scale.
+- A value one change introduced never becomes a `DESIGN.md` frontmatter token. It is described in Layout and becomes a token only through an opt-in. The trial added `date-to-time-gap: 28px` and `showtime-chip-height: 44px`.
+- The Risk line names the item by its number and title exactly as listed in `routing.md`. The trial reported "item 2 (touch target resize)" for an item 6 opt-in.
+
 ## [0.7.4] - 2026-11-10
 
 ### Fixed

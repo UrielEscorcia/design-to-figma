@@ -51,7 +51,7 @@ Its measurements are the evidence for those findings. Hierarchy and Copy and UX 
 - Every fill, stroke, spacing, radius and text value is bound to a variable or style; list the unbound ones.
 - Components are instances of the library, not detached copies or one-off frames that look like a component.
 - States and variants are real component variants, never faked (painted backgrounds, overlays) ([quality-bar.md](quality-bar.md)).
-- Values sit on the scales in `DESIGN.md` (spacing, radius, type); a value off the scale is a finding.
+- Values sit on the scales in `DESIGN.md` (spacing, radius, type); a value off the scale is a finding. Compare every value the change introduced (gaps, offsets, sizes, radius, type) with the scale recorded in `DESIGN.md` before the change (in an adopted file without variables, the observed values recorded at adoption). Report an off-scale value even when the user chose it, at P2 with the value and the nearest steps (for example "28 px; scale 10/20"), so the user decides to keep it or move it to the scale. It is never cleared by adding the value to the scale.
 - With a provided look, the reference's radius, elevation and color use are kept ([proposals.md](proposals.md)).
 
 ## 4. Copy and UX

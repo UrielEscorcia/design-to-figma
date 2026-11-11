@@ -513,6 +513,16 @@ section "$d/SKILL.md" '^## Output Contract' | grep -E 'Quality passes' | grep -q
 section "$d/SKILL.md" '^## Output Contract' | grep -E 'Warnings' | grep -qiE 'opt-ins' || { echo "FAIL SKILL.md Output Contract Warnings must send adopted-file opt-ins to the next-step form (S23 #1)"; status=1; }
 grep -E '^When it is unclear' "$cl" | grep -qiE 'tappable[^.]*(padding|label)[^.]*touch target[^.]*Accessibility runs' || { echo "FAIL critique-lenses.md must say resizing a tappable element changes its touch target and runs Accessibility (S23 #3)"; status=1; }
 
+# T18 in odd/tasks/design-harness.md: v0.7.4 Desktop trial gaps (S24).
+offscale="$(grep -E 'off the scale' "$cl")"
+grep -qiE 'scale recorded in .DESIGN\.md. before the change' <<<"$offscale" || { echo "FAIL critique-lenses.md must compare changed values with the scale recorded before the change (S24 #1)"; status=1; }
+grep -qiE 'even when the user chose' <<<"$offscale" || { echo "FAIL critique-lenses.md must report an off-scale value even when the user chose it (S24 #1)"; status=1; }
+grep -qiE 'never cleared by adding' <<<"$offscale" || { echo "FAIL critique-lenses.md must never clear an off-scale finding by adding the value to the scale (S24 #1)"; status=1; }
+if [[ -f "$bf" ]]; then
+  grep -qiE 'never adds a value one change introduced' <<<"$(section "$bf" '^## 4\.')" || { echo "FAIL brownfield.md must keep one-change values out of the DESIGN.md tokens (S24 #2)"; status=1; }
+fi
+grep -E '^The report adds the \*\*Route and risk\*\*' "$r/routing.md" | grep -qiE 'title exactly as listed' || { echo "FAIL routing.md Risk line must name the item by its title exactly as listed (S24 #3)"; status=1; }
+
 # T7: README with install and usage for Claude Code and Claude Desktop.
 readme="README.md"  # relative to the repository root; the script cds there at the top
 if [[ -f "$readme" ]]; then
