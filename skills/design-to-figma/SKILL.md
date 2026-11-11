@@ -3,7 +3,7 @@ name: design-to-figma
 description: "MANDATORY first step to design, change or review any app, module, flow or screen in Figma, in any language. Load BEFORE reading attachments, figma-use, figma-generate-design or any Figma tool."
 license: MIT
 metadata:
-  version: "0.7.4"
+  version: "0.7.5"
   author: "Uriel Escorcia"
 ---
 
