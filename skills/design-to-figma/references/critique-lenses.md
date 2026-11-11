@@ -15,7 +15,7 @@ Proportional, like [routing.md](routing.md): run the lenses that cover what chan
 | A component or variant | System consistency, Accessibility |
 | A behavior or a flow | Copy and UX, Hierarchy and readability |
 
-When it is unclear which lenses cover a change, run all four. A re-verify after a self-fix batch runs the lenses whose findings the batch fixed, plus the lenses that cover what the fixes changed. Say in one line which lenses ran and why.
+When it is unclear which lenses cover a change, run all four. Resizing a tappable element (a chip, button or row, in width or height, directly or through its padding, label or layout) changes its touch target, so Accessibility runs too. A re-verify after a self-fix batch runs the lenses whose findings the batch fixed, plus the lenses that cover what the fixes changed. Say in one line which lenses ran and why.
 
 All lenses share the same `get_screenshot` renders of the frames under review. Take one render per frame per verify; the measurements come from new screenshots never.
 
