@@ -520,8 +520,9 @@ grep -qiE 'even when the user chose' <<<"$offscale" || { echo "FAIL critique-len
 grep -qiE 'never cleared by adding' <<<"$offscale" || { echo "FAIL critique-lenses.md must never clear an off-scale finding by adding the value to the scale (S24 #1)"; status=1; }
 if [[ -f "$bf" ]]; then
   grep -qiE 'never adds a value one change introduced' <<<"$(section "$bf" '^## 4\.')" || { echo "FAIL brownfield.md must keep one-change values out of the DESIGN.md tokens (S24 #2)"; status=1; }
+  grep -qiE 'one-off, not on the scale' <<<"$(section "$bf" '^## 4\.')" || { echo "FAIL brownfield.md must mark a one-change value in prose as one-off, not on the scale (S24 #2)"; status=1; }
 fi
-grep -E '^The report adds the \*\*Route and risk\*\*' "$r/routing.md" | grep -qiE 'title exactly as listed' || { echo "FAIL routing.md Risk line must name the item by its title exactly as listed (S24 #3)"; status=1; }
+grep -E '^The report adds the \*\*Route and risk\*\*' "$r/routing.md" | grep -qiE 'title exactly as listed' && grep -E '^The report adds the \*\*Route and risk\*\*' "$r/routing.md" | grep -qF 'Risk: item N (<title>: reason)' || { echo "FAIL routing.md Risk line must name the item by its title exactly as listed (S24 #3)"; status=1; }
 
 # T7: README with install and usage for Claude Code and Claude Desktop.
 readme="README.md"  # relative to the repository root; the script cds there at the top

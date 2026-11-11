@@ -58,7 +58,7 @@
 | T15 | S21 | Read-only first request on an adopted file: adoption reads + summary, nothing recorded; recorded at the first change request; route label; lens counts in the Output Contract; v0.7.2 | inline | done (guards RED 4 -> GREEN) | this commit |
 | T16 | S22 | Trial gaps #1–#11: HR18 step order and forms per step, read-only next-step question with record-adoption, brief before writing, opt-ins as high-risk forms, snapshot.js unchanged, estimated vs measured, lenses on position changes, no one-change rules; v0.7.3 | inline | done (guards RED 10 -> GREEN) | this commit |
 | T17 | S23 | Retrial gaps #1–#4: next-step opt-in form at the end of an adopted change run, lens counts as numbers, Accessibility on tappable resizes, observed-in-file provenance; v0.7.4 | inline | done (guards RED 9 -> GREEN; 3 mutation probes caught; review review-64fbcc46bb66114c approved and acknowledged, its warnings fixed in the follow-up commit) | f3c102f, 51426a8 (PR #33 merged) |
-| T18 | S24 | v0.7.4 trial gaps #1–#3: off-scale values against the pre-change scale (even when chosen), no one-change tokens in DESIGN.md, Risk item named by its listed title; v0.7.5 | inline | done (guards RED 5 -> GREEN; 3 mutation probes caught) | this commit |
+| T18 | S24 | v0.7.4 trial gaps #1–#3: off-scale values against the pre-change scale (even when chosen), no one-change tokens in DESIGN.md, Risk item named by its listed title; v0.7.5 | inline | done (guards RED 5 -> GREEN; 3 mutation probes caught; review review-4bdee066b46664f6 approved and acknowledged, its warnings fixed in the follow-up: RED 2 -> GREEN) | 482f7d2 + follow-up |
 
 ## Log
 

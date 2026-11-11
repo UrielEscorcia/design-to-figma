@@ -59,4 +59,4 @@ When `DESIGN-PLAN.md` exists or is created, its `## Requests` section holds the 
 
 ## 6. Close with the route and risk
 
-The report adds the **Route and risk** line to the Output Contract: the route taken (read-only, small, screen or project, prefixed with `adopted` when [brownfield.md](brownfield.md) ran first), then `Risk: none` or `Risk: item N (reason), confirmed by the user`. Name the item by its number and title exactly as listed above (for example `Risk: item 6 (Adopted file structure: chips resized to 44 px), confirmed by the user`), never a number with a description of your own.
+The report adds the **Route and risk** line to the Output Contract: the route taken (read-only, small, screen or project, prefixed with `adopted` when [brownfield.md](brownfield.md) ran first), then `Risk: none` or `Risk: item N (<title>: reason), confirmed by the user`. Name the item by its number and title exactly as listed above (for example `Risk: item 6 (Adopted file structure: chips resized to 44 px), confirmed by the user`), never a number with a description of your own.
